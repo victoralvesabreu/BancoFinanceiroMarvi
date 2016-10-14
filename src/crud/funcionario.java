@@ -27,10 +27,6 @@ public class funcionario{
         return id;
     }
 
-    public void setId(int idFuncionario) {
-        this.id = idFuncionario;
-    }
-
     public String getNome() {
         return nome;
     }

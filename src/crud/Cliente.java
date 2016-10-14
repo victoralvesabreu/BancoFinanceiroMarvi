@@ -10,15 +10,15 @@ package crud;
  * @author victo
  */
 public class Cliente {
-    private static int idNext = 0;
+    private static int nextId = 0;
     private int id;
     private String nome;
     private String cpf;
     private String email;
 
     public Cliente(){
-        id = Cliente.idNext;
-        Cliente.idNext++;
+        id = nextId;
+        nextId++;
     }
 
     public int getId() {
