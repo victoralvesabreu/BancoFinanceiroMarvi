@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package crud;
+package domain;
 
 import javax.swing.JOptionPane;
 
@@ -11,31 +11,17 @@ import javax.swing.JOptionPane;
  *
  * @author victor alves abreu
  */
-public class Cliente {
+public class Usuario {
 
     private static int nextId = 0;
     private int id;
     private String nome;
-    private String cpf;
     private String email;
-    private Endereco endereco;
+    private String senha;
 
-    public Cliente() {
+    public Usuario() {
         id = nextId;
         nextId++;
-        endereco = new Endereco();
-    }
-
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        if (endereco != null) {
-            this.endereco = endereco;
-        } else {
-            JOptionPane.showMessageDialog(null, "Endereço invalido");
-        }
     }
 
     public int getId() {
@@ -54,18 +40,6 @@ public class Cliente {
         }
     }
 
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        if (!cpf.isEmpty()) {
-            this.cpf = cpf;
-        } else {
-            JOptionPane.showMessageDialog(null, "cpf invalido");
-        }
-    }
-
     public String getEmail() {
         return email;
     }
@@ -75,6 +49,18 @@ public class Cliente {
             this.email = email;
         } else {
             JOptionPane.showMessageDialog(null, "email invalido");
+        }
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        if (!senha.isEmpty()) {
+            this.senha = senha;
+        } else {
+            JOptionPane.showMessageDialog(null, "senha invalido");
         }
     }
 

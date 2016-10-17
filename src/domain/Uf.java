@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package crud;
+package domain;
 
 import javax.swing.JOptionPane;
 
@@ -11,20 +11,21 @@ import javax.swing.JOptionPane;
  *
  * @author victor alves abreu
  */
-public class Comodos {
+public class Uf {
 
-    private int id;
-    private static int nextId = 0;
+    private String codigoUf;
     private String nome;
-    private int quantidade;
 
-    public Comodos() {
-        id = nextId;
-        nextId++;
+    public String getCodigoUf() {
+        return codigoUf;
     }
 
-    public int getId() {
-        return id;
+    public void setCodigoUf(String codigoUf) {
+        if (!codigoUf.isEmpty() && codigoUf.length() == 2) {
+            this.codigoUf = codigoUf;
+        } else {
+            JOptionPane.showMessageDialog(null, "codigo uf invalido");
+        }
     }
 
     public String getNome() {
@@ -36,18 +37,6 @@ public class Comodos {
             this.nome = nome;
         } else {
             JOptionPane.showMessageDialog(null, "nome invalido");
-        }
-    }
-
-    public int getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(int quantidade) {
-        if (quantidade >= 1) {
-            this.quantidade = quantidade;
-        }else{
-            JOptionPane.showMessageDialog(null, "quantidade invalido");
         }
     }
 
