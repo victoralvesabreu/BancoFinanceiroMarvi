@@ -5,16 +5,19 @@
  */
 package crud;
 
+import javax.swing.JOptionPane;
+
 /**
  *
- * @author victo
+ * @author victor alves abreu
  */
 public class FormaDePagamento {
+
     private int id;
     private static int nextId;
     private String tipo;
-    
-    public FormaDePagamento(){
+
+    public FormaDePagamento() {
         id = nextId;
         nextId++;
     }
@@ -28,8 +31,10 @@ public class FormaDePagamento {
     }
 
     public void setTipo(String tipo) {
-        this.tipo = tipo;
+        if (!tipo.isEmpty()) {
+            this.tipo = tipo;
+        } else {
+            JOptionPane.showMessageDialog(null, "tipo invalido");
+        }
     }
-    
-    
 }
