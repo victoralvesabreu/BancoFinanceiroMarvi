@@ -5,20 +5,23 @@
  */
 package crud;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author victor alves abreu
  */
-public class funcionario extends Usuario {
-    
+public class Funcionario extends Usuario {
+
     private static int IdNext = 0;
     private int id;
     private String cpf;
     private String cargo;
 
-    public funcionario() {
+    public Funcionario() {
         id = IdNext;
         IdNext++;
+        
     }
 
     public String getCpf() {
@@ -28,6 +31,8 @@ public class funcionario extends Usuario {
     public void setCpf(String cpf) {
         if (!cpf.isEmpty()) {
             this.cpf = cpf;
+        } else {
+            JOptionPane.showMessageDialog(null, "cargo invalido");
         }
     }
 
@@ -38,6 +43,8 @@ public class funcionario extends Usuario {
     public void setCargo(String cargo) {
         if (!cargo.isEmpty()) {
             this.cargo = cargo;
+        } else {
+            JOptionPane.showMessageDialog(null, "cargo invalido");
         }
     }
 

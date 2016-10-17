@@ -11,21 +11,20 @@ import javax.swing.JOptionPane;
  *
  * @author victor alves abreu
  */
-public class Uf {
+public class Comodos {
 
-    private String codigoUf;
+    private int id;
+    private static int nextId = 0;
     private String nome;
+    private int quantidade;
 
-    public String getCodigoUf() {
-        return codigoUf;
+    public Comodos() {
+        id = nextId;
+        nextId++;
     }
 
-    public void setCodigoUf(String codigoUf) {
-        if (!codigoUf.isEmpty() && codigoUf.length() == 2) {
-            this.codigoUf = codigoUf;
-        } else {
-            JOptionPane.showMessageDialog(null, "codigo uf invalido");
-        }
+    public int getId() {
+        return id;
     }
 
     public String getNome() {
@@ -37,6 +36,18 @@ public class Uf {
             this.nome = nome;
         } else {
             JOptionPane.showMessageDialog(null, "nome invalido");
+        }
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        if (quantidade >= 1) {
+            this.quantidade = quantidade;
+        }else{
+            JOptionPane.showMessageDialog(null, "quantidade invalido");
         }
     }
 
