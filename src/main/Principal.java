@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package domain;
+package main;
 
 
 /**
  *
- * @author victo
+ * @author victor alves abreu
  */
 public class Principal {
     
