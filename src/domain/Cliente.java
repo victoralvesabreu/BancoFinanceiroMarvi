@@ -13,7 +13,6 @@ import javax.swing.JOptionPane;
  */
 public class Cliente {
 
-    private static int nextId = 0;
     private int id;
     private String nome;
     private String cpf;
@@ -21,8 +20,6 @@ public class Cliente {
     private Endereco endereco;
 
     public Cliente() {
-        id = nextId;
-        nextId++;
         endereco = new Endereco();
     }
 
@@ -40,6 +37,10 @@ public class Cliente {
 
     public int getId() {
         return id;
+    }
+    
+    public void setId(int id){
+        this.id = id;
     }
 
     public String getNome() {

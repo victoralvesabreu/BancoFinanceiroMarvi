@@ -13,19 +13,17 @@ import javax.swing.JOptionPane;
  */
 public class Usuario {
 
-    private static int nextId = 0;
     private int id;
     private String nome;
     private String email;
     private String senha;
 
-    public Usuario() {
-        id = nextId;
-        nextId++;
-    }
-
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -45,7 +43,7 @@ public class Usuario {
     }
 
     public void setEmail(String email) {
-        if (!email.isEmpty()) {
+        if (email.contains("@")) {
             this.email = email;
         } else {
             JOptionPane.showMessageDialog(null, "email invalido");
@@ -57,7 +55,7 @@ public class Usuario {
     }
 
     public void setSenha(String senha) {
-        if (!senha.isEmpty()) {
+        if (senha.length() == 6) {
             this.senha = senha;
         } else {
             JOptionPane.showMessageDialog(null, "senha invalido");

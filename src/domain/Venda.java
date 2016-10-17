@@ -14,25 +14,18 @@ import javax.swing.JOptionPane;
 public class Venda {
 
     private int id;
-    private static int nextId = 0;
     private Cliente cliente;
     private FormaDePagamento formaDePagamento;
     private Funcionario funcionario;
     private Imovel imovel;
     private int parcelas;
 
-    public Venda() {
-        id = nextId;
-        nextId++;
-
-        cliente = new Cliente();
-        formaDePagamento = new FormaDePagamento();
-        funcionario = new Funcionario();
-        imovel = new Imovel();
-    }
-
     public int getId() {
         return id;
+    }
+    
+    public void setId(int id){
+        this.id = id;
     }
     
     public Cliente getCliente() {
