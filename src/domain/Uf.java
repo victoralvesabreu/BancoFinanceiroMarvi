@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package crud;
+package domain;
 
 import javax.swing.JOptionPane;
 
@@ -21,7 +21,7 @@ public class Uf {
     }
 
     public void setCodigoUf(String codigoUf) {
-        if (!codigoUf.isEmpty() && codigoUf.length() == 2) {
+        if (codigoUf.length() == 2) {
             this.codigoUf = codigoUf;
         } else {
             JOptionPane.showMessageDialog(null, "codigo uf invalido");

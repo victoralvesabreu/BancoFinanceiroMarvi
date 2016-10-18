@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package crud;
+package domain;
 
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -15,21 +15,30 @@ import javax.swing.JOptionPane;
 public class Imovel {
 
     private int id;
-    private static int nextId = 0;
     private float metrosQuad;
     private String descricao;
     private float preco;
     private Endereco endereco;
-    private ArrayList<Comodos> comodos;
-    public Imovel() {
-        id = nextId;
-        nextId++;
-        endereco = new Endereco();
-        comodos = new ArrayList<>();
+    private ArrayList<Comodo> comodo;
+
+    public ArrayList<Comodo> getComodos() {
+        return comodo;
+    }
+
+    public void setComodos(Comodo comodo) {
+        if (comodo == null) {
+            this.comodo.add(comodo);
+        }else{
+            JOptionPane.showMessageDialog(null, "Comodo invalido");
+        }
     }
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public float getMetrosQuad() {

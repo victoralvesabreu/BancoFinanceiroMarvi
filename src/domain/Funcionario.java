@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package crud;
+package domain;
 
 import javax.swing.JOptionPane;
 
@@ -12,18 +12,14 @@ import javax.swing.JOptionPane;
  * @author victor alves abreu
  */
 public class Funcionario extends Usuario {
-
-    private static int IdNext = 0;
-    private int id;
+    
     private String cpf;
     private String cargo;
 
-    public Funcionario() {
-        id = IdNext;
-        IdNext++;
-        
+    public Funcionario(String cargo){
+        this.cargo = cargo;
     }
-
+    
     public String getCpf() {
         return cpf;
     }
