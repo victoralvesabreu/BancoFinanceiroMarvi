@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package domain;
+package main;
+
+import views.FrmPrincipal;
 
 
 /**
@@ -12,6 +14,7 @@ package domain;
  */
 public class Principal {
     public static void main(String []args){
-        
+        FrmPrincipal menu = new FrmPrincipal();
+        menu.setVisible(true);
     }
 }
