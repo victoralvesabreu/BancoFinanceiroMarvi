@@ -5,7 +5,8 @@
  */
 package views;
 
-import static database.Database.listaCliente;
+import crud.ClienteCRUD;
+import database.Database;
 import domain.Cliente;
 import domain.Uf;
 
@@ -19,8 +20,16 @@ public class FrmCliente extends javax.swing.JInternalFrame {
      * Creates new form FrmCliente
      */
     public FrmCliente() {
-        cbUf.addItem("teste");
+        
        initComponents();
+       
+       Uf u = new Uf();
+        u.setCodigoUf("ES");
+        u.setNome("Espirito Santo");
+        Database.listaUf.add(u); 
+        for (Uf uf: Database.listaUf) {
+            cbUf.addItem(uf.getCodigoUf());
+        }
     }
 
     /**
@@ -39,7 +48,7 @@ public class FrmCliente extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        btSair = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         txtRua = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -76,9 +85,14 @@ public class FrmCliente extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Email:");
 
-        jButton2.setText("Sair");
-        jButton2.setMaximumSize(new java.awt.Dimension(74, 27));
-        jButton2.setMinimumSize(new java.awt.Dimension(74, 27));
+        btSair.setText("Sair");
+        btSair.setMaximumSize(new java.awt.Dimension(74, 27));
+        btSair.setMinimumSize(new java.awt.Dimension(74, 27));
+        btSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSairActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Rua:");
 
@@ -89,8 +103,6 @@ public class FrmCliente extends javax.swing.JInternalFrame {
         jLabel7.setText("Bairro:");
 
         jLabel8.setText("Estado:");
-
-        cbUf.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -107,25 +119,27 @@ public class FrmCliente extends javax.swing.JInternalFrame {
                     .addComponent(jLabel6)
                     .addComponent(jLabel7)
                     .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbUf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(txtNome)
                                 .addComponent(txtCpf)
                                 .addComponent(txtEmail)
                                 .addComponent(txtRua)
                                 .addComponent(txtNumero)
                                 .addComponent(txtCep)
-                                .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(40, 40, 40))
+                                .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(40, 40, 40))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(42, 42, 42)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(42, 42, 42))))
+                        .addComponent(cbUf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,7 +179,7 @@ public class FrmCliente extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31))
         );
 
@@ -177,7 +191,7 @@ public class FrmCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtNomeActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        ClienteCRUD cli = new ClienteCRUD();
         Cliente cliente = new Cliente();
         
         cliente.setNome(txtNome.getText());
@@ -187,18 +201,26 @@ public class FrmCliente extends javax.swing.JInternalFrame {
         cliente.setNumero(txtNumero.getText());
         cliente.setCep(txtCep.getText());
         cliente.setBairro(txtBairro.getText());
-        //cliente.setUf(cbUf.getSelectedItem());
+        for(Uf uf: Database.listaUf){
+            if (uf.getCodigoUf().equals(cbUf)) {
+                cliente.setUf(uf);
+            }
+        }
         
-        listaCliente.add(cliente);
-        
+        cli.inserir(cliente);
+       
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btSairActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btSair;
     private javax.swing.JComboBox<String> cbUf;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
