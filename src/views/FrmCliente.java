@@ -5,7 +5,7 @@
  */
 package views;
 
-import static database.Database.listaCliente;
+import crud.ClienteCRUD;
 import domain.Cliente;
 import domain.Uf;
 
@@ -191,8 +191,6 @@ public class FrmCliente extends javax.swing.JInternalFrame {
         cliente.setCep(txtCep.getText());
         cliente.setBairro(txtBairro.getText());
         //cliente.setUf(cbUf.getSelectedItem());
-        
-        listaCliente.add(cliente);
         
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
