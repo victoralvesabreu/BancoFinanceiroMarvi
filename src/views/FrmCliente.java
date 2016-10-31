@@ -6,6 +6,7 @@
 package views;
 
 import crud.ClienteCRUD;
+import database.Database;
 import domain.Cliente;
 import domain.Uf;
 
@@ -19,8 +20,15 @@ public class FrmCliente extends javax.swing.JInternalFrame {
      * Creates new form FrmCliente
      */
     public FrmCliente() {
-       // cbUf.addItem("teste");
        initComponents();
+       
+       Uf u = new Uf();
+        u.setCodigoUf("ES");
+        u.setNome("Espirito Santo");
+        Database.listaUf.add(u); 
+        for (Uf uf: Database.listaUf) {
+            cbUf.addItem(uf.getCodigoUf());
+        }
     }
 
     /**
@@ -180,7 +188,7 @@ public class FrmCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtNomeActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        ClienteCRUD cli = new ClienteCRUD();
         Cliente cliente = new Cliente();
         
         cliente.setNome(txtNome.getText());
@@ -190,8 +198,14 @@ public class FrmCliente extends javax.swing.JInternalFrame {
         cliente.setNumero(txtNumero.getText());
         cliente.setCep(txtCep.getText());
         cliente.setBairro(txtBairro.getText());
-        //cliente.setUf(cbUf.getSelectedItem());
+        for(Uf uf: Database.listaUf){
+            if (uf.getCodigoUf().equals(cbUf)) {
+                cliente.setUf(uf);
+            }
+        }
         
+        cli.inserir(cliente);
+       
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
