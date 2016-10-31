@@ -38,7 +38,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         setTitle("Imobiliária Marvi");
         getContentPane().setLayout(null);
         getContentPane().add(frmPrincipal);
-        frmPrincipal.setBounds(0, 0, 750, 420);
+        frmPrincipal.setBounds(0, 0, 750, 510);
 
         jMenu1.setText("Cliente");
 
@@ -66,7 +66,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar1);
 
-        setBounds(0, 0, 750, 466);
+        setBounds(0, 0, 750, 554);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed

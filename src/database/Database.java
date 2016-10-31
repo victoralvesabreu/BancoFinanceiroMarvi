@@ -8,7 +8,6 @@ package database;
 
 import domain.Cliente;
 import domain.Comodo;
-import domain.Endereco;
 import domain.FormaDePagamento;
 import domain.Imovel;
 import domain.Uf;
@@ -21,12 +20,11 @@ import java.util.ArrayList;
  * @author victor alves abreu
  */
 public class Database {
-    public static ArrayList<Cliente> listaCliente = new ArrayList<>();
-    public static ArrayList<Usuario> listaUsuario = new ArrayList<>();
-    public static ArrayList<Uf> listaUf = new ArrayList<>();
-    public static ArrayList<Endereco> listaEndereco = new ArrayList<>();
-    public static ArrayList<Venda> listaVenda = new ArrayList<>();
-    public static ArrayList<Imovel> listaImovel = new ArrayList<>();
+    public static ArrayList<Cliente>          listaCliente          = new ArrayList<>();
+    public static ArrayList<Usuario>          listaUsuario          = new ArrayList<>();
+    public static ArrayList<Uf>               listaUf               = new ArrayList<>();
+    public static ArrayList<Venda>            listaVenda            = new ArrayList<>();
+    public static ArrayList<Imovel>           listaImovel           = new ArrayList<>();
     public static ArrayList<FormaDePagamento> listaFormaDepagamento = new ArrayList<>();
-    public static ArrayList<Comodo> listaComodo = new ArrayList<>();
+    public static ArrayList<Comodo>           listaComodo           = new ArrayList<>();
 }
