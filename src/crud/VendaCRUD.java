@@ -5,10 +5,33 @@
  */
 package crud;
 
+import domain.Venda;
+import database.Database;
+import java.util.ArrayList;
+
 /**
  *
- * @author tognere
+ * @author victor alves abreu
  */
 public class VendaCRUD {
+    public void inserir(Venda venda){
+        Database.listaVenda.add(venda);
+    }
     
+    public ArrayList<Venda> ler(){
+        return Database.listaVenda;
+    }
+    
+    public Venda ler(int id){
+        for(Venda v: Database.listaVenda){
+            if (v.getId() == id) {
+                return v;
+            }
+        }
+        return null;
+    }
+    
+    public void remover(Venda venda){
+        Database.listaVenda.remove(venda);
+    }
 }
