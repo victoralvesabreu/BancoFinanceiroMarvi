@@ -18,7 +18,59 @@ public class Imovel {
     private float metrosQuad;
     private String descricao;
     private float preco;
-    private Endereco endereco;
+    private String rua;
+    private String numero;
+    private String cep;
+    private String bairro;
+    private Uf     uf;
+
+    public String getRua() {
+        return rua;
+    }
+
+    public void setRua(String rua) {
+        this.rua = rua;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public Uf getUf() {
+        return uf;
+    }
+
+    public void setUf(Uf uf) {
+        this.uf = uf;
+    }
+
+    public ArrayList<Comodo> getComodo() {
+        return comodo;
+    }
+
+    public void setComodo(ArrayList<Comodo> comodo) {
+        this.comodo = comodo;
+    }
     private ArrayList<Comodo> comodo;
 
     public ArrayList<Comodo> getComodos() {
@@ -76,17 +128,4 @@ public class Imovel {
             JOptionPane.showMessageDialog(null, "preço invalido");
         }
     }
-
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        if (endereco != null) {
-            this.endereco = endereco;
-        } else {
-            JOptionPane.showMessageDialog(null, "Endereço invalido");
-        }
-    }
-
 }
