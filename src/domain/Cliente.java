@@ -52,15 +52,23 @@ public class Cliente {
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        if(!nome.isEmpty()) {
+            this.nome = nome;
+        } else {
+            JOptionPane.showMessageDialog(null, "Nome inválido!");
+        }
     }
 
     public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setCpf(String cpf) {      
+        if(!cpf.isEmpty()){
+            this.cpf = cpf;
+        } else {
+            JOptionPane.showMessageDialog(null, "Cpf inválido!!");
+        }
     }
 
     public String getEmail() {
@@ -68,7 +76,11 @@ public class Cliente {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        if(!email.isEmpty()){
+            this.email = email;
+        } else {
+            JOptionPane.showMessageDialog(null, "Email inválido!");
+        }
     }
 
     public String getRua() {
@@ -110,58 +122,4 @@ public class Cliente {
     public void setUf(Uf uf) {
         this.uf = uf;
     }
-    
-    /*
-    public Cliente() {
-        endereco = new Endereco();
-    }
-
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        if (endereco != null) {
-            this.endereco = endereco;
-        } else {
-            JOptionPane.showMessageDialog(null, "Endereço invalido");
-        }
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        if (!nome.isEmpty()) {
-            this.nome = nome;
-        } else {
-            JOptionPane.showMessageDialog(null, "nome invalido");
-        }
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        if (!cpf.isEmpty()) {
-            this.cpf = cpf;
-        } else {
-            JOptionPane.showMessageDialog(null, "cpf invalido");
-        }
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        if (!email.isEmpty()) {
-            this.email = email;
-        } else {
-            JOptionPane.showMessageDialog(null, "email invalido");
-        }
-    }
-    */
 }

@@ -16,13 +16,14 @@ public class Imovel {
 
     private int id;
     private float metrosQuad;
-    private String descricao;
     private float preco;
+    private String descricao;
     private String rua;
     private String numero;
     private String cep;
     private String bairro;
     private Uf     uf;
+    private ArrayList<Comodo> comodo;
 
     public String getRua() {
         return rua;
@@ -71,7 +72,6 @@ public class Imovel {
     public void setComodo(ArrayList<Comodo> comodo) {
         this.comodo = comodo;
     }
-    private ArrayList<Comodo> comodo;
 
     public ArrayList<Comodo> getComodos() {
         return comodo;
