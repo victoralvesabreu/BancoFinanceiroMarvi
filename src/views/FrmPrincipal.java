@@ -326,3 +326,4 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem miVendaVisualizar;
     // End of variables declaration//GEN-END:variables
 }
+
