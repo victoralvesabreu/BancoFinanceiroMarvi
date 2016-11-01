@@ -7,6 +7,7 @@ package views;
 
 import crud.UsuarioCRUD;
 import domain.Usuario;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -185,18 +186,23 @@ public class FrmUsuario extends javax.swing.JFrame {
 
     private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
         UsuarioCRUD usu = new UsuarioCRUD();
-        Usuario usuario = new Usuario(cbControlLevel.getName());
-        
-        usuario.setId(Integer.parseInt(tfId.getText()));
-        usuario.setNome(tfNome.getText());
-        usuario.setEmail(tfEmail.getText());
-        usuario.setSenha(pfSenha.getText());
-        usuario.setCpf(tfCpf.getText());
-        usuario.setCargo(tfCargo.getText());
+        try {
+            Usuario usuario = new Usuario(cbControlLevel.getName());
 
-        usu.inserir(usuario);
+            usuario.setId(Integer.parseInt(tfId.getText()));
+            usuario.setNome(tfNome.getText());
+            usuario.setEmail(tfEmail.getText());
+            JOptionPane.showMessageDialog(this, pfSenha.getPassword());
+            usuario.setSenha((pfSenha.getPassword()).toString());
+            usuario.setCpf(tfCpf.getText());
+            usuario.setCargo(tfCargo.getText());
 
-        this.dispose();
+            usu.inserir(usuario);
+
+            this.dispose();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex);
+        }
     }//GEN-LAST:event_btCadastrarActionPerformed
 
     private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed

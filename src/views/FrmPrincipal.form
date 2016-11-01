@@ -37,10 +37,21 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miUsuarioCadastrarActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="miUsuarioVisualizarTodos">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Visualizar Todos"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miUsuarioVisualizarTodosActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="miUsuarioVisualizar">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Visualizar"/>
+                <Property name="text" type="java.lang.String" value="Visualizar "/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miUsuarioVisualizarActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

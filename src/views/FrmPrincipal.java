@@ -5,6 +5,10 @@
  */
 package views;
 
+import javax.swing.JOptionPane;
+import crud.UsuarioCRUD;
+import domain.Usuario;
+
 /**
  *
  * @author tognere
@@ -34,6 +38,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         miClienteVisualizar = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         miUsuarioCadastrar = new javax.swing.JMenuItem();
+        miUsuarioVisualizarTodos = new javax.swing.JMenuItem();
         miUsuarioVisualizar = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         miImovelCadastrar = new javax.swing.JMenuItem();
@@ -81,7 +86,20 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jMenu2.add(miUsuarioCadastrar);
 
-        miUsuarioVisualizar.setText("Visualizar");
+        miUsuarioVisualizarTodos.setText("Visualizar Todos");
+        miUsuarioVisualizarTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miUsuarioVisualizarTodosActionPerformed(evt);
+            }
+        });
+        jMenu2.add(miUsuarioVisualizarTodos);
+
+        miUsuarioVisualizar.setText("Visualizar ");
+        miUsuarioVisualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miUsuarioVisualizarActionPerformed(evt);
+            }
+        });
         jMenu2.add(miUsuarioVisualizar);
 
         jMenuBar1.add(jMenu2);
@@ -161,6 +179,32 @@ public class FrmPrincipal extends javax.swing.JFrame {
         obj.setVisible(true);
     }//GEN-LAST:event_miVendaCadastrarActionPerformed
 
+    private void miUsuarioVisualizarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miUsuarioVisualizarTodosActionPerformed
+        UsuarioCRUD usuario = new UsuarioCRUD();
+        String usuarios = "";
+        if (usuario.ler().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhum Usuario Cadastrado!!");
+        } else {
+            for (Usuario u : usuario.ler()) {
+                usuarios = "";
+                usuarios += "Nome: " + u.getNome() + "\n";
+                usuarios += "CPF: " + u.getCpf() + "\n";
+                usuarios += "Email: " + u.getEmail() + "\n";
+                usuarios += "ID: " + u.getId() + "\n\n";
+                JOptionPane.showMessageDialog(this, usuarios);
+            }
+        }
+    }//GEN-LAST:event_miUsuarioVisualizarTodosActionPerformed
+
+    private void miUsuarioVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miUsuarioVisualizarActionPerformed
+        UsuarioCRUD user = new UsuarioCRUD();
+        if (user.ler().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhim Usuario Cadastrados!!");
+        } else {
+            JOptionPane.showMessageDialog(this, user.ler(Integer.parseInt(JOptionPane.showInputDialog(this, "Digite o ID do Usuario a ser pesquisado"))));
+        }
+    }//GEN-LAST:event_miUsuarioVisualizarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -212,6 +256,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem miImovelVisualizar;
     private javax.swing.JMenuItem miUsuarioCadastrar;
     private javax.swing.JMenuItem miUsuarioVisualizar;
+    private javax.swing.JMenuItem miUsuarioVisualizarTodos;
     private javax.swing.JMenuItem miVendaCadastrar;
     private javax.swing.JMenuItem miVendaVisualizar;
     // End of variables declaration//GEN-END:variables

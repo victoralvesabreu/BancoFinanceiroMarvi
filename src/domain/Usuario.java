@@ -5,6 +5,8 @@
  */
 package domain;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,11 +20,11 @@ public class Usuario {
     private String email;
     private String senha;
     private String Acesso;
-    
+
     private String cpf;
     private String cargo;
-    
-    public Usuario(String Acesso){
+
+    public Usuario(String Acesso) {
         this.Acesso = Acesso;
     }
 
@@ -63,13 +65,16 @@ public class Usuario {
     }
 
     public void setSenha(String senha) {
-        if (senha.length() == 6) {
+        Pattern p = Pattern.compile("((?=.*[a-z])(?=.*d)(?=.*[@#$%])(?=.*[A-Z]).{6})");
+        Matcher m = p.matcher(senha);
+        if (m.matches()) {
             this.senha = senha;
         } else {
-            JOptionPane.showMessageDialog(null, "senha invalido");
+            IllegalArgumentException erro = new IllegalArgumentException("Senha Invalida");
+            throw erro;
         }
     }
-    
+
     public String getCpf() {
         return cpf;
     }
