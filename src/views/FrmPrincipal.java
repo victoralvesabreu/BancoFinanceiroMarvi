@@ -6,9 +6,11 @@
 package views;
 
 import crud.ClienteCRUD;
+import crud.FormaDePagamentoCRUD;
 import javax.swing.JOptionPane;
 import crud.UsuarioCRUD;
 import domain.Cliente;
+import domain.FormaDePagamento;
 import domain.Usuario;
 import java.awt.Component;
 import java.util.ArrayList;
@@ -148,6 +150,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu4.add(miFormPagamentoCadastrar);
 
         miFormPagamentoVisualizar.setText("Visualizar");
+        miFormPagamentoVisualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miFormPagamentoVisualizarActionPerformed(evt);
+            }
+        });
         jMenu4.add(miFormPagamentoVisualizar);
 
         jMenuBar1.add(jMenu4);
@@ -244,6 +251,21 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_miClienteVisualizarActionPerformed
+
+    private void miFormPagamentoVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miFormPagamentoVisualizarActionPerformed
+        FormaDePagamentoCRUD formaDePagamento = new FormaDePagamentoCRUD();
+        String formaDePagamentos = "";
+        if (formaDePagamento.ler().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhuma forma de pagamento Cadastrada!!");
+        } else {
+            for (FormaDePagamento u : formaDePagamento.ler()) {
+                formaDePagamentos = "";
+                formaDePagamentos += "Tipo: " + u.getTipo() + "\n";    
+                formaDePagamentos += "ID: " + u.getId() + "\n\n";
+                JOptionPane.showMessageDialog(this, formaDePagamentos);
+            }
+        }
+    }//GEN-LAST:event_miFormPagamentoVisualizarActionPerformed
 
     /**
      * @param args the command line arguments
