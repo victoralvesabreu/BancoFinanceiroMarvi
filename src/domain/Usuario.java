@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
  */
 public class Usuario {
 
+    public static Usuario user = null;
     private int id;
     private String nome;
     private String email;
@@ -65,7 +66,7 @@ public class Usuario {
     }
 
     public void setSenha(String senha) {
-        
+
         Pattern p = Pattern.compile("((?=.*[a-z])(?=.*d)(?=.*[@#$%])(?=.*[A-Z]).{6})");
         Matcher m = p.matcher(senha);
         if (m.matches()) {

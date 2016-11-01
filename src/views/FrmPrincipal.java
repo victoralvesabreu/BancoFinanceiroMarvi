@@ -240,9 +240,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 clientes += "CPF: " + u.getCpf() + "\n";
                 clientes += "Email: " + u.getEmail() + "\n";
                 clientes += "Rua: " + u.getRua() + "\n";
-                clientes += "Numero: " + u.getNumero() + "\n";        
-                clientes += "Cep: " + u.getCep() + "\n";        
-                clientes += "Bairro: " + u.getBairro() + "\n";        
+                clientes += "Numero: " + u.getNumero() + "\n";
+                clientes += "Cep: " + u.getCep() + "\n";
+                clientes += "Bairro: " + u.getBairro() + "\n";
                 //cliente += "Uf: " + u.getUf() + "\n"
                 clientes += "ID: " + u.getId() + "\n\n";
                 JOptionPane.showMessageDialog(this, clientes);
@@ -258,7 +258,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         } else {
             for (FormaDePagamento u : formaDePagamento.ler()) {
                 formaDePagamentos = "";
-                formaDePagamentos += "Tipo: " + u.getTipo() + "\n";    
+                formaDePagamentos += "Tipo: " + u.getTipo() + "\n";
                 formaDePagamentos += "ID: " + u.getId() + "\n\n";
                 JOptionPane.showMessageDialog(this, formaDePagamentos);
             }
