@@ -65,6 +65,7 @@ public class Usuario {
     }
 
     public void setSenha(String senha) {
+        
         Pattern p = Pattern.compile("((?=.*[a-z])(?=.*d)(?=.*[@#$%])(?=.*[A-Z]).{6})");
         Matcher m = p.matcher(senha);
         if (m.matches()) {

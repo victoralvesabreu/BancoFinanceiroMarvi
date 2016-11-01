@@ -9,6 +9,7 @@ import crud.ClienteCRUD;
 import database.Database;
 import domain.Cliente;
 import domain.Uf;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,18 +20,42 @@ public class FrmCliente extends javax.swing.JFrame {
     /**
      * Creates new form FrmCliente
      */
+    boolean edit = false;
+
     public FrmCliente() {
         initComponents();
         for (Uf uf : Database.listaUf) {
             cbUf.addItem(uf.getCodigoUf());
         }
+        edit = false;
     }
-    
-    public FrmCliente(Cliente cli){
-        this.setTitle("Editar Cliente");
-        tfNome.setText(cli.getNome());
+
+    public FrmCliente(int id) {
         
+        ClienteCRUD cliente = new ClienteCRUD();
+        Cliente cli = null;
+        for (Cliente c : cliente.ler()) {
+            if (c.getId() == id) {
+                cli = c;
+            }
+        }
+        
+        if (cli != null) {
+            initComponents();
+            this.setTitle("Editar Cliente ID: " + cli.getId());
+            tfNome.setText(cli.getNome());
+            tfBairro.setText(cli.getBairro());
+            tfCep.setText(cli.getCep());
+            tfCpf.setText(cli.getCpf());
+            tfEmail.setText(cli.getEmail());
+            tfNumero.setText(cli.getNumero());
+            edit = true;
+        }else{
+            throw new IllegalAccessError("Nenhum Cliente Encontrado");
+        }
+
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -229,12 +254,17 @@ public class FrmCliente extends javax.swing.JFrame {
         cliente.setCep(tfCep.getText());
         cliente.setBairro(tfBairro.getText());
         for (Uf uf : Database.listaUf) {
-            if (uf.getCodigoUf().equals(cbUf)) {
+            if (uf.getCodigoUf().equals(cbUf.getSelectedItem())) {
                 cliente.setUf(uf);
             }
         }
-
-        cli.inserir(cliente);
+        for (Cliente c : cli.ler()) {
+            if (c.getId() == cliente.getId() && edit) {
+                cli.inserir(cliente);
+            } else if (c.getId() != cliente.getId() && !edit) {
+                cli.inserir(cliente);
+            }
+        }
 
         this.dispose();
     }//GEN-LAST:event_btCadastrarActionPerformed
