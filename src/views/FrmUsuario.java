@@ -38,11 +38,11 @@ public class FrmUsuario extends javax.swing.JFrame {
         lbSenha = new javax.swing.JLabel();
         tfNome = new javax.swing.JTextField();
         tfEmail = new javax.swing.JTextField();
-        pfSenha = new javax.swing.JPasswordField();
         cbControlLevel = new javax.swing.JComboBox<>();
         tfId = new javax.swing.JTextField();
         lbId = new javax.swing.JLabel();
         lbNome = new javax.swing.JLabel();
+        tfSenha = new javax.swing.JTextField();
         lbCpf = new javax.swing.JLabel();
         tfCpf = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -80,7 +80,10 @@ public class FrmUsuario extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 402, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(62, 62, 62)
+                .addComponent(tfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(138, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
@@ -93,25 +96,25 @@ public class FrmUsuario extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(tfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(0, 0, Short.MAX_VALUE))
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(cbControlLevel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lbSenha))
+                            .addGap(327, 327, 327))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                             .addGap(0, 0, Short.MAX_VALUE)
                             .addComponent(lbId)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(cbControlLevel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(lbSenha)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(pfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGap(128, 128, 128)))
-                    .addContainerGap()))
+                            .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(12, 12, 12)))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 200, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(126, Short.MAX_VALUE)
+                .addComponent(tfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(54, 54, 54))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
@@ -127,10 +130,8 @@ public class FrmUsuario extends javax.swing.JFrame {
                         .addComponent(lbEmail)
                         .addComponent(tfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lbSenha)
-                        .addComponent(pfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                    .addComponent(lbSenha)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                     .addComponent(cbControlLevel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap()))
         );
@@ -192,11 +193,10 @@ public class FrmUsuario extends javax.swing.JFrame {
             usuario.setId(Integer.parseInt(tfId.getText()));
             usuario.setNome(tfNome.getText());
             usuario.setEmail(tfEmail.getText());
-            JOptionPane.showMessageDialog(this, pfSenha.getPassword());
-            usuario.setSenha((pfSenha.getPassword()).toString());
+            JOptionPane.showMessageDialog(this, tfSenha.g());
+            usuario.setSenha(tfSenha.getText());
             usuario.setCpf(tfCpf.getText());
             usuario.setCargo(tfCargo.getText());
-
             usu.inserir(usuario);
 
             this.dispose();
@@ -256,11 +256,11 @@ public class FrmUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel lbId;
     private javax.swing.JLabel lbNome;
     private javax.swing.JLabel lbSenha;
-    private javax.swing.JPasswordField pfSenha;
     private javax.swing.JTextField tfCargo;
     private javax.swing.JTextField tfCpf;
     private javax.swing.JTextField tfEmail;
     private javax.swing.JTextField tfId;
     private javax.swing.JTextField tfNome;
+    private javax.swing.JTextField tfSenha;
     // End of variables declaration//GEN-END:variables
 }
