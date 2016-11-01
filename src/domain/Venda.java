@@ -16,7 +16,6 @@ public class Venda {
     private int id;
     private Cliente cliente;
     private FormaDePagamento formaDePagamento;
-    private Funcionario funcionario;
     private Usuario usuario;
     private Imovel imovel;
     private int parcelas;
@@ -32,11 +31,11 @@ public class Venda {
     public int getId() {
         return id;
     }
-    
-    public void setId(int id){
+
+    public void setId(int id) {
         this.id = id;
     }
-    
+
     public Cliente getCliente() {
         return cliente;
     }
@@ -44,7 +43,7 @@ public class Venda {
     public void setCliente(Cliente cliente) {
         if (cliente != null) {
             this.cliente = cliente;
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "cliente invalido");
         }
     }
@@ -58,18 +57,6 @@ public class Venda {
             this.formaDePagamento = formaDePagamento;
         } else {
             JOptionPane.showMessageDialog(null, "forma de pagamento invalido");
-        }
-    }
-
-    public Funcionario getFuncionario() {
-        return funcionario;
-    }
-
-    public void setFuncionario(Funcionario funcionario) {
-        if (funcionario != null) {
-            this.funcionario = funcionario;
-        } else {
-            JOptionPane.showMessageDialog(null, "funcionario invalido");
         }
     }
 

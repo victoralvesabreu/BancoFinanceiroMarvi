@@ -17,6 +17,14 @@ public class Usuario {
     private String nome;
     private String email;
     private String senha;
+    private String Acesso;
+    
+    private String cpf;
+    private String cargo;
+    
+    public Usuario(String Acesso){
+        this.Acesso = Acesso;
+    }
 
     public int getId() {
         return id;
@@ -55,10 +63,34 @@ public class Usuario {
     }
 
     public void setSenha(String senha) {
-        if (senha.length() == 6 && senha.contains("[a-z]") && senha.contains("[A-Z]")) {
+        if (senha.length() == 6) {
             this.senha = senha;
         } else {
             JOptionPane.showMessageDialog(null, "senha invalido");
+        }
+    }
+    
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        if (!cpf.isEmpty()) {
+            this.cpf = cpf;
+        } else {
+            JOptionPane.showMessageDialog(null, "cargo invalido");
+        }
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        if (!cargo.isEmpty()) {
+            this.cargo = cargo;
+        } else {
+            JOptionPane.showMessageDialog(null, "cargo invalido");
         }
     }
 

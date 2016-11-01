@@ -27,23 +27,23 @@ public class FrmPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        frmPrincipal = new javax.swing.JDesktopPane();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        miClienteCadastrar = new javax.swing.JMenuItem();
+        miClienteVisualizar = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
+        miUsuarioCadastrar = new javax.swing.JMenuItem();
+        miUsuarioVisualizar = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        miImovelCadastrar = new javax.swing.JMenuItem();
+        miImovelVisualizar = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
+        miFormPagamentoCadastrar = new javax.swing.JMenuItem();
+        miFormPagamentoVisualizar = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
-        jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
+        miVendaCadastrar = new javax.swing.JMenuItem();
+        miVendaVisualizar = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Imobiliária Marvi");
@@ -51,117 +51,115 @@ public class FrmPrincipal extends javax.swing.JFrame {
         setResizable(false);
         setSize(new java.awt.Dimension(680, 800));
         getContentPane().setLayout(null);
-        getContentPane().add(frmPrincipal);
-        frmPrincipal.setBounds(0, 0, 740, 510);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Wallpaper.jpg"))); // NOI18N
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(-30, -50, 770, 760);
 
         jMenu1.setText("Cliente");
 
-        jMenuItem1.setText("Cadastrar");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        miClienteCadastrar.setText("Cadastrar");
+        miClienteCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                miClienteCadastrarActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu1.add(miClienteCadastrar);
 
-        jMenuItem6.setText("Visualizar");
-        jMenu1.add(jMenuItem6);
+        miClienteVisualizar.setText("Visualizar");
+        jMenu1.add(miClienteVisualizar);
 
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Usuário");
 
-        jMenuItem3.setText("Cadastrar");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        miUsuarioCadastrar.setText("Cadastrar");
+        miUsuarioCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                miUsuarioCadastrarActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem3);
+        jMenu2.add(miUsuarioCadastrar);
 
-        jMenuItem5.setText("Visualizar");
-        jMenu2.add(jMenuItem5);
+        miUsuarioVisualizar.setText("Visualizar");
+        jMenu2.add(miUsuarioVisualizar);
 
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Imóvel");
 
-        jMenuItem2.setText("Cadastrar");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        miImovelCadastrar.setText("Cadastrar");
+        miImovelCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                miImovelCadastrarActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem2);
+        jMenu3.add(miImovelCadastrar);
 
-        jMenuItem4.setText("Visualizar");
-        jMenu3.add(jMenuItem4);
+        miImovelVisualizar.setText("Visualizar");
+        jMenu3.add(miImovelVisualizar);
 
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Forma de Pagamento");
 
-        jMenuItem7.setText("Cadastrar");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+        miFormPagamentoCadastrar.setText("Cadastrar");
+        miFormPagamentoCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
+                miFormPagamentoCadastrarActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem7);
+        jMenu4.add(miFormPagamentoCadastrar);
 
-        jMenuItem8.setText("Visualizar");
-        jMenu4.add(jMenuItem8);
+        miFormPagamentoVisualizar.setText("Visualizar");
+        jMenu4.add(miFormPagamentoVisualizar);
 
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("Venda");
 
-        jMenuItem9.setText("Cadastrar");
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+        miVendaCadastrar.setText("Cadastrar");
+        miVendaCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
+                miVendaCadastrarActionPerformed(evt);
             }
         });
-        jMenu5.add(jMenuItem9);
+        jMenu5.add(miVendaCadastrar);
 
-        jMenuItem10.setText("Visualizar");
-        jMenu5.add(jMenuItem10);
+        miVendaVisualizar.setText("Visualizar");
+        jMenu5.add(miVendaVisualizar);
 
         jMenuBar1.add(jMenu5);
 
         setJMenuBar(jMenuBar1);
 
-        setBounds(0, 0, 750, 554);
+        setBounds(0, 0, 750, 566);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void miClienteCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miClienteCadastrarActionPerformed
         FrmCliente obj = new FrmCliente();
         obj.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_miClienteCadastrarActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void miUsuarioCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miUsuarioCadastrarActionPerformed
         FrmUsuario obj = new FrmUsuario();
-        frmPrincipal.add(obj);
         obj.setVisible(true);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_miUsuarioCadastrarActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void miImovelCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miImovelCadastrarActionPerformed
         FrmImovel obj = new FrmImovel();
-        frmPrincipal.add(obj);
         obj.setVisible(true);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_miImovelCadastrarActionPerformed
 
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+    private void miFormPagamentoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miFormPagamentoCadastrarActionPerformed
         FrmFormaPagamento obj = new FrmFormaPagamento();
-        frmPrincipal.add(obj);
         obj.setVisible(true);
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
+    }//GEN-LAST:event_miFormPagamentoCadastrarActionPerformed
 
-    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+    private void miVendaCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miVendaCadastrarActionPerformed
         FrmVenda obj = new FrmVenda();
-        frmPrincipal.add(obj);
         obj.setVisible(true);
-    }//GEN-LAST:event_jMenuItem9ActionPerformed
+    }//GEN-LAST:event_miVendaCadastrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -199,22 +197,22 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JDesktopPane frmPrincipal;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JMenuItem miClienteCadastrar;
+    private javax.swing.JMenuItem miClienteVisualizar;
+    private javax.swing.JMenuItem miFormPagamentoCadastrar;
+    private javax.swing.JMenuItem miFormPagamentoVisualizar;
+    private javax.swing.JMenuItem miImovelCadastrar;
+    private javax.swing.JMenuItem miImovelVisualizar;
+    private javax.swing.JMenuItem miUsuarioCadastrar;
+    private javax.swing.JMenuItem miUsuarioVisualizar;
+    private javax.swing.JMenuItem miVendaCadastrar;
+    private javax.swing.JMenuItem miVendaVisualizar;
     // End of variables declaration//GEN-END:variables
 }
