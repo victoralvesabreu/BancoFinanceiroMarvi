@@ -7,10 +7,13 @@ package views;
 
 import crud.ClienteCRUD;
 import crud.FormaDePagamentoCRUD;
+import crud.ImovelCRUD;
 import javax.swing.JOptionPane;
 import crud.UsuarioCRUD;
+import crud.VendaCRUD;
 import domain.Cliente;
 import domain.FormaDePagamento;
+import domain.Imovel;
 import domain.Usuario;
 
 /**
@@ -40,6 +43,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         miClienteCadastrar = new javax.swing.JMenuItem();
         miClienteVisualizar = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         miUsuarioCadastrar = new javax.swing.JMenuItem();
         miUsuarioVisualizarTodos = new javax.swing.JMenuItem();
@@ -47,12 +51,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         miImovelCadastrar = new javax.swing.JMenuItem();
         miImovelVisualizar = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         miFormPagamentoCadastrar = new javax.swing.JMenuItem();
         miFormPagamentoVisualizar = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         miVendaCadastrar = new javax.swing.JMenuItem();
         miVendaVisualizar = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Imobiliária Marvi");
@@ -83,6 +90,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jMenu1.add(miClienteVisualizar);
 
+        jMenuItem3.setText("Procurar");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem3);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Usuário");
@@ -95,7 +110,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jMenu2.add(miUsuarioCadastrar);
 
-        miUsuarioVisualizarTodos.setText("Visualizar Todos");
+        miUsuarioVisualizarTodos.setText("Visualizar");
         miUsuarioVisualizarTodos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 miUsuarioVisualizarTodosActionPerformed(evt);
@@ -103,7 +118,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jMenu2.add(miUsuarioVisualizarTodos);
 
-        miUsuarioVisualizar.setText("Visualizar ");
+        miUsuarioVisualizar.setText("Procurar");
         miUsuarioVisualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 miUsuarioVisualizarActionPerformed(evt);
@@ -124,7 +139,20 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu3.add(miImovelCadastrar);
 
         miImovelVisualizar.setText("Visualizar");
+        miImovelVisualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miImovelVisualizarActionPerformed(evt);
+            }
+        });
         jMenu3.add(miImovelVisualizar);
+
+        jMenuItem1.setText("Procurar");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem1);
 
         jMenuBar1.add(jMenu3);
 
@@ -146,6 +174,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jMenu4.add(miFormPagamentoVisualizar);
 
+        jMenuItem2.setText("Procurar");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem2);
+
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("Venda");
@@ -159,7 +195,20 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu5.add(miVendaCadastrar);
 
         miVendaVisualizar.setText("Visualizar");
+        miVendaVisualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miVendaVisualizarActionPerformed(evt);
+            }
+        });
         jMenu5.add(miVendaVisualizar);
+
+        jMenuItem4.setText("Procurar");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem4);
 
         jMenuBar1.add(jMenu5);
 
@@ -213,9 +262,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void miUsuarioVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miUsuarioVisualizarActionPerformed
         UsuarioCRUD user = new UsuarioCRUD();
         if (user.ler().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nenhim Usuario Cadastrados!!");
+            JOptionPane.showMessageDialog(this, "Nenhum Usuário cadastrados!!");
         } else {
-            JOptionPane.showMessageDialog(this, user.ler(Integer.parseInt(JOptionPane.showInputDialog(this, "Digite o ID do Usuario a ser pesquisado"))));
+            JOptionPane.showMessageDialog(this, user.ler(Integer.parseInt(JOptionPane.showInputDialog(this, "Digite o ID do Usuario a ser pesquisado: "))));
         }
     }//GEN-LAST:event_miUsuarioVisualizarActionPerformed
 
@@ -223,7 +272,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         ClienteCRUD cliente = new ClienteCRUD();
         String clientes = "";
         if (cliente.ler().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nenhum Usuario Cadastrado!!");
+            JOptionPane.showMessageDialog(this, "Nenhum cliente cadastrado!!");
         } else {
             for (Cliente u : cliente.ler()) {
                 clientes = "";
@@ -245,7 +294,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         FormaDePagamentoCRUD formaDePagamento = new FormaDePagamentoCRUD();
         String formaDePagamentos = "";
         if (formaDePagamento.ler().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nenhuma forma de pagamento Cadastrada!!");
+            JOptionPane.showMessageDialog(this, "Nenhuma forma de pagamento cadastrada!!");
         } else {
             for (FormaDePagamento u : formaDePagamento.ler()) {
                 formaDePagamentos = "";
@@ -255,6 +304,69 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_miFormPagamentoVisualizarActionPerformed
+
+    private void miImovelVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miImovelVisualizarActionPerformed
+        ImovelCRUD imovel = new ImovelCRUD();
+        String imoveis = "";
+        if (imovel.ler().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhum Imóvel Cadastrado!!");
+        } else {
+            for (Imovel u : imovel.ler()) {
+                imoveis = "";
+                imoveis += "Nome: " + u.getNome() + "\n";
+                imoveis += "CPF: " + u.getMetrosQuad() + "\n";
+                imoveis += "Email: " + u.getPreco() + "\n";
+                imoveis += "Rua: " + u.getDescricao() + "\n";
+                imoveis += "Numero: " + u.getRua() + "\n";        
+                imoveis += "Cep: " + u.getNumero() + "\n";        
+                imoveis += "Bairro: " + u.getCep() + "\n";
+                imoveis += "Bairro: " + u.getBairro() + "\n"; 
+                //cliente += "Uf: " + u.getUf() + "\n"
+                imoveis += "ID: " + u.getId() + "\n\n";
+                JOptionPane.showMessageDialog(this, imoveis);
+            }
+        }
+    }//GEN-LAST:event_miImovelVisualizarActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    ImovelCRUD imovel = new ImovelCRUD();
+        if (imovel.ler().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhum Usuário cadastrados!!");
+        } else {
+            JOptionPane.showMessageDialog(this, imovel.ler(Integer.parseInt(JOptionPane.showInputDialog(this, "Digite o ID do imóvel a ser pesquisado: "))));
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    FormaDePagamentoCRUD formaDePagamento = new FormaDePagamentoCRUD();
+        if (formaDePagamento.ler().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhum Usuário cadastrados!!");
+        } else {
+            JOptionPane.showMessageDialog(this, formaDePagamento.ler(Integer.parseInt(JOptionPane.showInputDialog(this, "Digite o ID da forma de pagamento a ser pesquisado: "))));
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    ClienteCRUD cliente = new ClienteCRUD();
+        if (cliente.ler().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhum cliente cadastrados!!");
+        } else {
+            JOptionPane.showMessageDialog(this, cliente.ler(Integer.parseInt(JOptionPane.showInputDialog(this, "Digite o ID do cliente a ser pesquisado: "))));
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    VendaCRUD venda = new VendaCRUD();
+        if (venda.ler().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhum cliente cadastrados!!");
+        } else {
+            JOptionPane.showMessageDialog(this, venda.ler(Integer.parseInt(JOptionPane.showInputDialog(this, "Digite o ID da venda a ser pesquisado: "))));
+        }
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void miVendaVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miVendaVisualizarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_miVendaVisualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -299,6 +411,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem miClienteCadastrar;
     private javax.swing.JMenuItem miClienteVisualizar;
     private javax.swing.JMenuItem miFormPagamentoCadastrar;
