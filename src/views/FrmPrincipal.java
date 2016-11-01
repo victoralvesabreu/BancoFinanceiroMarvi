@@ -5,8 +5,10 @@
  */
 package views;
 
+import crud.ClienteCRUD;
 import javax.swing.JOptionPane;
 import crud.UsuarioCRUD;
+import domain.Cliente;
 import domain.Usuario;
 
 /**
@@ -72,6 +74,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu1.add(miClienteCadastrar);
 
         miClienteVisualizar.setText("Visualizar");
+        miClienteVisualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miClienteVisualizarActionPerformed(evt);
+            }
+        });
         jMenu1.add(miClienteVisualizar);
 
         jMenuBar1.add(jMenu1);
@@ -204,6 +211,28 @@ public class FrmPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, user.ler(Integer.parseInt(JOptionPane.showInputDialog(this, "Digite o ID do Usuario a ser pesquisado"))));
         }
     }//GEN-LAST:event_miUsuarioVisualizarActionPerformed
+
+    private void miClienteVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miClienteVisualizarActionPerformed
+        ClienteCRUD cliente = new ClienteCRUD();
+        String clientes = "";
+        if (cliente.ler().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhum Usuario Cadastrado!!");
+        } else {
+            for (Cliente u : cliente.ler()) {
+                clientes = "";
+                clientes += "Nome: " + u.getNome() + "\n";
+                clientes += "CPF: " + u.getCpf() + "\n";
+                clientes += "Email: " + u.getEmail() + "\n";
+                clientes += "Rua: " + u.getRua() + "\n";
+                clientes += "Numero: " + u.getNumero() + "\n";        
+                clientes += "Cep: " + u.getCep() + "\n";        
+                clientes += "Bairro: " + u.getBairro() + "\n";        
+                //cliente += "Uf: " + u.getUf() + "\n"
+                clientes += "ID: " + u.getId() + "\n\n";
+                JOptionPane.showMessageDialog(this, clientes);
+            }
+        }
+    }//GEN-LAST:event_miClienteVisualizarActionPerformed
 
     /**
      * @param args the command line arguments
