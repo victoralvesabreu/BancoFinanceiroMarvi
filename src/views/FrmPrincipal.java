@@ -47,9 +47,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Imobiliária Marvi");
+        setLocation(new java.awt.Point(0, 0));
+        setResizable(false);
+        setSize(new java.awt.Dimension(680, 800));
         getContentPane().setLayout(null);
         getContentPane().add(frmPrincipal);
-        frmPrincipal.setBounds(0, 0, 750, 510);
+        frmPrincipal.setBounds(0, 0, 740, 510);
 
         jMenu1.setText("Cliente");
 
@@ -133,7 +136,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         FrmCliente obj = new FrmCliente();
-        frmPrincipal.add(obj);
         obj.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 

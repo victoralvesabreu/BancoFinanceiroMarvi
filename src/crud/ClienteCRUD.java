@@ -14,24 +14,25 @@ import java.util.ArrayList;
  * @author victor alves abreu
  */
 public class ClienteCRUD {
-    public void inserir(Cliente cliente){
-      Database.listaCliente.add(cliente);
+
+    public void inserir(Cliente cliente) {
+        Database.listaCliente.add(cliente);
     }
-    
-    public ArrayList<Cliente> ler(){
+
+    public ArrayList<Cliente> ler() {
         return Database.listaCliente;
     }
-    
-    public Cliente ler(int id){
-        for(Cliente c: Database.listaCliente){
+
+    public Cliente ler(int id) {
+        for (Cliente c : Database.listaCliente) {
             if (c.getId() == id) {
                 return c;
             }
         }
         return null;
     }
-    
-    public void remover(Cliente cliente){
+
+    public void remover(Cliente cliente) {
         Database.listaCliente.remove(cliente);
     }
 }

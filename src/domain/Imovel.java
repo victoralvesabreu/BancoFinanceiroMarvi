@@ -5,7 +5,6 @@
  */
 package domain;
 
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -23,23 +22,10 @@ public class Imovel {
     private String numero;
     private String cep;
     private String bairro;
-    private Uf     uf;
-    private ArrayList<Comodo> comodo;
+    private Uf uf;
 
-    public static int nextId = 0;
-    
     public Imovel() {
-        this.id         = nextId;
-        Imovel.nextId++;
-        this.nome       = "";
-        this.metrosQuad = 0;
-        this.descricao  = "";
-        this.preco      = 0;
-        this.rua        = "";
-        this.numero     = "";
-        this.cep        = "";
-        this.bairro     = "";
-        this.uf         = null;
+        this.uf = null;
     }
 
     public String getNome() {
@@ -88,26 +74,6 @@ public class Imovel {
 
     public void setUf(Uf uf) {
         this.uf = uf;
-    }
-
-    public ArrayList<Comodo> getComodo() {
-        return comodo;
-    }
-
-    public void setComodo(ArrayList<Comodo> comodo) {
-        this.comodo = comodo;
-    }
-
-    public ArrayList<Comodo> getComodos() {
-        return comodo;
-    }
-
-    public void setComodos(Comodo comodo) {
-        if (comodo == null) {
-            this.comodo.add(comodo);
-        }else{
-            JOptionPane.showMessageDialog(null, "Comodo invalido");
-        }
     }
 
     public int getId() {

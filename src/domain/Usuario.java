@@ -18,16 +18,6 @@ public class Usuario {
     private String email;
     private String senha;
 
-    public static int nextId = 0;
-    
-    public Usuario() {
-        this.id = nextId;
-        Usuario.nextId++;
-        this.nome  = "";
-        this.email = "";
-        this.senha = "";
-    }
-
     public int getId() {
         return id;
     }
@@ -65,7 +55,7 @@ public class Usuario {
     }
 
     public void setSenha(String senha) {
-        if (senha.length() == 6) {
+        if (senha.length() == 6 && senha.contains("[a-z]") && senha.contains("[A-Z]")) {
             this.senha = senha;
         } else {
             JOptionPane.showMessageDialog(null, "senha invalido");
