@@ -15,7 +15,14 @@ public class FormaDePagamento {
 
     private int id;
     private String tipo;
+    
+    public static int nextId = 0;
 
+    public FormaDePagamento() {
+        this.id = nextId;
+        FormaDePagamento.nextId++;
+        this.tipo = "";
+    }
 
     public int getId() {
         return id;

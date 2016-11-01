@@ -7,7 +7,6 @@
 package database;
 
 import domain.Cliente;
-import domain.Comodo;
 import domain.FormaDePagamento;
 import domain.Imovel;
 import domain.Uf;
@@ -26,5 +25,4 @@ public class Database {
     public static ArrayList<Venda>            listaVenda            = new ArrayList<>();
     public static ArrayList<Imovel>           listaImovel           = new ArrayList<>();
     public static ArrayList<FormaDePagamento> listaFormaDepagamento = new ArrayList<>();
-    public static ArrayList<Comodo>           listaComodo           = new ArrayList<>();
 }

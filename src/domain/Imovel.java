@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 public class Imovel {
 
     private int id;
+    private String nome;
     private float metrosQuad;
     private float preco;
     private String descricao;
@@ -24,6 +25,30 @@ public class Imovel {
     private String bairro;
     private Uf     uf;
     private ArrayList<Comodo> comodo;
+
+    public static int nextId = 0;
+    
+    public Imovel() {
+        this.id         = nextId;
+        Imovel.nextId++;
+        this.nome       = "";
+        this.metrosQuad = 0;
+        this.descricao  = "";
+        this.preco      = 0;
+        this.rua        = "";
+        this.numero     = "";
+        this.cep        = "";
+        this.bairro     = "";
+        this.uf         = null;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
     public String getRua() {
         return rua;

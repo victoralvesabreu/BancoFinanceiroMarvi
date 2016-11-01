@@ -18,6 +18,16 @@ public class Usuario {
     private String email;
     private String senha;
 
+    public static int nextId = 0;
+    
+    public Usuario() {
+        this.id = nextId;
+        Usuario.nextId++;
+        this.nome  = "";
+        this.email = "";
+        this.senha = "";
+    }
+
     public int getId() {
         return id;
     }

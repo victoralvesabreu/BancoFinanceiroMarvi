@@ -5,7 +5,7 @@
  */
 package views;
 
-import static database.Database.listaUsuario;
+import crud.UsuarioCRUD;
 import domain.Usuario;
 
 /**
@@ -81,9 +81,9 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
                             .addComponent(tfEmail)
                             .addComponent(tfSenha)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(74, 74, 74))
         );
         layout.setVerticalGroup(
@@ -105,7 +105,7 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         pack();
@@ -116,14 +116,15 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        UsuarioCRUD usu = new UsuarioCRUD();
         Usuario usuario = new Usuario();
-        
+
         usuario.setNome(tfNome.getText());
         usuario.setEmail(tfEmail.getText());
         usuario.setSenha(tfSenha.getText());
-        
-        listaUsuario.add(usuario);
-        
+
+        usu.inserir(usuario);
+
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
