@@ -40,20 +40,33 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         miClienteCadastrar = new javax.swing.JMenuItem();
         miClienteVisualizar = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         miUsuarioCadastrar = new javax.swing.JMenuItem();
         miUsuarioVisualizarTodos = new javax.swing.JMenuItem();
         miUsuarioVisualizar = new javax.swing.JMenuItem();
         miUsuarioEditar = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         miImovelCadastrar = new javax.swing.JMenuItem();
         miImovelVisualizar = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         miFormPagamentoCadastrar = new javax.swing.JMenuItem();
         miFormPagamentoVisualizar = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         miVendaCadastrar = new javax.swing.JMenuItem();
         miVendaVisualizar = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem12 = new javax.swing.JMenuItem();
+        jMenuItem13 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Imobiliária Marvi");
@@ -84,6 +97,25 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jMenu1.add(miClienteVisualizar);
 
+        jMenuItem3.setText("Procurar");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem3);
+
+        jMenuItem5.setText("Editar");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem5);
+
+        jMenuItem6.setText("Deletar");
+        jMenu1.add(jMenuItem6);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Usuário");
@@ -96,7 +128,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jMenu2.add(miUsuarioCadastrar);
 
-        miUsuarioVisualizarTodos.setText("Visualizar Todos");
+        miUsuarioVisualizarTodos.setText("Visualizar");
         miUsuarioVisualizarTodos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 miUsuarioVisualizarTodosActionPerformed(evt);
@@ -104,7 +136,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jMenu2.add(miUsuarioVisualizarTodos);
 
-        miUsuarioVisualizar.setText("Visualizar ");
+        miUsuarioVisualizar.setText("Procurar");
         miUsuarioVisualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 miUsuarioVisualizarActionPerformed(evt);
@@ -120,6 +152,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jMenu2.add(miUsuarioEditar);
 
+        jMenuItem7.setText("Deletar");
+        jMenu2.add(jMenuItem7);
+
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Imóvel");
@@ -133,7 +168,26 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu3.add(miImovelCadastrar);
 
         miImovelVisualizar.setText("Visualizar");
+        miImovelVisualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miImovelVisualizarActionPerformed(evt);
+            }
+        });
         jMenu3.add(miImovelVisualizar);
+
+        jMenuItem1.setText("Procurar");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem1);
+
+        jMenuItem8.setText("Editar");
+        jMenu3.add(jMenuItem8);
+
+        jMenuItem9.setText("Deletar");
+        jMenu3.add(jMenuItem9);
 
         jMenuBar1.add(jMenu3);
 
@@ -155,6 +209,20 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jMenu4.add(miFormPagamentoVisualizar);
 
+        jMenuItem2.setText("Procurar");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem2);
+
+        jMenuItem10.setText("Editar");
+        jMenu4.add(jMenuItem10);
+
+        jMenuItem11.setText("Deletar");
+        jMenu4.add(jMenuItem11);
+
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("Venda");
@@ -168,7 +236,26 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu5.add(miVendaCadastrar);
 
         miVendaVisualizar.setText("Visualizar");
+        miVendaVisualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miVendaVisualizarActionPerformed(evt);
+            }
+        });
         jMenu5.add(miVendaVisualizar);
+
+        jMenuItem4.setText("Procurar");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem4);
+
+        jMenuItem12.setText("Editar");
+        jMenu5.add(jMenuItem12);
+
+        jMenuItem13.setText("Deletar");
+        jMenu5.add(jMenuItem13);
 
         jMenuBar1.add(jMenu5);
 
@@ -266,8 +353,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_miFormPagamentoVisualizarActionPerformed
 
     private void miUsuarioEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miUsuarioEditarActionPerformed
-        FrmCliente editar = new FrmCliente(Integer.parseInt(JOptionPane.showInputDialog(this, "Digite o Id do Cliente a ser alterado")));
+        
     }//GEN-LAST:event_miUsuarioEditarActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        FrmCliente editar = new FrmCliente(Integer.parseInt(JOptionPane.showInputDialog(this, "Digite o Id do Cliente a ser alterado")));
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -312,6 +403,19 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JMenuItem miClienteCadastrar;
     private javax.swing.JMenuItem miClienteVisualizar;
     private javax.swing.JMenuItem miFormPagamentoCadastrar;
