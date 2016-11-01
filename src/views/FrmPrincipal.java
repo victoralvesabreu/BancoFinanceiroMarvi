@@ -7,11 +7,15 @@ package views;
 
 import crud.ClienteCRUD;
 import crud.FormaDePagamentoCRUD;
+import crud.ImovelCRUD;
 import javax.swing.JOptionPane;
 import crud.UsuarioCRUD;
+import crud.VendaCRUD;
 import domain.Cliente;
 import domain.FormaDePagamento;
+import domain.Imovel;
 import domain.Usuario;
+import domain.Venda;
 
 /**
  *
@@ -114,6 +118,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu1.add(jMenuItem5);
 
         jMenuItem6.setText("Deletar");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem6);
 
         jMenuBar1.add(jMenu1);
@@ -153,6 +162,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu2.add(miUsuarioEditar);
 
         jMenuItem7.setText("Deletar");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem7);
 
         jMenuBar1.add(jMenu2);
@@ -187,6 +201,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu3.add(jMenuItem8);
 
         jMenuItem9.setText("Deletar");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem9);
 
         jMenuBar1.add(jMenu3);
@@ -221,6 +240,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu4.add(jMenuItem10);
 
         jMenuItem11.setText("Deletar");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem11);
 
         jMenuBar1.add(jMenu4);
@@ -255,6 +279,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu5.add(jMenuItem12);
 
         jMenuItem13.setText("Deletar");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem13);
 
         jMenuBar1.add(jMenu5);
@@ -359,6 +388,101 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         FrmCliente editar = new FrmCliente(Integer.parseInt(JOptionPane.showInputDialog(this, "Digite o Id do Cliente a ser alterado")));
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+    ClienteCRUD cliente = new ClienteCRUD();
+        if (cliente.ler().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhum cliente Cadastrados!!");
+        } else {
+            int escolhido = 0;
+            
+            escolhido = Integer.parseInt(JOptionPane.showInputDialog(this, "Digite o ID do cliente para ser deletado: "));
+            
+            for (Cliente u : cliente.ler()) {
+                if(u.getId() == escolhido){
+                    cliente.ler().remove(u);
+                    
+                    JOptionPane.showConfirmDialog(null, "Cliente deletado com sucesso!");
+                }
+            }
+        }
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+    UsuarioCRUD usuario = new UsuarioCRUD();
+        if (usuario.ler().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhum Usuario Cadastrados!!");
+        } else {
+            int escolhido = 0;
+            
+            escolhido = Integer.parseInt(JOptionPane.showInputDialog(this, "Digite o ID do usuario para ser deletado: "));
+            
+            for (Usuario u : usuario.ler()) {
+                if(u.getId() == escolhido){
+                    usuario.ler().remove(u);
+                    
+                    JOptionPane.showConfirmDialog(null, "Usuario deletado com sucesso!");
+                }
+            }
+        }
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        ImovelCRUD imovel = new ImovelCRUD();
+        if (imovel.ler().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhum imovel Cadastrados!!");
+        } else {
+            int escolhido = 0;
+            
+            escolhido = Integer.parseInt(JOptionPane.showInputDialog(this, "Digite o ID do imovel para ser deletado: "));
+            
+            for (Imovel u : imovel.ler()) {
+                if(u.getId() == escolhido){
+                    imovel.ler().remove(u);
+                    
+                    JOptionPane.showConfirmDialog(null, "Imovel deletado com sucesso!");
+                }
+            }
+        }
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        FormaDePagamentoCRUD formaDePagamanto = new FormaDePagamentoCRUD();
+        if (formaDePagamanto.ler().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhum forma de pagamento Cadastrada!!");
+        } else {
+            int escolhido = 0;
+            
+            escolhido = Integer.parseInt(JOptionPane.showInputDialog(this, "Digite o ID da forma de pagamento para ser deletado: "));
+            
+            for (FormaDePagamento u : formaDePagamanto.ler()) {
+                if(u.getId() == escolhido){
+                    formaDePagamanto.ler().remove(u);
+                    
+                    JOptionPane.showConfirmDialog(null, "Forma de pagamento deletada com sucesso!");
+                }
+            }
+        }
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        VendaCRUD venda = new VendaCRUD();
+        if (venda.ler().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhuma venda cadastrada!!");
+        } else {
+            int escolhido = 0;
+            
+            escolhido = Integer.parseInt(JOptionPane.showInputDialog(this, "Digite o ID da forma de pagamento para ser deletado: "));
+            
+            for (Venda u : venda.ler()) {
+                if(u.getId() == escolhido){
+                    venda.ler().remove(u);
+                    
+                    JOptionPane.showConfirmDialog(null, "Venda deletada com sucesso!");
+                }
+            }
+        }
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     /**
      * @param args the command line arguments
