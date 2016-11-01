@@ -27,23 +27,17 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="lbCodPagamento" min="-2" max="-2" attributes="0"/>
-                  <Component id="lbTipoPagamento" min="-2" max="-2" attributes="0"/>
-              </Group>
+              <Component id="lbTipoPagamento" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="tfTipoPagamento" max="32767" attributes="0"/>
-                  <Component id="tfCodPagamento" pref="242" max="32767" attributes="0"/>
-              </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <Component id="tfTipoPagamento" min="-2" pref="242" max="-2" attributes="0"/>
+              <EmptySpace pref="64" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="271" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Component id="btCadastrar" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btSair" min="-2" pref="91" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -55,12 +49,7 @@
                   <Component id="lbTipoPagamento" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="tfTipoPagamento" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lbCodPagamento" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="tfCodPagamento" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace pref="97" max="32767" attributes="0"/>
+              <EmptySpace pref="31" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btCadastrar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btSair" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -77,13 +66,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="tfTipoPagamento">
-    </Component>
-    <Component class="javax.swing.JLabel" name="lbCodPagamento">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Codigo Pagamento"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="tfCodPagamento">
     </Component>
     <Component class="javax.swing.JButton" name="btCadastrar">
       <Properties>

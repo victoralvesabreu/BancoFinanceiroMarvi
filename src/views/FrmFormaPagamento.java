@@ -32,8 +32,6 @@ public class FrmFormaPagamento extends javax.swing.JFrame {
 
         lbTipoPagamento = new javax.swing.JLabel();
         tfTipoPagamento = new javax.swing.JTextField();
-        lbCodPagamento = new javax.swing.JLabel();
-        tfCodPagamento = new javax.swing.JTextField();
         btCadastrar = new javax.swing.JButton();
         btSair = new javax.swing.JButton();
 
@@ -42,8 +40,6 @@ public class FrmFormaPagamento extends javax.swing.JFrame {
         setResizable(false);
 
         lbTipoPagamento.setText("Tipo de Pagamento");
-
-        lbCodPagamento.setText("Codigo Pagamento");
 
         btCadastrar.setText("Cadastrar");
         btCadastrar.addActionListener(new java.awt.event.ActionListener() {
@@ -65,20 +61,16 @@ public class FrmFormaPagamento extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(50, 50, 50)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lbCodPagamento)
-                    .addComponent(lbTipoPagamento))
+                .addComponent(lbTipoPagamento)
                 .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(tfTipoPagamento)
-                    .addComponent(tfCodPagamento, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(tfTipoPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(64, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(271, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btCadastrar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52))
+                .addGap(64, 64, 64))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -87,11 +79,7 @@ public class FrmFormaPagamento extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbTipoPagamento)
                     .addComponent(tfTipoPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbCodPagamento)
-                    .addComponent(tfCodPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btCadastrar)
                     .addComponent(btSair))
@@ -103,11 +91,12 @@ public class FrmFormaPagamento extends javax.swing.JFrame {
 
     private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
         FormaDePagamento pagamento = new FormaDePagamento();
-        pagamento.setId(Integer.parseInt(tfCodPagamento.getText()));
         pagamento.setTipo(tfTipoPagamento.getText());
         
         FormaDePagamentoCRUD pagaCrud = new FormaDePagamentoCRUD();
         pagaCrud.inserir(pagamento);
+        
+        this.dispose();
     }//GEN-LAST:event_btCadastrarActionPerformed
 
     private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
@@ -153,9 +142,7 @@ public class FrmFormaPagamento extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCadastrar;
     private javax.swing.JButton btSair;
-    private javax.swing.JLabel lbCodPagamento;
     private javax.swing.JLabel lbTipoPagamento;
-    private javax.swing.JTextField tfCodPagamento;
     private javax.swing.JTextField tfTipoPagamento;
     // End of variables declaration//GEN-END:variables
 }
