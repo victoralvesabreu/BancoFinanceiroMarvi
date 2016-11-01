@@ -44,33 +44,33 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         miClienteCadastrar = new javax.swing.JMenuItem();
         miClienteVisualizar = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         miUsuarioCadastrar = new javax.swing.JMenuItem();
         miUsuarioVisualizarTodos = new javax.swing.JMenuItem();
-        miUsuarioVisualizar = new javax.swing.JMenuItem();
         miUsuarioEditar = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
+        miUsuarioVisualizar = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         miImovelCadastrar = new javax.swing.JMenuItem();
         miImovelVisualizar = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         miFormPagamentoCadastrar = new javax.swing.JMenuItem();
         miFormPagamentoVisualizar = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         miVendaCadastrar = new javax.swing.JMenuItem();
         miVendaVisualizar = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Imobiliária Marvi");
@@ -101,14 +101,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jMenu1.add(miClienteVisualizar);
 
-        jMenuItem3.setText("Procurar");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem3);
-
         jMenuItem5.setText("Editar");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -124,6 +116,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem6);
+
+        jMenuItem14.setText("Procurar");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem14);
 
         jMenuBar1.add(jMenu1);
 
@@ -145,14 +145,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jMenu2.add(miUsuarioVisualizarTodos);
 
-        miUsuarioVisualizar.setText("Procurar");
-        miUsuarioVisualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miUsuarioVisualizarActionPerformed(evt);
-            }
-        });
-        jMenu2.add(miUsuarioVisualizar);
-
         miUsuarioEditar.setText("Editar");
         miUsuarioEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -168,6 +160,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem7);
+
+        miUsuarioVisualizar.setText("Procurar");
+        miUsuarioVisualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miUsuarioVisualizarActionPerformed(evt);
+            }
+        });
+        jMenu2.add(miUsuarioVisualizar);
 
         jMenuBar1.add(jMenu2);
 
@@ -189,14 +189,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jMenu3.add(miImovelVisualizar);
 
-        jMenuItem1.setText("Procurar");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuItem1);
-
         jMenuItem8.setText("Editar");
         jMenu3.add(jMenuItem8);
 
@@ -207,6 +199,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu3.add(jMenuItem9);
+
+        jMenuItem3.setText("Procurar");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem3);
 
         jMenuBar1.add(jMenu3);
 
@@ -228,14 +228,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jMenu4.add(miFormPagamentoVisualizar);
 
-        jMenuItem2.setText("Procurar");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
-        jMenu4.add(jMenuItem2);
-
         jMenuItem10.setText("Editar");
         jMenu4.add(jMenuItem10);
 
@@ -246,6 +238,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu4.add(jMenuItem11);
+
+        jMenuItem1.setText("Procurar");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem1);
 
         jMenuBar1.add(jMenu4);
 
@@ -267,14 +267,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jMenu5.add(miVendaVisualizar);
 
-        jMenuItem4.setText("Procurar");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
-            }
-        });
-        jMenu5.add(jMenuItem4);
-
         jMenuItem12.setText("Editar");
         jMenu5.add(jMenuItem12);
 
@@ -285,6 +277,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu5.add(jMenuItem13);
+
+        jMenuItem2.setText("Procurar");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem2);
 
         jMenuBar1.add(jMenu5);
 
@@ -484,6 +484,42 @@ public class FrmPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+    ClienteCRUD user = new ClienteCRUD();
+        if (user.ler().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhum cliente Cadastrado!!");
+        } else {
+            JOptionPane.showMessageDialog(this, user.ler(Integer.parseInt(JOptionPane.showInputDialog(this, "Digite o ID do cliente a ser pesquisado"))));
+        }
+    }//GEN-LAST:event_jMenuItem14ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        ImovelCRUD user = new ImovelCRUD();
+        if (user.ler().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhum imovel Cadastrado!!");
+        } else {
+            JOptionPane.showMessageDialog(this, user.ler(Integer.parseInt(JOptionPane.showInputDialog(this, "Digite o ID do imovel a ser pesquisado"))));
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        FormaDePagamentoCRUD user = new FormaDePagamentoCRUD();
+        if (user.ler().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhuma forma de pagamento cadastrada!!");
+        } else {
+            JOptionPane.showMessageDialog(this, user.ler(Integer.parseInt(JOptionPane.showInputDialog(this, "Digite o ID da forma de pagamento a ser pesquisada"))));
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        VendaCRUD user = new VendaCRUD();
+        if (user.ler().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhuma venda cadastrada!!");
+        } else {
+            JOptionPane.showMessageDialog(this, user.ler(Integer.parseInt(JOptionPane.showInputDialog(this, "Digite o ID da venda a ser pesquisada"))));
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -532,9 +568,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
