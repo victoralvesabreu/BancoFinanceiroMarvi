@@ -193,7 +193,6 @@ public class FrmUsuario extends javax.swing.JFrame {
             usuario.setId(Integer.parseInt(tfId.getText()));
             usuario.setNome(tfNome.getText());
             usuario.setEmail(tfEmail.getText());
-            JOptionPane.showMessageDialog(this, tfSenha.g());
             usuario.setSenha(tfSenha.getText());
             usuario.setCpf(tfCpf.getText());
             usuario.setCargo(tfCargo.getText());

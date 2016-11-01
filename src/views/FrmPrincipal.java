@@ -12,8 +12,6 @@ import crud.UsuarioCRUD;
 import domain.Cliente;
 import domain.FormaDePagamento;
 import domain.Usuario;
-import java.awt.Component;
-import java.util.ArrayList;
 
 /**
  *
@@ -266,6 +264,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_miFormPagamentoVisualizarActionPerformed
+
+    private void miUsuarioEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miUsuarioEditarActionPerformed
+        FrmCliente editar = new FrmCliente(Integer.parseInt(JOptionPane.showInputDialog(this, "Digite o Id do Cliente a ser alterado")));
+    }//GEN-LAST:event_miUsuarioEditarActionPerformed
 
     /**
      * @param args the command line arguments
