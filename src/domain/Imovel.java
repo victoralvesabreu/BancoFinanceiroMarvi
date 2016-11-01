@@ -24,6 +24,21 @@ public class Imovel {
     private String bairro;
     private Uf     uf;
 
+    public static int nextId = 0;
+    
+    public Imovel() {
+        this.id         = nextId;
+        Imovel.nextId++;
+        this.metrosQuad = 0;
+        this.descricao  = "";
+        this.preco      = 0;
+        this.rua        = "";
+        this.numero     = "";
+        this.cep        = "";
+        this.bairro     = "";
+        this.uf         = null;
+    }
+
     public String getRua() {
         return rua;
     }
@@ -62,27 +77,6 @@ public class Imovel {
 
     public void setUf(Uf uf) {
         this.uf = uf;
-    }
-
-    public ArrayList<Comodo> getComodo() {
-        return comodo;
-    }
-
-    public void setComodo(ArrayList<Comodo> comodo) {
-        this.comodo = comodo;
-    }
-    private ArrayList<Comodo> comodo;
-
-    public ArrayList<Comodo> getComodos() {
-        return comodo;
-    }
-
-    public void setComodos(Comodo comodo) {
-        if (comodo == null) {
-            this.comodo.add(comodo);
-        }else{
-            JOptionPane.showMessageDialog(null, "Comodo invalido");
-        }
     }
 
     public int getId() {
