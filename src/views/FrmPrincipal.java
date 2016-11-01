@@ -10,6 +10,8 @@ import javax.swing.JOptionPane;
 import crud.UsuarioCRUD;
 import domain.Cliente;
 import domain.Usuario;
+import java.awt.Component;
+import java.util.ArrayList;
 
 /**
  *
@@ -42,6 +44,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         miUsuarioCadastrar = new javax.swing.JMenuItem();
         miUsuarioVisualizarTodos = new javax.swing.JMenuItem();
         miUsuarioVisualizar = new javax.swing.JMenuItem();
+        miUsuarioEditar = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         miImovelCadastrar = new javax.swing.JMenuItem();
         miImovelVisualizar = new javax.swing.JMenuItem();
@@ -108,6 +111,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu2.add(miUsuarioVisualizar);
+
+        miUsuarioEditar.setText("Editar");
+        miUsuarioEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miUsuarioEditarActionPerformed(evt);
+            }
+        });
+        jMenu2.add(miUsuarioEditar);
 
         jMenuBar1.add(jMenu2);
 
@@ -284,6 +295,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem miImovelCadastrar;
     private javax.swing.JMenuItem miImovelVisualizar;
     private javax.swing.JMenuItem miUsuarioCadastrar;
+    private javax.swing.JMenuItem miUsuarioEditar;
     private javax.swing.JMenuItem miUsuarioVisualizar;
     private javax.swing.JMenuItem miUsuarioVisualizarTodos;
     private javax.swing.JMenuItem miVendaCadastrar;

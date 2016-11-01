@@ -12,7 +12,7 @@ import domain.Uf;
 
 /**
  *
- * @author victo
+ * @author victor alves abreu
  */
 public class FrmCliente extends javax.swing.JFrame {
 
@@ -25,7 +25,12 @@ public class FrmCliente extends javax.swing.JFrame {
             cbUf.addItem(uf.getCodigoUf());
         }
     }
-
+    
+    public FrmCliente(Cliente cli){
+        this.setTitle("Editar Cliente");
+        tfNome.setText(cli.getNome());
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
