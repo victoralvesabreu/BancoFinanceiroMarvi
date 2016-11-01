@@ -17,8 +17,17 @@ public class Venda {
     private Cliente cliente;
     private FormaDePagamento formaDePagamento;
     private Funcionario funcionario;
+    private Usuario usuario;
     private Imovel imovel;
     private int parcelas;
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 
     public int getId() {
         return id;

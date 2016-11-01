@@ -43,19 +43,19 @@
                           <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="tfBairro" min="-2" pref="290" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="tfCep" pref="290" max="32767" attributes="0"/>
-                              <Component id="tfNumero" max="32767" attributes="0"/>
-                              <Component id="tfRua" max="32767" attributes="0"/>
-                              <Component id="tfMetrosQuad" max="32767" attributes="0"/>
-                              <Component id="tfPreco" alignment="0" max="32767" attributes="0"/>
-                              <Component id="tfDescricao" alignment="0" max="32767" attributes="0"/>
-                          </Group>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="tfBairro" pref="290" max="32767" attributes="0"/>
+                          <Component id="tfCep" pref="290" max="32767" attributes="0"/>
+                          <Component id="tfNumero" max="32767" attributes="0"/>
+                          <Component id="tfRua" max="32767" attributes="0"/>
+                          <Component id="tfMetrosQuad" max="32767" attributes="0"/>
+                          <Component id="tfPreco" alignment="0" max="32767" attributes="0"/>
+                          <Component id="tfDescricao" alignment="0" max="32767" attributes="0"/>
                           <Component id="cbUf" min="-2" max="-2" attributes="0"/>
+                          <Component id="tfNome" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -66,7 +66,12 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+              <EmptySpace pref="25" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfNome" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <Component id="tfMetrosQuad" min="-2" max="-2" attributes="0"/>
@@ -111,7 +116,7 @@
                   <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cbUf" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="20" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jButton1" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                   <Component id="jButton2" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
@@ -201,6 +206,13 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel9">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Nome:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfNome">
     </Component>
   </SubComponents>
 </Form>
