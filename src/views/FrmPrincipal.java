@@ -190,6 +190,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu3.add(jMenuItem4);
 
         jMenuItem8.setText("Editar");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem8);
 
         jMenuItem9.setText("Deletar");
@@ -229,6 +234,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu4.add(miFormPagamentoVisualizar);
 
         jMenuItem10.setText("Editar");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem10);
 
         jMenuItem11.setText("Deletar");
@@ -268,6 +278,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu5.add(jMenuItem15);
 
         jMenuItem12.setText("Editar");
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem12);
 
         jMenuItem13.setText("Deletar");
@@ -382,11 +397,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_miFormPagamentoVisualizarActionPerformed
 
     private void miUsuarioEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miUsuarioEditarActionPerformed
-        
+        FrmUsuario editar = new FrmUsuario(Integer.parseInt(JOptionPane.showInputDialog(this, "Digite o Id do usuário a ser alterado: ")));        
     }//GEN-LAST:event_miUsuarioEditarActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        FrmCliente editar = new FrmCliente(Integer.parseInt(JOptionPane.showInputDialog(this, "Digite o Id do Cliente a ser alterado")));
+        FrmCliente editar = new FrmCliente(Integer.parseInt(JOptionPane.showInputDialog(this, "Digite o Id do cliente a ser alterado: ")));
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
@@ -561,6 +576,18 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jMenuItem15ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        FrmImovel editar = new FrmImovel(Integer.parseInt(JOptionPane.showInputDialog(this, "Digite o Id do imovel a ser alterado: ")));        
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        FrmFormaPagamento editar = new FrmFormaPagamento(Integer.parseInt(JOptionPane.showInputDialog(this, "Digite o Id da forma de pagamento a ser alterado: ")));        
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        FrmVenda editar = new FrmVenda(Integer.parseInt(JOptionPane.showInputDialog(this, "Digite o Id da venda a ser alterado: ")));        
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     /**
      * @param args the command line arguments
