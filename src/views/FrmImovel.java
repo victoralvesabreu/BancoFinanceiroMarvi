@@ -95,7 +95,7 @@ public class FrmImovel extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 325, Short.MAX_VALUE)
+            .addGap(0, 358, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
@@ -147,6 +147,7 @@ public class FrmImovel extends javax.swing.JFrame {
 
         jLabel1.setText("Uf:");
 
+        cbUf.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ES", "RJ", "SP", "MG" }));
         cbUf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbUfActionPerformed(evt);

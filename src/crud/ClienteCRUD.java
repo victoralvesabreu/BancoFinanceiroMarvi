@@ -35,4 +35,19 @@ public class ClienteCRUD {
     public void remover(Cliente cliente) {
         Database.listaCliente.remove(cliente);
     }
+    
+    public void alterar(int id, Cliente cliente){
+        for(Cliente c: Database.listaCliente){
+            if(c.getId()== id){
+                c.setNome(cliente.getNome());
+                c.setCpf(cliente.getCpf());
+                c.setEmail(cliente.getEmail());
+                c.setRua(cliente.getRua());
+                c.setNumero(cliente.getNumero());
+                c.setCep(cliente.getCep());
+                c.setBairro(cliente.getBairro());
+                //uf
+            }
+        }
+    }
 }

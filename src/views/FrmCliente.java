@@ -116,6 +116,8 @@ public class FrmCliente extends javax.swing.JFrame {
 
         lbBairro.setText("Bairro");
 
+        cbUf.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ES", "RJ", "SP", "MG" }));
+
         lbCep.setText("CEP");
 
         tfCep.setText("00000-000");
@@ -131,7 +133,7 @@ public class FrmCliente extends javax.swing.JFrame {
                         .addGap(51, 51, 51)
                         .addComponent(tfCep, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lbCep))
-                .addContainerGap(411, Short.MAX_VALUE))
+                .addContainerGap(419, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()

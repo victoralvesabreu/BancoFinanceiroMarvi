@@ -34,4 +34,16 @@ public class VendaCRUD {
     public void remover(Venda venda){
         Database.listaVenda.remove(venda);
     }
+    
+    public void alterar(int id, Venda venda){
+        for(Venda v: Database.listaVenda){
+            if(v.getId()== id){
+                v.setCliente(venda.getCliente());
+                v.setFormaDePagamento(venda.getFormaDePagamento());
+                v.setUsuario(venda.getUsuario());
+                v.setImovel(venda.getImovel());
+                v.setParcelas(venda.getParcelas());
+            }
+        }
+    }
 }

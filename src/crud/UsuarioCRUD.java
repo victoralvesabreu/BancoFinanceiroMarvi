@@ -34,4 +34,16 @@ public class UsuarioCRUD {
     public void remover(Usuario usuario){
         Database.listaUsuario.remove(usuario);
     }
+    
+    public void alterar(int id, Usuario usuario){
+        for(Usuario u: Database.listaUsuario){
+            if(u.getId()== id){
+                u.setNome(usuario.getNome());
+                u.setEmail(usuario.getEmail());
+                u.setSenha(usuario.getSenha());
+                u.setCpf(usuario.getCpf());
+                u.setCargo(usuario.getCargo());
+            }
+        }
+    }
 }

@@ -34,4 +34,20 @@ public class ImovelCRUD {
     public void remover(Imovel imovel){
         Database.listaImovel.remove(imovel);
     }
+    
+    public void alterar(int id, Imovel imovel){
+        for(Imovel i: Database.listaImovel){
+            if(i.getId()== id){
+                i.setNome(imovel.getNome());
+                i.setMetrosQuad(imovel.getMetrosQuad());
+                i.setPreco(imovel.getPreco());
+                i.setDescricao(imovel.getDescricao());
+                i.setRua(imovel.getRua());
+                i.setNumero(imovel.getNumero());
+                i.setCep(imovel.getCep());
+                i.setBairro(imovel.getBairro());
+                //uf
+            }
+        }
+    }
 }

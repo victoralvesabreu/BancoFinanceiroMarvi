@@ -34,4 +34,12 @@ public class FormaDePagamentoCRUD {
     public void remover(FormaDePagamento pagamento){
         Database.listaFormaDepagamento.remove(pagamento);
     }
+    
+    public void alterar(int id, FormaDePagamento formaDePagamento){
+        for(FormaDePagamento f: Database.listaFormaDepagamento){
+            if(f.getId()== id){
+                f.setTipo(formaDePagamento.getTipo());
+            }
+        }
+    }
 }
