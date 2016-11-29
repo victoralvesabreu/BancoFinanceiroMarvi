@@ -20,11 +20,11 @@ public class Uf {
         return codigoUf;
     }
 
-    public void setCodigoUf(String codigoUf) {
+    public void setCodigoUf(String codigoUf) throws Exception{
         if (codigoUf.length() == 2) {
             this.codigoUf = codigoUf;
         } else {
-            JOptionPane.showMessageDialog(null, "codigo uf invalido");
+            throw new Exception("Codigo Uf Invalido");
         }
     }
 

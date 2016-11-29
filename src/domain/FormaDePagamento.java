@@ -16,13 +16,6 @@ public class FormaDePagamento {
     private int id;
     private String tipo;
     
-    public static int nextId = 0;
-
-    public FormaDePagamento() {
-        this.id = nextId;
-        FormaDePagamento.nextId++;
-        this.tipo = "";
-    }
 
     public int getId() {
         return id;
@@ -36,11 +29,11 @@ public class FormaDePagamento {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(String tipo) throws Exception {
         if (!tipo.isEmpty()) {
             this.tipo = tipo;
         } else {
-            JOptionPane.showMessageDialog(null, "tipo invalido");
+            throw new Exception("Tipo Invalido!");
         }
     }
 }

@@ -3,17 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package database;
-
-import java.sql.Connection;
-
 
 /**
  *
- * @author victor alves abreu
+ * @author 20151si030
  */
-public interface Database {
-    public Connection connect();
-    public void disconnect(Connection conn);
+interface database {
+    
 }

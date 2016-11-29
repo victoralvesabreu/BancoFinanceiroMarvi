@@ -112,11 +112,11 @@ public class Imovel {
         return preco;
     }
 
-    public void setPreco(float preco) {
+    public void setPreco(float preco) throws Exception {
         if (preco > 0) {
             this.preco = preco;
         } else {
-            JOptionPane.showMessageDialog(null, "preço invalido");
+            throw new Exception("Preco Invalido");
         }
     }
 }

@@ -6,44 +6,131 @@
 package crud;
 
 import domain.Usuario;
-import database.Database;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+
 
 /**
  *
  * @author victor alves abreu
  */
 public class UsuarioCRUD {
-    public void inserir(Usuario usuario){
-        Database.listaUsuario.add(usuario);
-    }
-    
-    public ArrayList<Usuario> ler(){
-        return Database.listaUsuario;
-    }
-    
-    public Usuario ler(int id){
-        for(Usuario u: Database.listaUsuario){
-            if (u.getId() == id) {
-                return u;
-            }
+    public void create(Connection conn, Usuario usuario){
+        try{
+            PreparedStatement pstm = conn.prepareStatement(
+                    "INSERT INTO venda(id, nome, email, senha, acesso, cpf, cargo)"+
+                    "VALUES(?,?,?,?,?,?,?);"
+            );
+            pstm.setInt(1, usuario.getId());
+            pstm.setString(2, usuario.getNome());
+            pstm.setString(3, usuario.getEmail());
+            pstm.setString(4, usuario.getSenha());
+            pstm.setString(5, usuario.getAcesso());
+            pstm.setString(6, usuario.getCpf());
+            pstm.setString(7, usuario.getCargo());
+            pstm.execute();
+        }catch(SQLException ex){
+            System.err.println(ex.getMessage());
         }
-        return null;
     }
     
-    public void remover(Usuario usuario){
-        Database.listaUsuario.remove(usuario);
-    }
-    
-    public void alterar(int id, Usuario usuario){
-        for(Usuario u: Database.listaUsuario){
-            if(u.getId()== id){
-                u.setNome(usuario.getNome());
-                u.setEmail(usuario.getEmail());
-                u.setSenha(usuario.getSenha());
-                u.setCpf(usuario.getCpf());
-                u.setCargo(usuario.getCargo());
+    public ArrayList<Usuario> read(Connection conn){
+        ArrayList<Usuario> listaUsuarios = new ArrayList<>();
+        
+        try{
+            PreparedStatement pstm = conn.prepareStatement(
+                    "SELECT id, nome, cpf, email, rua, numero, cep, bairro, uf"+
+                    "  FROM venda"+
+                    "  ORDER BY id;"
+            );
+            
+            ResultSet rset = pstm.executeQuery();
+            while(rset.next()){
+                Usuario usuario = new Usuario();
+                usuario.setId(rset.getInt("id"));
+                usuario.setNome(rset.getString("nome"));
+                usuario.setEmail(rset.getString("email"));
+                usuario.setSenha(rset.getString("senha"));
+                usuario.setAcesso(rset.getString("acesso"));
+                usuario.setCpf(rset.getString("cpf"));
+                usuario.setCargo(rset.getString("cargo"));
+                
+                listaUsuarios.add(usuario);
             }
+            return listaUsuarios;
+        }catch(SQLException ex){
+            System.err.println(ex.getMessage());
+            return listaUsuarios;
+        }
+    }
+    
+    public Usuario read(Connection conn, int id){
+        Usuario usuario = null;
+        try{
+            PreparedStatement pstm = conn.prepareStatement(
+                    "SELECT id, nome,email, senha, acesso, cpf, cargo"+
+                    "  FROM usuario"+
+                    "  WHERE id=?"+
+                    " LIMIT 1;"
+            );
+            pstm.setInt(1, id);
+            ResultSet rset = pstm.executeQuery();
+            UfCRUD uf = new UfCRUD();
+            if (rset.next()) {
+                usuario = new Usuario();
+                usuario.setId(rset.getInt("id"));
+                usuario.setNome(rset.getString("nome"));
+                usuario.setEmail(rset.getString("email"));
+                usuario.setSenha(rset.getString("senha"));
+                usuario.setAcesso(rset.getString("acesso"));
+                usuario.setCpf(rset.getString("cpf"));
+                usuario.setCargo(rset.getString("cargo"));
+                return usuario;
+                
+            }else{
+                return usuario;
+            }
+        }catch(SQLException ex){
+            System.err.println(ex.getMessage());
+            return usuario;
+        }
+    }
+    
+    public void update(Connection conn, Usuario usuario){
+        try{
+            PreparedStatement pstm = conn.prepareStatement(
+                    "UPDATE cliente"+
+                    " SET nome=?, email=?,senha=?, acesso=? ,cpf=?, cargo=?"+
+                    " WHERE id=?;"
+            );
+            pstm.setString(1, usuario.getNome());
+            pstm.setString(2, usuario.getEmail());
+            pstm.setString(3, usuario.getSenha());
+            pstm.setString(4, usuario.getAcesso());            
+            pstm.setString(5, usuario.getCpf());
+            pstm.setString(6, usuario.getCargo());
+            pstm.setInt(7, usuario.getId());
+            
+            pstm.execute();
+        }catch(SQLException ex){
+            System.err.println(ex.getMessage());
+        }
+    }
+    
+    
+    public void delete(Connection conn, Usuario usuario){
+        try{
+            PreparedStatement pstm = conn.prepareStatement(
+                    "DELETE FROM usuario"+
+                    "  WHERE id=?;"
+            );
+            pstm.setInt(1, usuario.getId());
+            pstm.execute();
+        }catch(SQLException ex){
+            System.err.println(ex.getMessage());
         }
     }
 }

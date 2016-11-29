@@ -22,22 +22,7 @@ public class Cliente {
     private String cep;
     private String bairro;
     private Uf     uf;
-    
-    public static int nextId = 0;
-    
-    //metodo construtor
-    public Cliente(){
-        this.id     = nextId;
-        Cliente.nextId++;
-        this.nome   = "";
-        this.cpf    = "";
-        this.email  = "";
-        this.rua    = "";
-        this.numero = "";
-        this.cep    = "";
-        this.bairro = "";
-        this.uf     = new Uf();
-    }
+
     
     public int getId() {
         return id;
@@ -51,11 +36,11 @@ public class Cliente {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public void setNome(String nome) throws Exception {
         if(!nome.isEmpty()) {
             this.nome = nome;
         } else {
-            JOptionPane.showMessageDialog(null, "Nome inválido!");
+            throw new Exception("o campo nome não pode ficar vazio");
         }
     }
 
@@ -63,11 +48,11 @@ public class Cliente {
         return cpf;
     }
 
-    public void setCpf(String cpf) {      
+    public void setCpf(String cpf) throws Exception {      
         if(!cpf.isEmpty()){
             this.cpf = cpf;
         } else {
-            JOptionPane.showMessageDialog(null, "Cpf inválido!!");
+            throw new Exception("Cpf invalido");
         }
     }
 
@@ -75,11 +60,11 @@ public class Cliente {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(String email) throws Exception {
         if(!email.isEmpty()){
             this.email = email;
         } else {
-            JOptionPane.showMessageDialog(null, "Email inválido!");
+            throw new Exception("email invalido");
         }
     }
 

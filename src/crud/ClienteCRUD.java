@@ -5,8 +5,11 @@
  */
 package crud;
 
-import database.Database;
 import domain.Cliente;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -15,39 +18,122 @@ import java.util.ArrayList;
  */
 public class ClienteCRUD {
 
-    public void inserir(Cliente cliente) {
-        Database.listaCliente.add(cliente);
-    }
-
-    public ArrayList<Cliente> ler() {
-        return Database.listaCliente;
-    }
-
-    public Cliente ler(int id) {
-        for (Cliente c : Database.listaCliente) {
-            if (c.getId() == id) {
-                return c;
-            }
+    public void create(Connection conn, Cliente cliente){
+        try{
+            PreparedStatement pstm = conn.prepareStatement(
+                    "INSERT INTO cliente(nome,cpf, email, rua, numero, cep, bairro, uf)"+
+                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?);"
+            );
+            pstm.setString(1, cliente.getNome());
+            pstm.setString(2, cliente.getCpf());
+            pstm.setString(3, cliente.getEmail());
+            pstm.setString(4, cliente.getRua());
+            pstm.setString(5, cliente.getNumero());
+            pstm.setString(6, cliente.getCep());
+            pstm.setString(7, cliente.getBairro());
+            pstm.setString(8, cliente.getUf().getCodigoUf());
+            pstm.execute();
+        }catch(SQLException ex){
+            System.err.println(ex.getMessage());
         }
-        return null;
-    }
-
-    public void remover(Cliente cliente) {
-        Database.listaCliente.remove(cliente);
     }
     
-    public void alterar(int id, Cliente cliente){
-        for(Cliente c: Database.listaCliente){
-            if(c.getId()== id){
-                c.setNome(cliente.getNome());
-                c.setCpf(cliente.getCpf());
-                c.setEmail(cliente.getEmail());
-                c.setRua(cliente.getRua());
-                c.setNumero(cliente.getNumero());
-                c.setCep(cliente.getCep());
-                c.setBairro(cliente.getBairro());
-                //uf
+    public ArrayList<Cliente> read(Connection conn){
+        ArrayList<Cliente> listaClientes = new ArrayList<>();
+        UfCRUD uf = new UfCRUD();
+        try{
+            PreparedStatement pstm = conn.prepareStatement(
+                    "SELECT id, nome, cpf, email, rua, numero, cep, bairro, uf"+
+                    "  FROM cliente"+
+                    "  ORDER BY id;"
+            );
+            
+            ResultSet rset = pstm.executeQuery();
+            while(rset.next()){
+                Cliente cliente = new Cliente();
+                cliente.setId(rset.getInt("id"));
+                cliente.setNome(rset.getString("nome"));
+                cliente.setCpf(rset.getString("cpf"));
+                cliente.setRua(rset.getString("rua"));
+                cliente.setNumero(rset.getString("numero"));
+                cliente.setBairro(rset.getString("bairro"));
+                cliente.setUf(uf.read(conn, rset.getString("codigo_uf")));
+                
+                listaClientes.add(cliente);
             }
+            return listaClientes;
+        }catch(SQLException ex){
+            System.err.println(ex.getMessage());
+            return listaClientes;
+        }
+    }
+    
+    public Cliente read(Connection conn, int id){
+        Cliente aux = null;
+        try{
+            PreparedStatement pstm = conn.prepareStatement(
+                    "SELECT id, nome, cpf, email, rua, numero, cep, bairro, codigo_uf"+
+                    "  FROM cliente"+
+                    "  WHERE id=?"+
+                    " LIMIT 1;"
+            );
+            pstm.setInt(1, id);
+            ResultSet rset = pstm.executeQuery();
+            UfCRUD uf = new UfCRUD();
+            if (rset.next()) {
+                aux = new Cliente();
+                aux.setId(rset.getInt("id"));
+                aux.setNome(rset.getString("nome"));
+                aux.setCpf(rset.getString("cpf"));
+                aux.setRua(rset.getString("rua"));
+                aux.setNumero(rset.getString("numero"));
+                aux.setBairro(rset.getString("bairro"));
+                aux.setUf(uf.read(conn, rset.getString("codigo_uf")));
+                return aux;
+                
+            }else{
+                return aux;
+            }
+        }catch(SQLException ex){
+            System.err.println(ex.getMessage());
+            return aux;
+        }
+    }
+    
+    public void update(Connection conn, Cliente cliente){
+        try{
+            PreparedStatement pstm = conn.prepareStatement(
+                    "UPDATE cliente"+
+                    " SET nome=?, cpf=?, email=?, rua=?, numero=?, cep=?, bairro=?, codigo_uf=?"+
+                    " WHERE id=?;"
+            );
+            pstm.setString(1, cliente.getNome());
+            pstm.setString(2, cliente.getCpf());
+            pstm.setString(3, cliente.getEmail());
+            pstm.setString(4, cliente.getRua());
+            pstm.setString(5, cliente.getNumero());
+            pstm.setString(6, cliente.getCep());
+            pstm.setString(7, cliente.getBairro());
+            pstm.setString(8, cliente.getUf().getCodigoUf());
+            pstm.setInt(9, cliente.getId());
+            
+            pstm.execute();
+        }catch(SQLException ex){
+            System.err.println(ex.getMessage());
+        }
+    }
+    
+    
+    public void delete(Connection conn, Cliente cliente){
+        try{
+            PreparedStatement pstm = conn.prepareStatement(
+                    "DELETE FROM cliente"+
+                    "  WHERE id=?;"
+            );
+            pstm.setInt(1, cliente.getId());
+            pstm.execute();
+        }catch(SQLException ex){
+            System.err.println(ex.getMessage());
         }
     }
 }

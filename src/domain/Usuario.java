@@ -15,7 +15,6 @@ import javax.swing.JOptionPane;
  */
 public class Usuario {
 
-    public static Usuario user = null;
     private int id;
     private String nome;
     private String email;
@@ -25,7 +24,12 @@ public class Usuario {
     private String cpf;
     private String cargo;
 
-    public Usuario(String Acesso) {
+
+    public String getAcesso() {
+        return Acesso;
+    }
+
+    public void setAcesso(String Acesso) {
         this.Acesso = Acesso;
     }
 
