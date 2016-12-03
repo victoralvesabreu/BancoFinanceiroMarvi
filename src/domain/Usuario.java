@@ -7,7 +7,6 @@ package domain;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,17 +19,19 @@ public class Usuario {
     private String email;
     private String senha;
     private String Acesso;
-
     private String cpf;
     private String cargo;
-
 
     public String getAcesso() {
         return Acesso;
     }
 
-    public void setAcesso(String Acesso) {
-        this.Acesso = Acesso;
+    public void setAcesso(String Acesso) throws Exception {
+        if (!Acesso.isEmpty()) {
+            this.Acesso = Acesso;
+        } else {
+            throw new Exception("o campo acesso precisa ser preenchido!");
+        }
     }
 
     public int getId() {
@@ -45,11 +46,11 @@ public class Usuario {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public void setNome(String nome) throws Exception {
         if (!nome.isEmpty()) {
             this.nome = nome;
         } else {
-            JOptionPane.showMessageDialog(null, "nome invalido");
+            throw new Exception("Nome Invalido!");
         }
     }
 
@@ -57,11 +58,11 @@ public class Usuario {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(String email) throws Exception {
         if (email.contains("@")) {
             this.email = email;
         } else {
-            JOptionPane.showMessageDialog(null, "email invalido");
+            throw new Exception("email invalido!");
         }
     }
 
@@ -69,15 +70,18 @@ public class Usuario {
         return senha;
     }
 
-    public void setSenha(String senha) {
+    public void setSenha(String senha){
+        this.senha = senha;
+    }
+    
+    public void setSenha(String senha, String senhaLocked) {
 
         Pattern p = Pattern.compile("((?=.*[a-z])(?=.*d)(?=.*[@#$%])(?=.*[A-Z]).{6})");
         Matcher m = p.matcher(senha);
         if (m.matches()) {
-            this.senha = senha;
+            this.senha = senhaLocked;
         } else {
-            IllegalArgumentException erro = new IllegalArgumentException("Senha Invalida");
-            throw erro;
+            throw new IllegalArgumentException("Senha Invalida");
         }
     }
 
@@ -85,11 +89,11 @@ public class Usuario {
         return cpf;
     }
 
-    public void setCpf(String cpf) {
+    public void setCpf(String cpf) throws Exception {
         if (!cpf.isEmpty()) {
             this.cpf = cpf;
         } else {
-            JOptionPane.showMessageDialog(null, "cargo invalido");
+            throw new Exception("Cpf Invalido!");
         }
     }
 
@@ -97,11 +101,11 @@ public class Usuario {
         return cargo;
     }
 
-    public void setCargo(String cargo) {
+    public void setCargo(String cargo) throws Exception {
         if (!cargo.isEmpty()) {
             this.cargo = cargo;
         } else {
-            JOptionPane.showMessageDialog(null, "cargo invalido");
+            throw new Exception("Cargo invalido!");
         }
     }
 

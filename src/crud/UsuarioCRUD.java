@@ -37,7 +37,7 @@ public class UsuarioCRUD {
         }
     }
     
-    public ArrayList<Usuario> read(Connection conn){
+    public ArrayList<Usuario> read(Connection conn) throws Exception {
         ArrayList<Usuario> listaUsuarios = new ArrayList<>();
         
         try{
@@ -67,7 +67,7 @@ public class UsuarioCRUD {
         }
     }
     
-    public Usuario read(Connection conn, int id){
+    public Usuario read(Connection conn, int id) throws Exception{
         Usuario usuario = null;
         try{
             PreparedStatement pstm = conn.prepareStatement(

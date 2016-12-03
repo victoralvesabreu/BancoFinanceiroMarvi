@@ -29,7 +29,7 @@ public class ImovelCRUD {
             pstm.setString(3, imovel.getDescricao());
             pstm.setFloat(4, imovel.getPreco());
             pstm.setString(5, imovel.getRua());
-            pstm.setString(6, imovel.getNumero());
+            pstm.setInt(6, imovel.getNumero());
             pstm.setString(7, imovel.getCep());
             pstm.setString(8, imovel.getBairro());
             pstm.setString(9, imovel.getUf().getCodigoUf());
@@ -39,7 +39,7 @@ public class ImovelCRUD {
         }
     }
     
-    public ArrayList<Imovel> read(Connection conn){
+    public ArrayList<Imovel> read(Connection conn) throws Exception{
         ArrayList<Imovel> listaImovel = new ArrayList<>();
         UfCRUD uf = new UfCRUD();
         try{
@@ -58,7 +58,7 @@ public class ImovelCRUD {
                 imovel.setDescricao(rset.getString("descricao"));
                 imovel.setPreco(rset.getFloat("preco"));
                 imovel.setRua(rset.getString("rua"));
-                imovel.setNumero(rset.getString("numero"));
+                imovel.setNumero(rset.getInt("numero"));
                 imovel.setBairro(rset.getString("bairro"));
                 imovel.setUf(uf.read(conn, rset.getString("codigo_uf")));
                 
@@ -71,7 +71,7 @@ public class ImovelCRUD {
         }
     }
     
-    public Imovel read(Connection conn, int id){
+    public Imovel read(Connection conn, int id) throws Exception{
         Imovel imovel = null;
         try{
             PreparedStatement pstm = conn.prepareStatement(
@@ -91,7 +91,7 @@ public class ImovelCRUD {
                 imovel.setPreco(rset.getFloat("preco"));
                 imovel.setDescricao(rset.getString("descricao"));
                 imovel.setRua(rset.getString("rua"));
-                imovel.setNumero(rset.getString("numero"));
+                imovel.setNumero(rset.getInt("numero"));
                 imovel.setBairro(rset.getString("bairro"));
                 imovel.setUf(uf.read(conn, rset.getString("codigo_uf")));
                 return imovel;
@@ -117,7 +117,7 @@ public class ImovelCRUD {
             pstm.setFloat(3, imovel.getPreco());
             pstm.setString(4, imovel.getDescricao());
             pstm.setString(5, imovel.getRua());
-            pstm.setString(6, imovel.getNumero());
+            pstm.setInt(6, imovel.getNumero());
             pstm.setString(7, imovel.getCep());
             pstm.setString(8, imovel.getBairro());
             pstm.setString(9, imovel.getUf().getCodigoUf());

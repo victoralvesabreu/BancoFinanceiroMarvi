@@ -31,7 +31,7 @@ public class FormaDePagamentoCRUD {
         }
     }
     
-    public ArrayList<FormaDePagamento> read(Connection conn){
+    public ArrayList<FormaDePagamento> read(Connection conn) throws Exception{
         ArrayList<FormaDePagamento> listaPagamento = new ArrayList<>();
         try{
             PreparedStatement pstm = conn.prepareStatement(
@@ -55,7 +55,7 @@ public class FormaDePagamentoCRUD {
         }
     }
     
-    public FormaDePagamento read(Connection conn, int id){
+    public FormaDePagamento read(Connection conn, int id) throws Exception{
         FormaDePagamento aux = null;
         try{
             PreparedStatement pstm = conn.prepareStatement(

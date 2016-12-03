@@ -6,9 +6,15 @@
 package views;
 
 import crud.ClienteCRUD;
+import crud.UfCRUD;
 import database.Database;
+import database.DatabaseFactory;
 import domain.Cliente;
 import domain.Uf;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,17 +27,24 @@ public class FrmCliente extends javax.swing.JFrame {
      * Creates new form FrmCliente
      */
     boolean edit = false;
+    Connection conn = DatabaseFactory.getDatabase("postgresql").connect();
 
-    public FrmCliente() {
+    public FrmCliente() throws Exception {
         initComponents();
-        for (Uf uf : Database.listaUf) {
-            cbUf.addItem(uf.getCodigoUf());
+
+        UfCRUD ufCrud = new UfCRUD();
+        try {
+            for (Uf uf : ufCrud.read(conn)) {
+                cbUf.addItem(uf.getCodigoUf());
+            }
+            edit = false;
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
         }
-        edit = false;
     }
 
     public FrmCliente(int id) {
-        
+
         ClienteCRUD cliente = new ClienteCRUD();
         Cliente cli = null;
         for (Cliente c : cliente.ler()) {
@@ -39,7 +52,7 @@ public class FrmCliente extends javax.swing.JFrame {
                 cli = c;
             }
         }
-        
+
         if (cli != null) {
             initComponents();
             this.setTitle("Editar Cliente ID: " + cli.getId());
@@ -50,7 +63,7 @@ public class FrmCliente extends javax.swing.JFrame {
             tfEmail.setText(cli.getEmail());
             tfNumero.setText(cli.getNumero());
             edit = true;
-        }else{
+        } else {
             throw new IllegalAccessError("Nenhum Cliente Encontrado");
         }
 
@@ -244,30 +257,33 @@ public class FrmCliente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
+    private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) throws Exception {//GEN-FIRST:event_btCadastrarActionPerformed
         ClienteCRUD cli = new ClienteCRUD();
         Cliente cliente = new Cliente();
-
-        cliente.setNome(tfNome.getText());
-        cliente.setCpf(tfCpf.getText());
-        cliente.setEmail(tfEmail.getText());
-        cliente.setRua(tfRua.getText());
-        cliente.setNumero(tfNumero.getText());
-        cliente.setCep(tfCep.getText());
-        cliente.setBairro(tfBairro.getText());
-        for (Uf uf : Database.listaUf) {
-            if (uf.getCodigoUf().equals(cbUf.getSelectedItem())) {
-                cliente.setUf(uf);
+        UfCRUD ufCrud = new UfCRUD();
+        try {
+            cliente.setNome(tfNome.getText());
+            cliente.setCpf(tfCpf.getText());
+            cliente.setEmail(tfEmail.getText());
+            cliente.setRua(tfRua.getText());
+            cliente.setNumero(tfNumero.getText());
+            cliente.setCep(tfCep.getText());
+            cliente.setBairro(tfBairro.getText());
+            for (Uf uf : ufCrud.read(conn)) {
+                if (uf.getCodigoUf().equals(cbUf.getSelectedItem())) {
+                    cliente.setUf(uf);
+                }
             }
-        }
-        for (Cliente c : cli.ler()) {
-            if (c.getId() == cliente.getId() && edit) {
-                cli.inserir(cliente);
-            } else if (c.getId() != cliente.getId() && !edit) {
-                cli.inserir(cliente);
+            for (Cliente c : cli.read(conn)) {
+                if (edit) {
+                    cli.update(conn, c);
+                } else {
+                    cli.create(conn, c);
+                }
             }
+        }catch(SQLException ex){
+            System.err.println(ex.getMessage());
         }
-
         this.dispose();
     }//GEN-LAST:event_btCadastrarActionPerformed
 
@@ -282,7 +298,7 @@ public class FrmCliente extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -305,7 +321,11 @@ public class FrmCliente extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmCliente().setVisible(true);
+                try {
+                    new FrmCliente().setVisible(true);
+                } catch (Exception ex) {
+                    Logger.getLogger(FrmCliente.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

@@ -28,7 +28,7 @@ public class ClienteCRUD {
             pstm.setString(2, cliente.getCpf());
             pstm.setString(3, cliente.getEmail());
             pstm.setString(4, cliente.getRua());
-            pstm.setString(5, cliente.getNumero());
+            pstm.setInt(5, cliente.getNumero());
             pstm.setString(6, cliente.getCep());
             pstm.setString(7, cliente.getBairro());
             pstm.setString(8, cliente.getUf().getCodigoUf());
@@ -38,7 +38,7 @@ public class ClienteCRUD {
         }
     }
     
-    public ArrayList<Cliente> read(Connection conn){
+    public ArrayList<Cliente> read(Connection conn) throws Exception{
         ArrayList<Cliente> listaClientes = new ArrayList<>();
         UfCRUD uf = new UfCRUD();
         try{
@@ -55,7 +55,7 @@ public class ClienteCRUD {
                 cliente.setNome(rset.getString("nome"));
                 cliente.setCpf(rset.getString("cpf"));
                 cliente.setRua(rset.getString("rua"));
-                cliente.setNumero(rset.getString("numero"));
+                cliente.setNumero(rset.getInt("numero"));
                 cliente.setBairro(rset.getString("bairro"));
                 cliente.setUf(uf.read(conn, rset.getString("codigo_uf")));
                 
@@ -68,7 +68,7 @@ public class ClienteCRUD {
         }
     }
     
-    public Cliente read(Connection conn, int id){
+    public Cliente read(Connection conn, int id) throws Exception{
         Cliente aux = null;
         try{
             PreparedStatement pstm = conn.prepareStatement(
@@ -86,7 +86,7 @@ public class ClienteCRUD {
                 aux.setNome(rset.getString("nome"));
                 aux.setCpf(rset.getString("cpf"));
                 aux.setRua(rset.getString("rua"));
-                aux.setNumero(rset.getString("numero"));
+                aux.setNumero(rset.getInt("numero"));
                 aux.setBairro(rset.getString("bairro"));
                 aux.setUf(uf.read(conn, rset.getString("codigo_uf")));
                 return aux;
@@ -97,6 +97,39 @@ public class ClienteCRUD {
         }catch(SQLException ex){
             System.err.println(ex.getMessage());
             return aux;
+        }
+    }
+    
+    public ArrayList<Cliente> read(Connection conn, String filtro) throws Exception{
+        ArrayList<Cliente> listaClientes = new ArrayList<>();
+        UfCRUD uf = new UfCRUD();
+        try{
+            PreparedStatement pstm = conn.prepareStatement(
+                    "SELECT id, nome, cpf, email, rua, numero, cep, bairro, uf"+
+                    "  FROM cliente"+
+                    "  where nome LIKE ?"+
+                    "  ORDER BY id;"
+            );
+            
+            pstm.setString(1, filtro);
+            ResultSet rset = pstm.executeQuery();
+            
+            while(rset.next()){
+                Cliente cliente = new Cliente();
+                cliente.setId(rset.getInt("id"));
+                cliente.setNome(rset.getString("nome"));
+                cliente.setCpf(rset.getString("cpf"));
+                cliente.setRua(rset.getString("rua"));
+                cliente.setNumero(rset.getInt("numero"));
+                cliente.setBairro(rset.getString("bairro"));
+                cliente.setUf(uf.read(conn, rset.getString("codigo_uf")));
+                
+                listaClientes.add(cliente);
+            }
+            return listaClientes;
+        }catch(SQLException ex){
+            System.err.println(ex.getMessage());
+            return listaClientes;
         }
     }
     
@@ -111,7 +144,7 @@ public class ClienteCRUD {
             pstm.setString(2, cliente.getCpf());
             pstm.setString(3, cliente.getEmail());
             pstm.setString(4, cliente.getRua());
-            pstm.setString(5, cliente.getNumero());
+            pstm.setInt(5, cliente.getNumero());
             pstm.setString(6, cliente.getCep());
             pstm.setString(7, cliente.getBairro());
             pstm.setString(8, cliente.getUf().getCodigoUf());

@@ -5,7 +5,6 @@
  */
 package domain;
 
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,8 +23,12 @@ public class Venda {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setUsuario(Usuario usuario) throws Exception {
+        if (!(usuario == null)) {
+            this.usuario = usuario;
+        } else {
+            throw new Exception("usuario invalido!");
+        }
     }
 
     public int getId() {
@@ -40,11 +43,11 @@ public class Venda {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
+    public void setCliente(Cliente cliente) throws Exception {
         if (cliente != null) {
             this.cliente = cliente;
         } else {
-            JOptionPane.showMessageDialog(null, "cliente invalido");
+            throw new Exception("cliente invalido!");
         }
     }
 
@@ -52,11 +55,11 @@ public class Venda {
         return formaDePagamento;
     }
 
-    public void setFormaDePagamento(FormaDePagamento formaDePagamento) {
+    public void setFormaDePagamento(FormaDePagamento formaDePagamento) throws Exception {
         if (formaDePagamento != null) {
             this.formaDePagamento = formaDePagamento;
         } else {
-            JOptionPane.showMessageDialog(null, "forma de pagamento invalido");
+            throw new Exception("forma de pagamento invalida!");
         }
     }
 
@@ -64,11 +67,11 @@ public class Venda {
         return imovel;
     }
 
-    public void setImovel(Imovel imovel) {
+    public void setImovel(Imovel imovel) throws Exception {
         if (imovel != null) {
             this.imovel = imovel;
         } else {
-            JOptionPane.showMessageDialog(null, "imovel invalido");
+            throw new Exception("Imovel invalido!");
         }
     }
 
@@ -76,11 +79,11 @@ public class Venda {
         return parcelas;
     }
 
-    public void setParcelas(int parcelas) {
+    public void setParcelas(int parcelas) throws Exception {
         if (parcelas > 0) {
             this.parcelas = parcelas;
         } else {
-            JOptionPane.showMessageDialog(null, "parcelas invalido");
+            throw new Exception("parcelas invalida!");
         }
     }
 

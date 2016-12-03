@@ -5,25 +5,17 @@
  */
 package domain;
 
-import javax.swing.JOptionPane;
-
 /**
  *
  * @author victor alves abreu
  */
-public class Cliente {
-    
+public class Cliente extends Endereco {
+
     private int id;
     private String nome;
     private String cpf;
     private String email;
-    private String rua;
-    private String numero;
-    private String cep;
-    private String bairro;
-    private Uf     uf;
 
-    
     public int getId() {
         return id;
     }
@@ -37,7 +29,7 @@ public class Cliente {
     }
 
     public void setNome(String nome) throws Exception {
-        if(!nome.isEmpty()) {
+        if (!nome.isEmpty()) {
             this.nome = nome;
         } else {
             throw new Exception("o campo nome não pode ficar vazio");
@@ -48,8 +40,8 @@ public class Cliente {
         return cpf;
     }
 
-    public void setCpf(String cpf) throws Exception {      
-        if(!cpf.isEmpty()){
+    public void setCpf(String cpf) throws Exception {
+        if (!cpf.isEmpty()) {
             this.cpf = cpf;
         } else {
             throw new Exception("Cpf invalido");
@@ -61,50 +53,11 @@ public class Cliente {
     }
 
     public void setEmail(String email) throws Exception {
-        if(!email.isEmpty()){
+        if (!email.isEmpty()) {
             this.email = email;
         } else {
             throw new Exception("email invalido");
         }
     }
 
-    public String getRua() {
-        return rua;
-    }
-
-    public void setRua(String rua) {
-        this.rua = rua;
-    }
-
-    public String getNumero() {
-        return numero;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-    public String getCep() {
-        return cep;
-    }
-
-    public void setCep(String cep) {
-        this.cep = cep;
-    }
-
-    public String getBairro() {
-        return bairro;
-    }
-
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
-    }
-
-    public Uf getUf() {
-        return uf;
-    }
-
-    public void setUf(Uf uf) {
-        this.uf = uf;
-    }
 }

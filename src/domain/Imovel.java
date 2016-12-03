@@ -5,24 +5,18 @@
  */
 package domain;
 
-import javax.swing.JOptionPane;
-
 /**
  *
  * @author victor alves abreu
  */
-public class Imovel {
+public class Imovel extends Endereco{
 
     private int id;
     private String nome;
     private float metrosQuad;
     private float preco;
     private String descricao;
-    private String rua;
-    private String numero;
-    private String cep;
-    private String bairro;
-    private Uf uf;
+    
 
     public Imovel() {
         this.uf = null;
@@ -32,49 +26,15 @@ public class Imovel {
         return nome;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNome(String nome) throws Exception {
+        if (!nome.isEmpty()) {
+            this.nome = nome;
+        }else{
+            throw new Exception("nome invalido!");
+        }
     }
 
-    public String getRua() {
-        return rua;
-    }
-
-    public void setRua(String rua) {
-        this.rua = rua;
-    }
-
-    public String getNumero() {
-        return numero;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-    public String getCep() {
-        return cep;
-    }
-
-    public void setCep(String cep) {
-        this.cep = cep;
-    }
-
-    public String getBairro() {
-        return bairro;
-    }
-
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
-    }
-
-    public Uf getUf() {
-        return uf;
-    }
-
-    public void setUf(Uf uf) {
-        this.uf = uf;
-    }
+    
 
     public int getId() {
         return id;
@@ -88,11 +48,11 @@ public class Imovel {
         return metrosQuad;
     }
 
-    public void setMetrosQuad(float metrosQuad) {
+    public void setMetrosQuad(float metrosQuad) throws Exception {
         if (metrosQuad > 0) {
             this.metrosQuad = metrosQuad;
         } else {
-            JOptionPane.showMessageDialog(null, "valor invalido para metros quadrados");
+            throw new Exception("Metros quadrados invalido!");
         }
     }
 
@@ -100,11 +60,11 @@ public class Imovel {
         return descricao;
     }
 
-    public void setDescricao(String descricao) {
+    public void setDescricao(String descricao) throws Exception {
         if (!descricao.isEmpty()) {
             this.descricao = descricao;
         } else {
-            JOptionPane.showMessageDialog(null, "descricao invalido");
+            throw new Exception("descricao invalida!");
         }
     }
 

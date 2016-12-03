@@ -32,7 +32,7 @@ public class UfCRUD {
         }
     }
     
-    public ArrayList<Uf> read(Connection conn){
+    public ArrayList<Uf> read(Connection conn) throws Exception{
         ArrayList<Uf> listaUf = new ArrayList<>();
         try{
             PreparedStatement pstm = conn.prepareStatement(
@@ -44,7 +44,7 @@ public class UfCRUD {
             ResultSet rset = pstm.executeQuery();
             while(rset.next()){
                 Uf uf = new Uf();
-                uf.setCodigoUf(rset.getString("codigo_if"));
+                uf.setCodigoUf(rset.getString("codigo_uf"));
                 uf.setNome(rset.getString("nome"));
                 
                 listaUf.add(uf);
@@ -56,7 +56,7 @@ public class UfCRUD {
         }
     }
     
-    public Uf read(Connection conn, String codigoUf){
+    public Uf read(Connection conn, String codigoUf) throws Exception{
         Uf uf = null;
         try{
             PreparedStatement pstm = conn.prepareStatement(

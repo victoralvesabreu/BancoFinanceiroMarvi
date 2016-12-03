@@ -5,7 +5,6 @@
  */
 package domain;
 
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -32,11 +31,11 @@ public class Uf {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public void setNome(String nome) throws Exception {
         if (!nome.isEmpty()) {
             this.nome = nome;
         } else {
-            JOptionPane.showMessageDialog(null, "nome invalido");
+            throw new Exception("Nome uf invalido!");
         }
     }
 

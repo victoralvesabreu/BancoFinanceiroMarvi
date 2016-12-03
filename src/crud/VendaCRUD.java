@@ -35,7 +35,7 @@ public class VendaCRUD {
         }
     }
 
-    public ArrayList<Venda> read(Connection conn) {
+    public ArrayList<Venda> read(Connection conn) throws Exception {
         ArrayList<Venda> listaClientes = new ArrayList<>();
         ClienteCRUD cliente = new ClienteCRUD();
         FormaDePagamentoCRUD pagamento = new FormaDePagamentoCRUD();
@@ -68,7 +68,7 @@ public class VendaCRUD {
         }
     }
 
-    public Venda read(Connection conn, int id) {
+    public Venda read(Connection conn, int id) throws Exception {
         Venda venda = null;
         ClienteCRUD cliente = new ClienteCRUD();
         FormaDePagamentoCRUD pagamento = new FormaDePagamentoCRUD();
