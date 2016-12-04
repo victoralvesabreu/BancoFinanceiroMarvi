@@ -7,7 +7,7 @@ package database;
 
 /**
  *
- * @author 20151si030
+ * @author Victor Alves Abreu
  */
 public class DatabaseFactory {
     public static Database getDatabase(String type){

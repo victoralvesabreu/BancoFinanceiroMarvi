@@ -5,6 +5,7 @@
  */
 package main;
 
+import views.FrmLogin;
 import views.FrmPrincipal;
 
 
@@ -14,7 +15,7 @@ import views.FrmPrincipal;
  */
 public class Principal {
     public static void main(String []args){
-        FrmPrincipal menu = new FrmPrincipal();
+        FrmLogin menu = new FrmLogin();
         menu.setVisible(true);
     }
 }

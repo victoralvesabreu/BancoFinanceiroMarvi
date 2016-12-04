@@ -21,7 +21,7 @@ public class UsuarioCRUD {
     public void create(Connection conn, Usuario usuario){
         try{
             PreparedStatement pstm = conn.prepareStatement(
-                    "INSERT INTO venda(id, nome, email, senha, acesso, cpf, cargo)"+
+                    "INSERT INTO usuario(id, nome, email, senha, acesso, cpf, cargo)"+
                     "VALUES(?,?,?,?,?,?,?);"
             );
             pstm.setInt(1, usuario.getId());
@@ -42,8 +42,8 @@ public class UsuarioCRUD {
         
         try{
             PreparedStatement pstm = conn.prepareStatement(
-                    "SELECT id, nome, cpf, email, rua, numero, cep, bairro, uf"+
-                    "  FROM venda"+
+                    "SELECT id, nome, email, senha, acesso, cpf, cargo"+
+                    "  FROM usuario"+
                     "  ORDER BY id;"
             );
             
@@ -102,7 +102,7 @@ public class UsuarioCRUD {
     public void update(Connection conn, Usuario usuario){
         try{
             PreparedStatement pstm = conn.prepareStatement(
-                    "UPDATE cliente"+
+                    "UPDATE usuario"+
                     " SET nome=?, email=?,senha=?, acesso=? ,cpf=?, cargo=?"+
                     " WHERE id=?;"
             );

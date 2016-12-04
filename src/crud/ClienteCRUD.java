@@ -18,11 +18,11 @@ import java.util.ArrayList;
  */
 public class ClienteCRUD {
 
-    public void create(Connection conn, Cliente cliente){
-        try{
+    public void create(Connection conn, Cliente cliente) {
+        try {
             PreparedStatement pstm = conn.prepareStatement(
-                    "INSERT INTO cliente(nome,cpf, email, rua, numero, cep, bairro, uf)"+
-                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?);"
+                    "INSERT INTO cliente(nome,cpf, email, rua, numero, cep, bairro, uf)"
+                    + "VALUES(?, ?, ?, ?, ?, ?, ?, ?);"
             );
             pstm.setString(1, cliente.getNome());
             pstm.setString(2, cliente.getCpf());
@@ -33,88 +33,92 @@ public class ClienteCRUD {
             pstm.setString(7, cliente.getBairro());
             pstm.setString(8, cliente.getUf().getCodigoUf());
             pstm.execute();
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
     }
-    
-    public ArrayList<Cliente> read(Connection conn) throws Exception{
+
+    public ArrayList<Cliente> read(Connection conn) throws Exception {
         ArrayList<Cliente> listaClientes = new ArrayList<>();
         UfCRUD uf = new UfCRUD();
-        try{
+        try {
             PreparedStatement pstm = conn.prepareStatement(
-                    "SELECT id, nome, cpf, email, rua, numero, cep, bairro, uf"+
-                    "  FROM cliente"+
-                    "  ORDER BY id;"
+                    "SELECT id, nome, cpf, email, rua, numero, cep, bairro, uf"
+                    + "  FROM cliente"
+                    + "  ORDER BY id;"
             );
-            
+
             ResultSet rset = pstm.executeQuery();
-            while(rset.next()){
+            while (rset.next()) {
                 Cliente cliente = new Cliente();
                 cliente.setId(rset.getInt("id"));
                 cliente.setNome(rset.getString("nome"));
                 cliente.setCpf(rset.getString("cpf"));
                 cliente.setRua(rset.getString("rua"));
+                cliente.setEmail(rset.getString("email"));
                 cliente.setNumero(rset.getInt("numero"));
+                cliente.setCep(rset.getString("cep"));
                 cliente.setBairro(rset.getString("bairro"));
-                cliente.setUf(uf.read(conn, rset.getString("codigo_uf")));
-                
+                cliente.setUf(uf.read(conn, rset.getString("uf")));
+
                 listaClientes.add(cliente);
             }
             return listaClientes;
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             System.err.println(ex.getMessage());
             return listaClientes;
         }
     }
-    
-    public Cliente read(Connection conn, int id) throws Exception{
-        Cliente aux = null;
-        try{
+
+    public Cliente read(Connection conn, int id) throws Exception {
+        Cliente cliente = null;
+        try {
             PreparedStatement pstm = conn.prepareStatement(
-                    "SELECT id, nome, cpf, email, rua, numero, cep, bairro, codigo_uf"+
-                    "  FROM cliente"+
-                    "  WHERE id=?"+
-                    " LIMIT 1;"
+                    "SELECT id, nome, cpf, email, rua, numero, cep, bairro, uf"
+                    + "  FROM cliente"
+                    + "  WHERE id=?"
+                    + " LIMIT 1;"
             );
             pstm.setInt(1, id);
             ResultSet rset = pstm.executeQuery();
             UfCRUD uf = new UfCRUD();
             if (rset.next()) {
-                aux = new Cliente();
-                aux.setId(rset.getInt("id"));
-                aux.setNome(rset.getString("nome"));
-                aux.setCpf(rset.getString("cpf"));
-                aux.setRua(rset.getString("rua"));
-                aux.setNumero(rset.getInt("numero"));
-                aux.setBairro(rset.getString("bairro"));
-                aux.setUf(uf.read(conn, rset.getString("codigo_uf")));
-                return aux;
-                
-            }else{
-                return aux;
+                cliente = new Cliente();
+                cliente.setId(rset.getInt("id"));
+                cliente.setNome(rset.getString("nome"));
+                cliente.setCpf(rset.getString("cpf"));
+                cliente.setEmail(rset.getString("email"));
+                cliente.setRua(rset.getString("rua"));
+                cliente.setNumero(rset.getInt("numero"));
+                cliente.setCep(rset.getString("cep"));
+                cliente.setBairro(rset.getString("bairro"));
+                cliente.setUf(uf.read(conn, rset.getString("uf")));
+                return cliente;
+
+            } else {
+                return cliente;
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             System.err.println(ex.getMessage());
-            return aux;
+            return cliente;
         }
     }
-    
-    public ArrayList<Cliente> read(Connection conn, String filtro) throws Exception{
+
+    public ArrayList<Cliente> read(Connection conn, String filtro) throws Exception {
         ArrayList<Cliente> listaClientes = new ArrayList<>();
         UfCRUD uf = new UfCRUD();
-        try{
+        try {
             PreparedStatement pstm = conn.prepareStatement(
-                    "SELECT id, nome, cpf, email, rua, numero, cep, bairro, uf"+
-                    "  FROM cliente"+
-                    "  where nome LIKE ?"+
-                    "  ORDER BY id;"
+                    "SELECT id, nome, cpf, email, rua, numero, cep, bairro, uf"
+                    + "  FROM cliente"
+                    + "  where nome LIKE ?"
+                    + "  ORDER BY id;"
             );
-            
+
             pstm.setString(1, filtro);
             ResultSet rset = pstm.executeQuery();
-            
-            while(rset.next()){
+
+            while (rset.next()) {
                 Cliente cliente = new Cliente();
                 cliente.setId(rset.getInt("id"));
                 cliente.setNome(rset.getString("nome"));
@@ -123,22 +127,22 @@ public class ClienteCRUD {
                 cliente.setNumero(rset.getInt("numero"));
                 cliente.setBairro(rset.getString("bairro"));
                 cliente.setUf(uf.read(conn, rset.getString("codigo_uf")));
-                
+
                 listaClientes.add(cliente);
             }
             return listaClientes;
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             System.err.println(ex.getMessage());
             return listaClientes;
         }
     }
-    
-    public void update(Connection conn, Cliente cliente){
-        try{
+
+    public void update(Connection conn, Cliente cliente) {
+        try {
             PreparedStatement pstm = conn.prepareStatement(
-                    "UPDATE cliente"+
-                    " SET nome=?, cpf=?, email=?, rua=?, numero=?, cep=?, bairro=?, codigo_uf=?"+
-                    " WHERE id=?;"
+                    "UPDATE cliente"
+                    + " SET nome=?, cpf=?, email=?, rua=?, numero=?, cep=?, bairro=?, uf=?"
+                    + " WHERE id=?;"
             );
             pstm.setString(1, cliente.getNome());
             pstm.setString(2, cliente.getCpf());
@@ -149,23 +153,22 @@ public class ClienteCRUD {
             pstm.setString(7, cliente.getBairro());
             pstm.setString(8, cliente.getUf().getCodigoUf());
             pstm.setInt(9, cliente.getId());
-            
+
             pstm.execute();
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
     }
-    
-    
-    public void delete(Connection conn, Cliente cliente){
-        try{
+
+    public void delete(Connection conn, int id) {
+        try {
             PreparedStatement pstm = conn.prepareStatement(
-                    "DELETE FROM cliente"+
-                    "  WHERE id=?;"
+                    "DELETE FROM cliente"
+                    + "  WHERE id=?;"
             );
-            pstm.setInt(1, cliente.getId());
+            pstm.setInt(1, id);
             pstm.execute();
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
     }

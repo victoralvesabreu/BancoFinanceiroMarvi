@@ -5,8 +5,12 @@
  */
 package views;
 
+import crud.UsuarioCRUD;
 import database.Database;
+import database.DatabaseFactory;
 import domain.Usuario;
+import java.sql.Connection;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -106,12 +110,23 @@ public class FrmLogin extends javax.swing.JFrame {
 
     private void btEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEntrarActionPerformed
 
-        for (Usuario u : Database.listaUsuario) {
+        Connection conn = DatabaseFactory.getDatabase("postgres").connect();
+        UsuarioCRUD usuarioCrud = new UsuarioCRUD();
+        try{
+        for (Usuario u : usuarioCrud.read(conn)) {
             if (u.getEmail().equals(tfEmail.getText()) && u.getSenha().equals(tfSenha.getText())) {
-                Usuario.user = u;
-                throw new IllegalAccessError("Usuario Invalido");
+                Usuario.logado = u;
+                FrmPrincipal principal = new FrmPrincipal();
+                principal.setVisible(true);
+                this.dispose();
             } else {
+                JOptionPane.showMessageDialog(this, "Usuario/Senha invalido!");
             }
+        }
+        
+        DatabaseFactory.getDatabase("postgres").disconnect(conn);
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(this,ex.getMessage());
         }
     }//GEN-LAST:event_btEntrarActionPerformed
 

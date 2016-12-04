@@ -6,9 +6,13 @@
 package views;
 
 import crud.ImovelCRUD;
-import database.Database;
+import crud.UfCRUD;
+import database.DatabaseFactory;
 import domain.Imovel;
 import domain.Uf;
+import java.sql.Connection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,17 +23,60 @@ public class FrmImovel extends javax.swing.JFrame {
     /**
      * Creates new form FrmImovelFrame
      */
+    boolean edit;
+
     public FrmImovel() {
         initComponents();
-        
-        for (Uf uf : Database.listaUf) {
-            cbUf.addItem(uf.getCodigoUf());
+        try {
+            edit = false;
+            UfCRUD ufCrud = new UfCRUD();
+            Connection conn = DatabaseFactory.getDatabase("postgres").connect();
+            for (Uf uf : ufCrud.read(conn)) {
+                cbUf.addItem(uf.getCodigoUf());
+            }
+        } catch (Exception ex) {
+            System.err.print(ex.getMessage());
         }
     }
+    
+    public FrmImovel(int id) {
+        Connection conn = DatabaseFactory.getDatabase("postgres").connect();
+        ImovelCRUD imovel = new ImovelCRUD();
+        Imovel imo = null;
+        UfCRUD ufCRUD = new UfCRUD();
+        try {
+            for (Imovel c : imovel.read(conn)) {
+                if (c.getId() == id) {
+                    imo = c;
+                }
+            }
 
-    FrmImovel(int parseInt) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            if (imo != null) {
+                initComponents();
+                this.setTitle("Editar imovel ID: " + imo.getId());
+                tfId.setText(Integer.toString(imo.getId()));
+                tfNome.setText(imo.getNome());
+                tfBairro.setText(imo.getBairro());
+                tfCep.setText(imo.getCep());
+                tfRua.setText(imo.getRua());
+                tfPreco.setText(Float.toString(imo.getPreco()));
+                tfDescricao.setText(imo.getDescricao());
+                tfMetrosQuad.setText(Float.toString(imo.getMetrosQuad()));
+                tfNumero.setText(Integer.toString(imo.getNumero()));
+                edit = true;
+                for (Uf uf : ufCRUD.read(conn)) {
+                    cbUf.addItem(uf.getCodigoUf());
+                    cbUf.setSelectedItem(imo.getUf().getCodigoUf());
+                }
+            } else {
+                throw new IllegalAccessError("Nenhum Cliente Encontrado");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FrmCliente.class.getName()).log(Level.ALL.SEVERE, null, ex);
+        }
+
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -42,17 +89,7 @@ public class FrmImovel extends javax.swing.JFrame {
 
         btCadastrar = new javax.swing.JButton();
         btSair = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        tfNumero = new javax.swing.JTextField();
-        lbMetrosQuad = new javax.swing.JLabel();
-        tfMetrosQuad = new javax.swing.JTextField();
-        lbPreco = new javax.swing.JLabel();
-        tfPreco = new javax.swing.JTextField();
-        lbDescricao = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tfDescricao = new javax.swing.JTextPane();
-        lbNumero = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        pnLocalizacao = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         cbUf = new javax.swing.JComboBox<>();
         lbId = new javax.swing.JLabel();
@@ -65,6 +102,16 @@ public class FrmImovel extends javax.swing.JFrame {
         tfBairro = new javax.swing.JTextField();
         tfNome = new javax.swing.JTextField();
         lbNome = new javax.swing.JLabel();
+        pnDescricao = new javax.swing.JPanel();
+        tfNumero = new javax.swing.JTextField();
+        lbMetrosQuad = new javax.swing.JLabel();
+        tfMetrosQuad = new javax.swing.JTextField();
+        lbPreco = new javax.swing.JLabel();
+        tfPreco = new javax.swing.JTextField();
+        lbDescricao = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tfDescricao = new javax.swing.JTextPane();
+        lbNumero = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastrar Imovel");
@@ -83,71 +130,7 @@ public class FrmImovel extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        lbMetrosQuad.setText("Qtd Metros quadrados");
-
-        lbPreco.setText("Preço");
-
-        lbDescricao.setText("Descrição");
-
-        jScrollPane1.setViewportView(tfDescricao);
-
-        lbNumero.setText("Numero");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 358, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane1)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addGap(14, 14, 14)
-                            .addComponent(lbPreco)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(tfPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(lbNumero)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(tfNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(68, 68, 68))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lbDescricao)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(lbMetrosQuad)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(tfMetrosQuad, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGap(6, 6, 6)))
-                    .addContainerGap()))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 160, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lbMetrosQuad)
-                        .addComponent(tfMetrosQuad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(lbDescricao)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lbPreco)
-                        .addComponent(tfPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lbNumero)
-                        .addComponent(tfNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap()))
-        );
-
-        jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        pnLocalizacao.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel1.setText("Uf:");
 
@@ -160,26 +143,28 @@ public class FrmImovel extends javax.swing.JFrame {
 
         lbId.setText("Id:");
 
+        tfId.setEnabled(false);
+
         lbRua.setText("Rua:");
 
         lbCep.setText("Cep");
 
         lbBairro.setText("Bairro");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnLocalizacaoLayout = new javax.swing.GroupLayout(pnLocalizacao);
+        pnLocalizacao.setLayout(pnLocalizacaoLayout);
+        pnLocalizacaoLayout.setHorizontalGroup(
+            pnLocalizacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnLocalizacaoLayout.createSequentialGroup()
+                .addGroup(pnLocalizacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(pnLocalizacaoLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(pnLocalizacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnLocalizacaoLayout.createSequentialGroup()
                                 .addComponent(lbBairro)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(tfBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(pnLocalizacaoLayout.createSequentialGroup()
                                 .addComponent(lbCep)
                                 .addGap(31, 31, 31)
                                 .addComponent(tfCep, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -187,7 +172,7 @@ public class FrmImovel extends javax.swing.JFrame {
                                 .addComponent(lbRua)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(tfRua, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(pnLocalizacaoLayout.createSequentialGroup()
                         .addGap(56, 56, 56)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -198,29 +183,29 @@ public class FrmImovel extends javax.swing.JFrame {
                         .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+        pnLocalizacaoLayout.setVerticalGroup(
+            pnLocalizacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnLocalizacaoLayout.createSequentialGroup()
+                .addGroup(pnLocalizacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnLocalizacaoLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(pnLocalizacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbId))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnLocalizacaoLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(pnLocalizacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(cbUf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pnLocalizacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbCep)
                     .addComponent(tfCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbRua)
                     .addComponent(tfRua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pnLocalizacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbBairro)
                     .addComponent(tfBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(38, 38, 38))
@@ -228,43 +213,105 @@ public class FrmImovel extends javax.swing.JFrame {
 
         lbNome.setText("Nome");
 
+        pnDescricao.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        lbMetrosQuad.setText("Qtd Metros quadrados");
+
+        lbPreco.setText("Preço");
+
+        lbDescricao.setText("Descrição");
+
+        jScrollPane1.setViewportView(tfDescricao);
+
+        lbNumero.setText("Numero");
+
+        javax.swing.GroupLayout pnDescricaoLayout = new javax.swing.GroupLayout(pnDescricao);
+        pnDescricao.setLayout(pnDescricaoLayout);
+        pnDescricaoLayout.setHorizontalGroup(
+            pnDescricaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 358, Short.MAX_VALUE)
+            .addGroup(pnDescricaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnDescricaoLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(pnDescricaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnDescricaoLayout.createSequentialGroup()
+                            .addGap(14, 14, 14)
+                            .addComponent(lbPreco)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(tfPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(lbNumero)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(tfNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(68, 68, 68))
+                        .addGroup(pnDescricaoLayout.createSequentialGroup()
+                            .addGroup(pnDescricaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lbDescricao)
+                                .addGroup(pnDescricaoLayout.createSequentialGroup()
+                                    .addComponent(lbMetrosQuad)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(tfMetrosQuad, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(6, 6, 6)))
+                    .addContainerGap()))
+        );
+        pnDescricaoLayout.setVerticalGroup(
+            pnDescricaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 160, Short.MAX_VALUE)
+            .addGroup(pnDescricaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnDescricaoLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(pnDescricaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lbMetrosQuad)
+                        .addComponent(tfMetrosQuad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(lbDescricao)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnDescricaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lbPreco)
+                        .addComponent(tfPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lbNumero)
+                        .addComponent(tfNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap()))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pnLocalizacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(25, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btCadastrar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(56, 56, 56))))
+                        .addComponent(lbNome)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(pnDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lbNome)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(166, 166, 166))
+                .addComponent(btCadastrar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(53, 53, 53))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbNome)
-                    .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(22, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbNome)
+                            .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(pnLocalizacao, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pnDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btCadastrar)
                     .addComponent(btSair))
@@ -277,24 +324,33 @@ public class FrmImovel extends javax.swing.JFrame {
     private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
         ImovelCRUD imo = new ImovelCRUD();
         Imovel imovel = new Imovel();
-        
-        imovel.setId(Integer.parseInt(tfId.getText()));
-        imovel.setNome(tfNome.getText());
-        imovel.setMetrosQuad(Float.parseFloat(tfMetrosQuad.getText()));
-        imovel.setPreco(Float.parseFloat(tfPreco.getText()));
-        imovel.setDescricao(tfDescricao.getText());
-        imovel.setRua(tfRua.getText());
-        imovel.setNumero(tfNumero.getText());
-        imovel.setCep(tfCep.getText());
-        imovel.setBairro(tfBairro.getText());
-        for (Uf uf : Database.listaUf) {
-            if (uf.getCodigoUf().equals(cbUf)) {
-                imovel.setUf(uf);
+        UfCRUD ufcrud = new UfCRUD();
+        Connection conn = DatabaseFactory.getDatabase("postgres").connect();
+        try {
+            imovel.setId(Integer.parseInt(tfId.getText()));
+            imovel.setNome(tfNome.getText());
+            imovel.setMetrosQuad(Float.parseFloat(tfMetrosQuad.getText()));
+            imovel.setPreco(Float.parseFloat(tfPreco.getText()));
+            imovel.setDescricao(tfDescricao.getText());
+            imovel.setRua(tfRua.getText());
+            imovel.setNumero(Integer.parseInt(tfNumero.getText()));
+            imovel.setCep(tfCep.getText());
+            imovel.setBairro(tfBairro.getText());
+            for (Uf uf : ufcrud.read(conn)) {
+                if (uf.getCodigoUf().equals(cbUf.getSelectedItem())) {
+                    imovel.setUf(uf);
+                }
             }
+            if (edit) {
+                imo.update(conn, imovel);
+            } else {
+                imo.create(conn, imovel);
+            }
+
+            DatabaseFactory.getDatabase("postgres").disconnect(conn);
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
         }
-
-        imo.inserir(imovel);
-
         this.dispose();
     }//GEN-LAST:event_btCadastrarActionPerformed
 
@@ -347,8 +403,6 @@ public class FrmImovel extends javax.swing.JFrame {
     private javax.swing.JButton btSair;
     private javax.swing.JComboBox<String> cbUf;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbBairro;
     private javax.swing.JLabel lbCep;
@@ -359,6 +413,8 @@ public class FrmImovel extends javax.swing.JFrame {
     private javax.swing.JLabel lbNumero;
     private javax.swing.JLabel lbPreco;
     private javax.swing.JLabel lbRua;
+    private javax.swing.JPanel pnDescricao;
+    private javax.swing.JPanel pnLocalizacao;
     private javax.swing.JTextField tfBairro;
     private javax.swing.JTextField tfCep;
     private javax.swing.JTextPane tfDescricao;

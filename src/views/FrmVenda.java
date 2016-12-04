@@ -5,13 +5,24 @@
  */
 package views;
 
+import crud.ClienteCRUD;
+import crud.FormaDePagamentoCRUD;
+import crud.ImovelCRUD;
+import crud.UfCRUD;
+import crud.UsuarioCRUD;
 import crud.VendaCRUD;
 import database.Database;
+import database.DatabaseFactory;
 import domain.Cliente;
 import domain.FormaDePagamento;
 import domain.Imovel;
+import domain.Uf;
 import domain.Usuario;
 import domain.Venda;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -22,8 +33,34 @@ public class FrmVenda extends javax.swing.JFrame {
     /**
      * Creates new form FrmVendaForme
      */
-    public FrmVenda() {
+    boolean edit;
+
+    public FrmVenda() throws Exception {
         initComponents();
+        edit = false;
+        Connection conn = DatabaseFactory.getDatabase("postgresql").connect();
+        ClienteCRUD clienteCrud = new ClienteCRUD();
+        FormaDePagamentoCRUD formaPagamentoCrud = new FormaDePagamentoCRUD();
+        ImovelCRUD imovelCrud = new ImovelCRUD();
+        try {
+
+            tfUsuario.setText(Usuario.logado.getNome());
+
+            for (Cliente cli : clienteCrud.read(conn)) {
+                cbCliente.addItem(Integer.toString(cli.getId()));
+            }
+            for (FormaDePagamento pagamento : formaPagamentoCrud.read(conn)) {
+                cbFormaDePagamento.addItem(pagamento.getTipo());
+            }
+            for (Imovel imovel : imovelCrud.read(conn)) {
+                cbImovel.addItem(imovel.getNome());
+            }
+
+            DatabaseFactory.getDatabase("postgresql").disconnect(conn);
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+            DatabaseFactory.getDatabase("postgresql").disconnect(conn);
+        }
     }
 
     FrmVenda(int parseInt) {
@@ -41,7 +78,6 @@ public class FrmVenda extends javax.swing.JFrame {
 
         cbCliente = new javax.swing.JComboBox<>();
         lbCliente = new javax.swing.JLabel();
-        cbUsuario = new javax.swing.JComboBox<>();
         lbUsuario = new javax.swing.JLabel();
         cbFormaDePagamento = new javax.swing.JComboBox<>();
         lbFormaDePagamento = new javax.swing.JLabel();
@@ -51,9 +87,12 @@ public class FrmVenda extends javax.swing.JFrame {
         btSair = new javax.swing.JButton();
         tfParcelas = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        tfUsuario = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastrar Venda");
+
+        cbCliente.setToolTipText("");
 
         lbCliente.setText("Cliente:");
 
@@ -79,6 +118,8 @@ public class FrmVenda extends javax.swing.JFrame {
 
         jLabel1.setText("parcelas:");
 
+        tfUsuario.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -86,16 +127,10 @@ public class FrmVenda extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(102, 102, 102)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbCliente)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbUsuario)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cbUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(107, 107, 107)
+                        .addComponent(lbCliente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(43, 43, 43)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
@@ -117,11 +152,21 @@ public class FrmVenda extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(104, 104, 104))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(lbUsuario)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tfUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(68, 68, 68)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbUsuario)
+                    .addComponent(tfUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbCliente)
@@ -129,11 +174,9 @@ public class FrmVenda extends javax.swing.JFrame {
                     .addComponent(lbFormaDePagamento))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbUsuario)
                     .addComponent(cbImovel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbImovel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
@@ -153,36 +196,42 @@ public class FrmVenda extends javax.swing.JFrame {
 
     private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
         VendaCRUD ven = new VendaCRUD();
-        Venda venda   = new Venda();
-        
-        for (Cliente cliente : Database.listaCliente) {
-            if (cliente.getNome().equals(cbCliente)) {
-                venda.setCliente(cliente);
-            }
-        }
-        
-        for (Usuario usuario : Database.listaUsuario) {
-            if (usuario.getNome().equals(cbUsuario)) {
-                venda.setUsuario(usuario);
-            }
-        }
-        
-        for (FormaDePagamento formaDePagamento : Database.listaFormaDepagamento) {
-            if (formaDePagamento.getTipo().equals(cbFormaDePagamento)) {
-                venda.setFormaDePagamento(formaDePagamento);
-            }
-        }
-        
-        for (Imovel imovel : Database.listaImovel) {
-            if (imovel.getNome().equals(cbImovel)) {
-                venda.setImovel(imovel);
-            }
-        }
-        
-        venda.setParcelas(Integer.parseInt(tfParcelas.getText()));
+        Venda venda = new Venda();
+        Connection conn = DatabaseFactory.getDatabase("postgres").connect();
+        ClienteCRUD clienteCrud = new ClienteCRUD();
+        FormaDePagamentoCRUD formaPagamentoCrud = new FormaDePagamentoCRUD();
+        ImovelCRUD imovelCrud = new ImovelCRUD();
 
-        ven.inserir(venda);
+        try {
+            for (Cliente cliente : clienteCrud.read(conn)) {
+                if (Integer.toString(cliente.getId()).equals(cbCliente.getSelectedItem())) {
+                    venda.setCliente(cliente);
+                }
+            }
 
+            venda.setUsuario(Usuario.logado);
+
+            for (FormaDePagamento formaDePagamento : formaPagamentoCrud.read(conn)) {
+                if (formaDePagamento.getTipo().equals(cbFormaDePagamento.getSelectedItem())) {
+                    venda.setFormaDePagamento(formaDePagamento);
+                }
+            }
+
+            for (Imovel imovel : imovelCrud.read(conn)) {
+                if (imovel.getNome().equals(cbImovel.getSelectedItem())) {
+                    venda.setImovel(imovel);
+                }
+            }
+
+            venda.setParcelas(Integer.parseInt(tfParcelas.getText()));
+            if (edit) {
+                ven.update(conn, venda);
+            } else {
+                ven.create(conn, venda);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FrmVenda.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.dispose();
     }//GEN-LAST:event_btCadastrarActionPerformed
 
@@ -217,7 +266,11 @@ public class FrmVenda extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmVenda().setVisible(true);
+                try {
+                    new FrmVenda().setVisible(true);
+                } catch (Exception ex) {
+                    Logger.getLogger(FrmVenda.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -228,12 +281,12 @@ public class FrmVenda extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbCliente;
     private javax.swing.JComboBox<String> cbFormaDePagamento;
     private javax.swing.JComboBox<String> cbImovel;
-    private javax.swing.JComboBox<String> cbUsuario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lbCliente;
     private javax.swing.JLabel lbFormaDePagamento;
     private javax.swing.JLabel lbImovel;
     private javax.swing.JLabel lbUsuario;
     private javax.swing.JTextField tfParcelas;
+    private javax.swing.JTextField tfUsuario;
     // End of variables declaration//GEN-END:variables
 }

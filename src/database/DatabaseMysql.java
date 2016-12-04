@@ -9,7 +9,7 @@ import java.sql.Connection;
 
 /**
  *
- * @author 20151si030
+ * @author Victor Alves Abreu
  */
 public class DatabaseMysql implements Database {
 

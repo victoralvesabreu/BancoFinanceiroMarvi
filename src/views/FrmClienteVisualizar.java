@@ -6,6 +6,7 @@
 package views;
 
 import crud.ClienteCRUD;
+import database.DatabaseFactory;
 import domain.Cliente;
 import java.sql.Connection;
 import java.util.logging.Level;
@@ -16,42 +17,42 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author victo
  */
-public class FrmVisualizarCliente extends javax.swing.JFrame {
+public class FrmClienteVisualizar extends javax.swing.JFrame {
 
     /**
      * Creates new form FrmVisualizarCliente
      */
-    public FrmVisualizarCliente() {
+    public FrmClienteVisualizar() {
         initComponents();
     }
-    
-    public void addRowsToTable() throws Exception{
+
+    public void addRowsToTable() throws Exception {
         DefaultTableModel modelo = (DefaultTableModel) tbCliente.getModel();
-        
+
         modelo.getDataVector().removeAllElements();
-        
-        Connection conn = database.DatabaseFactory
-                .getDatabase("postgresql").connect();
-        
+
+        Connection conn = DatabaseFactory.getDatabase("postgresql").connect();
+
         ClienteCRUD clienteCrud = new ClienteCRUD();
-        
-        Object rowData[] = new Object[5];
-        
-        if(tfFiltro.getText().equals("")){
-            for(Cliente aux: clienteCrud.read(conn)){
+
+        Object rowData[] = new Object[9];
+
+        if (tfFiltro.getText().equals("")) {
+            for (Cliente aux : clienteCrud.read(conn)) {
                 rowData[0] = aux.getId();
                 rowData[1] = aux.getNome();
-                rowData[3] = aux.getCpf();
-                rowData[4] = aux.getEmail();
-                rowData[5] = aux.getRua();
-                rowData[6] = aux.getNumero();
-                rowData[7] = aux.getCep();
+                rowData[2] = aux.getCpf();
+                rowData[3] = aux.getEmail();
+                rowData[4] = aux.getRua();
+                rowData[5] = aux.getNumero();
+                rowData[6] = aux.getCep();
+                rowData[7] = aux.getBairro();
                 rowData[8] = aux.getUf().getCodigoUf();
 
                 modelo.addRow(rowData);
             }
-        }else{
-            for(Cliente aux: clienteCrud.read(conn, tfFiltro.getText())){
+        } else {
+            for (Cliente aux : clienteCrud.read(conn, tfFiltro.getText())) {
                 rowData[0] = aux.getId();
                 rowData[1] = aux.getNome();
                 rowData[3] = aux.getCpf();
@@ -64,8 +65,8 @@ public class FrmVisualizarCliente extends javax.swing.JFrame {
                 modelo.addRow(rowData);
             }
         }
-        
-        database.DatabaseFactory.getDatabase("postgresql").disconnect(conn);
+
+        DatabaseFactory.getDatabase("postgresql").disconnect(conn);
     }
 
     /**
@@ -100,9 +101,16 @@ public class FrmVisualizarCliente extends javax.swing.JFrame {
                 "Id", "Nome", "Cpf", "email", "rua", "numero", "Cep", "Bairro", "Uf"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -110,17 +118,6 @@ public class FrmVisualizarCliente extends javax.swing.JFrame {
         });
         tbCliente.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tbCliente);
-        if (tbCliente.getColumnModel().getColumnCount() > 0) {
-            tbCliente.getColumnModel().getColumn(0).setResizable(false);
-            tbCliente.getColumnModel().getColumn(1).setResizable(false);
-            tbCliente.getColumnModel().getColumn(2).setResizable(false);
-            tbCliente.getColumnModel().getColumn(3).setResizable(false);
-            tbCliente.getColumnModel().getColumn(4).setResizable(false);
-            tbCliente.getColumnModel().getColumn(5).setResizable(false);
-            tbCliente.getColumnModel().getColumn(6).setResizable(false);
-            tbCliente.getColumnModel().getColumn(7).setResizable(false);
-            tbCliente.getColumnModel().getColumn(8).setResizable(false);
-        }
 
         btListar.setText("Listar");
         btListar.addActionListener(new java.awt.event.ActionListener() {
@@ -141,23 +138,38 @@ public class FrmVisualizarCliente extends javax.swing.JFrame {
         });
 
         btSair.setText("Sair");
+        btSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSairActionPerformed(evt);
+            }
+        });
 
         btEditar.setText("Editar");
+        btEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btEditarActionPerformed(evt);
+            }
+        });
 
         btRemover.setText("Remover");
+        btRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btRemoverActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout plCrudLayout = new javax.swing.GroupLayout(plCrud);
         plCrud.setLayout(plCrudLayout);
         plCrudLayout.setHorizontalGroup(
             plCrudLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plCrudLayout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
+            .addGroup(plCrudLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(plCrudLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btNovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btRemover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addComponent(btNovo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btEditar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         plCrudLayout.setVerticalGroup(
             plCrudLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,11 +178,11 @@ public class FrmVisualizarCliente extends javax.swing.JFrame {
                 .addComponent(btNovo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btEditar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btSair)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btRemover)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btSair)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -197,11 +209,15 @@ public class FrmVisualizarCliente extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btListar)
-                    .addComponent(lbFiltro))
-                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbFiltro)
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(tfFiltro)
+                            .addComponent(btListar, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(plCrud, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE))
@@ -215,7 +231,7 @@ public class FrmVisualizarCliente extends javax.swing.JFrame {
         try {
             addRowsToTable();
         } catch (Exception ex) {
-            Logger.getLogger(FrmVisualizarCliente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrmCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btListarActionPerformed
 
@@ -225,10 +241,41 @@ public class FrmVisualizarCliente extends javax.swing.JFrame {
             cliente = new FrmCliente();
             cliente.setVisible(true);
         } catch (Exception ex) {
-            Logger.getLogger(FrmVisualizarCliente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrmCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_btNovoActionPerformed
+
+    private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btSairActionPerformed
+
+    private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
+        try {
+
+            int index = tbCliente.getSelectedRow();
+            DefaultTableModel model = (DefaultTableModel) tbCliente.getModel();
+            int id = Integer.parseInt(model.getValueAt(index, 0).toString());
+            FrmCliente editCliente = new FrmCliente(id);
+            editCliente.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btEditarActionPerformed
+
+    private void btRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverActionPerformed
+        try {
+            Connection conn = DatabaseFactory.getDatabase("postgres").connect();
+            ClienteCRUD clienteCrud = new ClienteCRUD();
+            int index = tbCliente.getSelectedRow();
+            DefaultTableModel model = (DefaultTableModel) tbCliente.getModel();
+            int id = Integer.parseInt(model.getValueAt(index, 0).toString());
+            clienteCrud.delete(conn, id);
+            DatabaseFactory.getDatabase("postgres").disconnect(conn);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btRemoverActionPerformed
 
     /**
      * @param args the command line arguments
@@ -247,20 +294,35 @@ public class FrmVisualizarCliente extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmVisualizarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmClienteVisualizar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmVisualizarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmClienteVisualizar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmVisualizarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmClienteVisualizar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmVisualizarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmClienteVisualizar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmVisualizarCliente().setVisible(true);
+                new FrmClienteVisualizar().setVisible(true);
             }
         });
     }

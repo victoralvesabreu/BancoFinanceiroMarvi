@@ -11,13 +11,13 @@ import java.sql.SQLException;
 
 /**
  *
- * @author 20151si030
+ * @author Victor Alves Abreu
  */
 public class DatabasePostgresql  implements Database{
     
     private String usuario = "postgres";
     private String senha = "postgres";
-    private String ipaddress = "127.0.0.1";
+    private String ipaddress = "127.0.0.1:5432";
     private String database = "ImobiliariaMarvi";
     private String url = "jdbc:postgresql://";
     

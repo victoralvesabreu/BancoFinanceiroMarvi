@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
  */
 public class Usuario {
 
+    public static Usuario logado;
     private int id;
     private String nome;
     private String email;

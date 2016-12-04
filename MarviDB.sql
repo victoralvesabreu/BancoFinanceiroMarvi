@@ -43,8 +43,9 @@ CREATE TABLE usuario(
   nome    VARCHAR(40) NOT NULL,
   email   VARCHAR(30) NOT NULL,
   senha   VARCHAR(40) NOT NULL,
-  acesso  VARCHAR(5) NOT NULL,
+  acesso  VARCHAR(5)  NOT NULL,
   cpf     CHAR(11)    NOT NULL,
+  cargo   VARCHAR(40) NOT NULL,
   CONSTRAINT pk_usuario
     PRIMARY KEY(id),
   CONSTRAINT ck_acesso

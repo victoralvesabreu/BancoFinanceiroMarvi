@@ -37,8 +37,8 @@ public class UfCRUD {
         try{
             PreparedStatement pstm = conn.prepareStatement(
                     "SELECT codigo_uf, nome"+
-                    "  FROM cliente"+
-                    "  ORDER BY id;"
+                    "  FROM uf"+
+                    "  ORDER BY codigo_uf;"
             );
             
             ResultSet rset = pstm.executeQuery();
