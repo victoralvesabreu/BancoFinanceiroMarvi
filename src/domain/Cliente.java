@@ -11,18 +11,9 @@ package domain;
  */
 public class Cliente extends Endereco {
 
-    private int id;
     private String nome;
     private String cpf;
     private String email;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getNome() {
         return nome;

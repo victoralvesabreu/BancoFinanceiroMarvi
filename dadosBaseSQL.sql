@@ -1,6 +1,9 @@
 DELETE FROM uf;
 DELETE FROM forma_pagamento;
 DELETE FROM usuario;
+DELETE FROM cliente;
+DELETE FROM imovel;
+DELETE FROM venda;
 
 INSERT INTO forma_pagamento(tipo) VALUES ('Dinheiro');
 INSERT INTO forma_pagamento(tipo) VALUES ('Cartão de Credito');
@@ -9,7 +12,7 @@ INSERT INTO forma_pagamento(tipo) VALUES ('Crediario');
 /*
  Cadastro do Administrador
  */
-INSERT INTO usuario(nome, email, senha, acesso, cpf, cargo) VALUES ('admin', 'admin@marvi.edu.br', MD5('123456'), 'admin', '00000000000', 'Administrador');
+INSERT INTO usuario(nome, email, senha, acesso, cpf, cargo) VALUES ('admin', 'admin@marvi.edu.br', '123456', 'admin', '00000000000', 'Administrador');
 
 /*
 Cadastro Uf's

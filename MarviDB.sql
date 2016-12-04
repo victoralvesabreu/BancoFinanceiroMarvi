@@ -15,7 +15,6 @@ CREATE TABLE uf(
 );
 
 CREATE TABLE cliente(
-  id      SERIAL      NOT NULL,
   nome    VARCHAR(40) NOT NULL,
   cpf     CHAR(11)    NOT NULL,
   email   VARCHAR(30) NOT NULL,
@@ -25,7 +24,7 @@ CREATE TABLE cliente(
   bairro  VARCHAR(50) NOT NULL,
   uf      CHAR(2)     NOT NULL,
   CONSTRAINT pk_cliente
-    PRIMARY KEY(id),
+    PRIMARY KEY(cpf),
   CONSTRAINT fk_cliente_uf
     FOREIGN KEY(uf)
     REFERENCES uf(codigo_uf)
@@ -55,8 +54,8 @@ CREATE TABLE usuario(
 CREATE TABLE imovel(
   id          SERIAL         NOT NULL,
   nome        VARCHAR(40)    NOT NULL,
-  metros_quad DECIMAL(3, 2)  NOT NULL,
-  preco       DECIMAL(5, 2)  NOT NULL,
+  metros_quad VARCHAR(10)    NOT NULL,
+  preco       VARCHAR(20)    NOT NULL,
   descricao   TEXT           NOT NULL,
   rua         VARCHAR(50)    NOT NULL,
   numero      INTEGER        NOT NULL,
@@ -71,17 +70,17 @@ CREATE TABLE imovel(
 );
 
 CREATE TABLE venda(
-  id              SERIAL  NOT NULL,
-  cliente         INTEGER NOT NULL,
-  forma_pagamento INTEGER NOT NULL,
-  usuario         INTEGER NOT NULL,
-  imovel          INTEGER NOT NULL,
-  parcelas        INTEGER NOT NULL,
+  id              SERIAL   NOT NULL,
+  cliente         CHAR(11) NOT NULL,
+  forma_pagamento INTEGER  NOT NULL,
+  usuario         INTEGER  NOT NULL,
+  imovel          INTEGER  NOT NULL,
+  parcelas        INTEGER  NOT NULL,
   CONSTRAINT pk_venda
     PRIMARY KEY(id),
   CONSTRAINT fk_venda_cliente
     FOREIGN KEY(cliente)
-    REFERENCES cliente(id),
+    REFERENCES cliente(cpf),
   CONSTRAINT fk_venda_forma_pagamento
     FOREIGN KEY(forma_pagamento)
     REFERENCES forma_pagamento(id),

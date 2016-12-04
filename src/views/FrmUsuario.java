@@ -9,11 +9,14 @@ import crud.UsuarioCRUD;
 import database.DatabaseFactory;
 import domain.Usuario;
 import java.sql.Connection;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
  *
- * @author victo
+ * @author victor alves abreu
  */
 public class FrmUsuario extends javax.swing.JFrame {
 
@@ -21,14 +24,32 @@ public class FrmUsuario extends javax.swing.JFrame {
      * Creates new form FrmUsuarioFrame
      */
     boolean edit;
-    
+
     public FrmUsuario() {
         initComponents();
         edit = false;
     }
-    
-    FrmUsuario(int parseInt) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+    public FrmUsuario(int id){
+        initComponents();
+        UsuarioCRUD usuarioCRUD = new UsuarioCRUD();
+        Connection conn = DatabaseFactory.getDatabase("postgres").connect();
+        try {
+            Usuario user = usuarioCRUD.read(conn, id);
+            tfId.setText(Integer.toString(user.getId()));
+            tfNome.setText(user.getNome());
+            tfCargo.setText(user.getCargo());
+            tfEmail.setText(user.getEmail());
+            tfCpf.setText(user.getCpf());
+            cbAcesso.setSelectedItem(user.getAcesso());
+            pfSenha.setText(user.getSenha());
+            edit = true;
+        } catch (Exception ex) {
+            Logger.getLogger(FrmUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            DatabaseFactory.getDatabase("postgres").disconnect(conn);
+        }
+        
     }
 
     /**
@@ -51,7 +72,7 @@ public class FrmUsuario extends javax.swing.JFrame {
         tfId = new javax.swing.JTextField();
         lbId = new javax.swing.JLabel();
         lbNome = new javax.swing.JLabel();
-        tfSenha = new javax.swing.JTextField();
+        pfSenha = new javax.swing.JPasswordField();
         lbCpf = new javax.swing.JLabel();
         tfCpf = new javax.swing.JTextField();
         lbCargo = new javax.swing.JLabel();
@@ -81,6 +102,8 @@ public class FrmUsuario extends javax.swing.JFrame {
 
         cbAcesso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "user", "admin" }));
 
+        tfId.setEnabled(false);
+
         lbId.setText("Id");
 
         lbNome.setText("Nome");
@@ -90,58 +113,54 @@ public class FrmUsuario extends javax.swing.JFrame {
         pnPrincInfoLayout.setHorizontalGroup(
             pnPrincInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnPrincInfoLayout.createSequentialGroup()
-                .addGap(62, 62, 62)
-                .addComponent(tfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(138, Short.MAX_VALUE))
-            .addGroup(pnPrincInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pnPrincInfoLayout.createSequentialGroup()
-                    .addContainerGap()
+                .addContainerGap()
+                .addGroup(pnPrincInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnPrincInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnPrincInfoLayout.createSequentialGroup()
-                            .addGap(0, 0, Short.MAX_VALUE)
-                            .addComponent(lbId)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(12, 12, 12))
                         .addGroup(pnPrincInfoLayout.createSequentialGroup()
-                            .addGroup(pnPrincInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(pnPrincInfoLayout.createSequentialGroup()
-                                    .addGroup(pnPrincInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(lbEmail)
-                                        .addComponent(lbNome))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addGroup(pnPrincInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(tfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addComponent(cbAcesso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lbSenha))
-                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                            .addComponent(lbEmail)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(pnPrincInfoLayout.createSequentialGroup()
+                            .addComponent(lbNome)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pnPrincInfoLayout.createSequentialGroup()
+                        .addComponent(lbSenha)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(pfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(47, 47, 47)
+                .addGroup(pnPrincInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnPrincInfoLayout.createSequentialGroup()
+                        .addComponent(lbId)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbAcesso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12))
         );
         pnPrincInfoLayout.setVerticalGroup(
             pnPrincInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnPrincInfoLayout.createSequentialGroup()
-                .addContainerGap(126, Short.MAX_VALUE)
-                .addComponent(tfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(54, 54, 54))
-            .addGroup(pnPrincInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pnPrincInfoLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(pnPrincInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lbId))
-                    .addGap(29, 29, 29)
-                    .addGroup(pnPrincInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lbNome)
-                        .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(14, 14, 14)
-                    .addGroup(pnPrincInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lbEmail)
-                        .addComponent(tfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(lbSenha)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                    .addComponent(cbAcesso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap()))
+            .addGroup(pnPrincInfoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnPrincInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnPrincInfoLayout.createSequentialGroup()
+                        .addGroup(pnPrincInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbId))
+                        .addGap(31, 31, 31)
+                        .addComponent(cbAcesso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnPrincInfoLayout.createSequentialGroup()
+                        .addGroup(pnPrincInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbNome)
+                            .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(14, 14, 14)
+                        .addGroup(pnPrincInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbEmail)
+                            .addComponent(tfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnPrincInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbSenha)
+                            .addComponent(pfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         lbCpf.setText("Cpf:");
@@ -162,15 +181,18 @@ public class FrmUsuario extends javax.swing.JFrame {
                         .addGap(36, 36, 36)
                         .addComponent(lbCargo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tfCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnPrincInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(tfCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(pnPrincInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(118, 118, 118)
                 .addComponent(btCadastrar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(119, 119, 119))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -183,7 +205,7 @@ public class FrmUsuario extends javax.swing.JFrame {
                     .addComponent(tfCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pnPrincInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btCadastrar)
                     .addComponent(btSair))
@@ -198,12 +220,16 @@ public class FrmUsuario extends javax.swing.JFrame {
         Connection conn = DatabaseFactory.getDatabase("postgres").connect();
         try {
             Usuario usuario = new Usuario();
-            
+
             usuario.setAcesso(cbAcesso.getSelectedItem().toString());
-            usuario.setId(Integer.parseInt(tfId.getText()));
+            
+            if (edit) {
+                usuario.setId(Integer.parseInt(tfId.getText()));
+            }
+            
             usuario.setNome(tfNome.getText());
             usuario.setEmail(tfEmail.getText());
-            usuario.setSenha(tfSenha.getText());
+            usuario.setSenha(pfSenha.getText());
             usuario.setCpf(tfCpf.getText());
             usuario.setCargo(tfCargo.getText());
             if (edit) {
@@ -211,7 +237,7 @@ public class FrmUsuario extends javax.swing.JFrame {
             } else {
                 usu.create(conn, usuario);
             }
-            
+
             DatabaseFactory.getDatabase("postgres").disconnect(conn);
             this.dispose();
         } catch (Exception ex) {
@@ -269,12 +295,12 @@ public class FrmUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel lbId;
     private javax.swing.JLabel lbNome;
     private javax.swing.JLabel lbSenha;
+    private javax.swing.JPasswordField pfSenha;
     private javax.swing.JPanel pnPrincInfo;
     private javax.swing.JTextField tfCargo;
     private javax.swing.JTextField tfCpf;
     private javax.swing.JTextField tfEmail;
     private javax.swing.JTextField tfId;
     private javax.swing.JTextField tfNome;
-    private javax.swing.JTextField tfSenha;
     // End of variables declaration//GEN-END:variables
 }

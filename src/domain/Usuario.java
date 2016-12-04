@@ -5,8 +5,6 @@
  */
 package domain;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  *
@@ -71,17 +69,10 @@ public class Usuario {
         return senha;
     }
 
-    public void setSenha(String senha){
-        this.senha = senha;
-    }
-    
-    public void setSenha(String senha, String senhaLocked) {
-
-        Pattern p = Pattern.compile("((?=.*[a-z])(?=.*d)(?=.*[@#$%])(?=.*[A-Z]).{6})");
-        Matcher m = p.matcher(senha);
-        if (m.matches()) {
-            this.senha = senhaLocked;
-        } else {
+    public void setSenha(String senha) {
+        if (!senha.isEmpty()) {
+            this.senha = senha;
+        }else{
             throw new IllegalArgumentException("Senha Invalida");
         }
     }

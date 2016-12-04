@@ -37,9 +37,9 @@ public class FrmLogin extends javax.swing.JFrame {
         lbEmail = new javax.swing.JLabel();
         tfEmail = new javax.swing.JTextField();
         lbSenha = new javax.swing.JLabel();
-        tfSenha = new javax.swing.JTextField();
         btEntrar = new javax.swing.JButton();
         btSair = new javax.swing.JButton();
+        pfSenha = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,7 +75,7 @@ public class FrmLogin extends javax.swing.JFrame {
                         .addGap(46, 46, 46)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(tfEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                            .addComponent(tfSenha)))
+                            .addComponent(pfSenha)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(126, 126, 126)
                         .addComponent(btEntrar)
@@ -93,7 +93,7 @@ public class FrmLogin extends javax.swing.JFrame {
                 .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbSenha)
-                    .addComponent(tfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btEntrar)
@@ -112,21 +112,25 @@ public class FrmLogin extends javax.swing.JFrame {
 
         Connection conn = DatabaseFactory.getDatabase("postgres").connect();
         UsuarioCRUD usuarioCrud = new UsuarioCRUD();
-        try{
-        for (Usuario u : usuarioCrud.read(conn)) {
-            if (u.getEmail().equals(tfEmail.getText()) && u.getSenha().equals(tfSenha.getText())) {
-                Usuario.logado = u;
+        Usuario aux = null;
+        try {
+            for (Usuario u : usuarioCrud.read(conn)) {
+                if (u.getEmail().equals(tfEmail.getText())) {
+                    aux = u;
+                    break;
+                }
+            }
+            if (aux.getEmail().equals(tfEmail.getText()) && aux.getSenha().equals(pfSenha.getText())) {
+                Usuario.logado = aux;
                 FrmPrincipal principal = new FrmPrincipal();
                 principal.setVisible(true);
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Usuario/Senha invalido!");
             }
-        }
-        
-        DatabaseFactory.getDatabase("postgres").disconnect(conn);
-        }catch(Exception ex){
-            JOptionPane.showMessageDialog(this,ex.getMessage());
+            DatabaseFactory.getDatabase("postgres").disconnect(conn);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }//GEN-LAST:event_btEntrarActionPerformed
 
@@ -170,7 +174,7 @@ public class FrmLogin extends javax.swing.JFrame {
     private javax.swing.JButton btSair;
     private javax.swing.JLabel lbEmail;
     private javax.swing.JLabel lbSenha;
+    private javax.swing.JPasswordField pfSenha;
     private javax.swing.JTextField tfEmail;
-    private javax.swing.JTextField tfSenha;
     // End of variables declaration//GEN-END:variables
 }

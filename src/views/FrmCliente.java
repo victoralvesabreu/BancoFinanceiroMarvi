@@ -43,22 +43,21 @@ public class FrmCliente extends javax.swing.JFrame {
         }
     }
 
-    public FrmCliente(int id) {
+    public FrmCliente(String cpf) {
         Connection conn = DatabaseFactory.getDatabase("postgresql").connect();
         ClienteCRUD cliente = new ClienteCRUD();
         Cliente cli = null;
         UfCRUD ufCRUD = new UfCRUD();
         try {
             for (Cliente c : cliente.read(conn)) {
-                if (c.getId() == id) {
+                if (c.getCpf().equals(cpf)) {
                     cli = c;
                 }
             }
 
             if (cli != null) {
                 initComponents();
-                this.setTitle("Editar Cliente ID: " + cli.getId());
-                tfId.setText(Integer.toString(cli.getId()));
+                this.setTitle("Editar Cliente ID: " + cli.getNome());
                 tfNome.setText(cli.getNome());
                 tfBairro.setText(cli.getBairro());
                 tfCep.setText(cli.getCep());
@@ -69,8 +68,8 @@ public class FrmCliente extends javax.swing.JFrame {
                 edit = true;
                 for (Uf uf : ufCRUD.read(conn)) {
                     cbUf.addItem(uf.getCodigoUf());
-                    cbUf.setSelectedItem(cli.getUf().getCodigoUf());
                 }
+                cbUf.setSelectedItem(cli.getUf().getCodigoUf());
             } else {
                 throw new IllegalAccessError("Nenhum Cliente Encontrado");
             }
@@ -109,8 +108,6 @@ public class FrmCliente extends javax.swing.JFrame {
         cbUf = new javax.swing.JComboBox<>();
         lbCep = new javax.swing.JLabel();
         tfCep = new javax.swing.JTextField();
-        lbId = new javax.swing.JLabel();
-        tfId = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastrar Cliente");
@@ -119,11 +116,11 @@ public class FrmCliente extends javax.swing.JFrame {
         btCadastrar.setText("Cadastrar");
         btCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                try{
-                  btCadastrarActionPerformed(evt);
-                }catch(Exception ex){
-                  System.err.println(ex.getMessage());
-                }
+              try{
+                btCadastrarActionPerformed(evt);
+              }catch(Exception ex){
+                System.err.println(ex.getMessage());
+              }
             }
         });
 
@@ -156,33 +153,34 @@ public class FrmCliente extends javax.swing.JFrame {
         pnCentral.setLayout(pnCentralLayout);
         pnCentralLayout.setHorizontalGroup(
             pnCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnCentralLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbEmail)
-                    .addComponent(lbBairro))
-                .addGap(18, 18, 18)
-                .addGroup(pnCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tfBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                .addGroup(pnCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbCep)
-                    .addComponent(lbRua)
-                    .addGroup(pnCentralLayout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addGroup(pnCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(pnCentralLayout.createSequentialGroup()
-                                .addComponent(tfCep, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lbNome5)
-                                .addGap(18, 18, 18)
-                                .addComponent(tfNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(tfRua, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
             .addGroup(pnCentralLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(cbUf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnCentralLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(pnCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbEmail)
+                            .addComponent(lbBairro))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbCep)
+                            .addComponent(lbRua)
+                            .addGroup(pnCentralLayout.createSequentialGroup()
+                                .addGap(51, 51, 51)
+                                .addGroup(pnCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(pnCentralLayout.createSequentialGroup()
+                                        .addComponent(tfCep, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lbNome5)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(tfNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(tfRua, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(pnCentralLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(cbUf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnCentralLayout.setVerticalGroup(
@@ -207,58 +205,46 @@ public class FrmCliente extends javax.swing.JFrame {
                 .addGap(119, 119, 119))
         );
 
-        lbId.setText("Id");
-
-        tfId.setEnabled(false);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btCadastrar)
+                .addGap(18, 18, 18)
+                .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(lbId)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lbNome)
-                            .addGap(18, 18, 18)
-                            .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(lbCpf)
-                            .addGap(18, 18, 18)
-                            .addComponent(tfCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(pnCentral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btCadastrar)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbNome)
                         .addGap(18, 18, 18)
-                        .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(13, 13, 13)))
+                        .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbCpf)
+                        .addGap(18, 18, 18)
+                        .addComponent(tfCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pnCentral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(tfCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lbCpf)
-                        .addComponent(lbNome)
-                        .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lbId))
-                    .addComponent(tfId, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbCpf)
+                    .addComponent(lbNome)
+                    .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(pnCentral, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btSair)
                     .addComponent(btCadastrar))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
@@ -270,9 +256,7 @@ public class FrmCliente extends javax.swing.JFrame {
         Connection conn = DatabaseFactory.getDatabase("postgresql").connect();
         UfCRUD ufCrud = new UfCRUD();
         try {
-            if (edit) {
-                cliente.setId(Integer.parseInt(tfId.getText()));
-            }
+
             cliente.setNome(tfNome.getText());
             cliente.setCpf(tfCpf.getText());
             cliente.setEmail(tfEmail.getText());
@@ -350,7 +334,6 @@ public class FrmCliente extends javax.swing.JFrame {
     private javax.swing.JLabel lbCep;
     private javax.swing.JLabel lbCpf;
     private javax.swing.JLabel lbEmail;
-    private javax.swing.JLabel lbId;
     private javax.swing.JLabel lbNome;
     private javax.swing.JLabel lbNome5;
     private javax.swing.JLabel lbRua;
@@ -359,7 +342,6 @@ public class FrmCliente extends javax.swing.JFrame {
     private javax.swing.JTextField tfCep;
     private javax.swing.JTextField tfCpf;
     private javax.swing.JTextField tfEmail;
-    private javax.swing.JTextField tfId;
     private javax.swing.JTextField tfNome;
     private javax.swing.JTextField tfNumero;
     private javax.swing.JTextField tfRua;

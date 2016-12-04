@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 
@@ -25,9 +26,9 @@ public class ImovelCRUD {
                     "VALUES(?, ?, ?, ?, ?, ?, ?, ?,?);"
             );
             pstm.setString(1, imovel.getNome());
-            pstm.setFloat(2, imovel.getMetrosQuad());
+            pstm.setString(2, Float.toString(imovel.getMetrosQuad()));
             pstm.setString(3, imovel.getDescricao());
-            pstm.setFloat(4, imovel.getPreco());
+            pstm.setString(4, Float.toString(imovel.getPreco()));
             pstm.setString(5, imovel.getRua());
             pstm.setInt(6, imovel.getNumero());
             pstm.setString(7, imovel.getCep());
@@ -113,8 +114,8 @@ public class ImovelCRUD {
                     " WHERE id=?;"
             );
             pstm.setString(1, imovel.getNome());
-            pstm.setFloat(2, imovel.getMetrosQuad());
-            pstm.setFloat(3, imovel.getPreco());
+            pstm.setString(2, Float.toString(imovel.getMetrosQuad()));
+            pstm.setString(3, Float.toString(imovel.getPreco()));
             pstm.setString(4, imovel.getDescricao());
             pstm.setString(5, imovel.getRua());
             pstm.setInt(6, imovel.getNumero());

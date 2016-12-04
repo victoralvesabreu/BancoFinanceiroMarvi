@@ -42,7 +42,7 @@ public class UsuarioCRUD {
         
         try{
             PreparedStatement pstm = conn.prepareStatement(
-                    "SELECT id, nome, email, senha, acesso, cpf, cargo"+
+                    "SELECT id, nome, email, senha as senha, acesso, cpf, cargo"+
                     "  FROM usuario"+
                     "  ORDER BY id;"
             );
@@ -99,6 +99,39 @@ public class UsuarioCRUD {
         }
     }
     
+    public ArrayList<Usuario> read(String filtro, Connection conn) throws Exception {
+        ArrayList<Usuario> listaUsuario = new ArrayList<>();
+        UfCRUD uf = new UfCRUD();
+        try {
+            PreparedStatement pstm = conn.prepareStatement(
+                    "SELECT id, nome, cpf, email, acesso, cargo, senha"
+                    + "  FROM usuario"
+                    + "  where nome LIKE ?"
+                    + "  ORDER BY nome;"
+            );
+
+            pstm.setString(1, filtro);
+            ResultSet rset = pstm.executeQuery();
+
+            while (rset.next()) {
+                Usuario usuario = new Usuario();
+                usuario.setId(rset.getInt("id"));
+                usuario.setNome(rset.getString("nome"));
+                usuario.setCpf(rset.getString("cpf"));
+                usuario.setEmail(rset.getString("email"));
+                usuario.setAcesso(rset.getString("acesso"));
+                usuario.setCargo(rset.getString("cargo"));
+                usuario.setSenha(rset.getString("senha"));
+                
+                listaUsuario.add(usuario);
+            }
+            return listaUsuario;
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+            return listaUsuario;
+        }
+    }
+    
     public void update(Connection conn, Usuario usuario){
         try{
             PreparedStatement pstm = conn.prepareStatement(
@@ -109,7 +142,7 @@ public class UsuarioCRUD {
             pstm.setString(1, usuario.getNome());
             pstm.setString(2, usuario.getEmail());
             pstm.setString(3, usuario.getSenha());
-            pstm.setString(4, usuario.getAcesso());            
+            pstm.setString(4, usuario.getAcesso());
             pstm.setString(5, usuario.getCpf());
             pstm.setString(6, usuario.getCargo());
             pstm.setInt(7, usuario.getId());
@@ -121,13 +154,13 @@ public class UsuarioCRUD {
     }
     
     
-    public void delete(Connection conn, Usuario usuario){
+    public void delete(Connection conn, int id){
         try{
             PreparedStatement pstm = conn.prepareStatement(
                     "DELETE FROM usuario"+
                     "  WHERE id=?;"
             );
-            pstm.setInt(1, usuario.getId());
+            pstm.setInt(1, id);
             pstm.execute();
         }catch(SQLException ex){
             System.err.println(ex.getMessage());

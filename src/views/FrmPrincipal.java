@@ -8,10 +8,11 @@ package views;
 import domain.Usuario;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author tognere
+ * @author victor alves abreu
  */
 public class FrmPrincipal extends javax.swing.JFrame {
 
@@ -35,15 +36,17 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         lbUser = new javax.swing.JLabel();
         lbWallpaper = new javax.swing.JLabel();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        mbPrincipal = new javax.swing.JMenuBar();
         mCliente = new javax.swing.JMenu();
         miClienteCadastrar = new javax.swing.JMenuItem();
         miClienteVisualizar = new javax.swing.JMenuItem();
         mUsuario = new javax.swing.JMenu();
         miUsuarioCadastrar = new javax.swing.JMenuItem();
+        miUsuarioVisualizar = new javax.swing.JMenuItem();
         mImovel = new javax.swing.JMenu();
-        mFormaPagamento = new javax.swing.JMenu();
+        miImovelCadastrar = new javax.swing.JMenuItem();
         mVenda = new javax.swing.JMenu();
+        miVendaCadastrar = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Imobiliária Marvi");
@@ -52,7 +55,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(680, 800));
         getContentPane().setLayout(null);
         getContentPane().add(lbUser);
-        lbUser.setBounds(20, 10, 60, 20);
+        lbUser.setBounds(20, 10, 230, 20);
 
         lbWallpaper.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Wallpaper.jpg"))); // NOI18N
         getContentPane().add(lbWallpaper);
@@ -76,7 +79,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         mCliente.add(miClienteVisualizar);
 
-        jMenuBar1.add(mCliente);
+        mbPrincipal.add(mCliente);
 
         mUsuario.setText("Usuario");
 
@@ -88,18 +91,41 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         mUsuario.add(miUsuarioCadastrar);
 
-        jMenuBar1.add(mUsuario);
+        miUsuarioVisualizar.setText("Visualizar");
+        miUsuarioVisualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miUsuarioVisualizarActionPerformed(evt);
+            }
+        });
+        mUsuario.add(miUsuarioVisualizar);
+
+        mbPrincipal.add(mUsuario);
 
         mImovel.setText("Imóvel");
-        jMenuBar1.add(mImovel);
 
-        mFormaPagamento.setText("Forma de Pagamento");
-        jMenuBar1.add(mFormaPagamento);
+        miImovelCadastrar.setText("Cadastrar");
+        miImovelCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miImovelCadastrarActionPerformed(evt);
+            }
+        });
+        mImovel.add(miImovelCadastrar);
+
+        mbPrincipal.add(mImovel);
 
         mVenda.setText("Venda");
-        jMenuBar1.add(mVenda);
 
-        setJMenuBar(jMenuBar1);
+        miVendaCadastrar.setText("Cadastrar");
+        miVendaCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miVendaCadastrarActionPerformed(evt);
+            }
+        });
+        mVenda.add(miVendaCadastrar);
+
+        mbPrincipal.add(mVenda);
+
+        setJMenuBar(mbPrincipal);
 
         setBounds(0, 0, 750, 566);
     }// </editor-fold>//GEN-END:initComponents
@@ -122,9 +148,32 @@ public class FrmPrincipal extends javax.swing.JFrame {
         if (Usuario.logado.getAcesso().equals("admin")) {
             FrmUsuario usuario = new FrmUsuario();
             usuario.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "Voce não possue permição para acessar esse recurso!");
         }
 
     }//GEN-LAST:event_miUsuarioCadastrarActionPerformed
+
+    private void miImovelCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miImovelCadastrarActionPerformed
+        FrmImovel imovel = new FrmImovel();
+        imovel.setVisible(true);
+    }//GEN-LAST:event_miImovelCadastrarActionPerformed
+
+    private void miVendaCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miVendaCadastrarActionPerformed
+        FrmVenda venda;
+        try {
+            venda = new FrmVenda();
+            venda.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_miVendaCadastrarActionPerformed
+
+    private void miUsuarioVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miUsuarioVisualizarActionPerformed
+        FrmUsuarioVisualizar usuario = new FrmUsuarioVisualizar();
+        usuario.setVisible(true);
+    }//GEN-LAST:event_miUsuarioVisualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -162,16 +211,18 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JLabel lbUser;
     private javax.swing.JLabel lbWallpaper;
     private javax.swing.JMenu mCliente;
-    private javax.swing.JMenu mFormaPagamento;
     private javax.swing.JMenu mImovel;
     private javax.swing.JMenu mUsuario;
     private javax.swing.JMenu mVenda;
+    private javax.swing.JMenuBar mbPrincipal;
     private javax.swing.JMenuItem miClienteCadastrar;
     private javax.swing.JMenuItem miClienteVisualizar;
+    private javax.swing.JMenuItem miImovelCadastrar;
     private javax.swing.JMenuItem miUsuarioCadastrar;
+    private javax.swing.JMenuItem miUsuarioVisualizar;
+    private javax.swing.JMenuItem miVendaCadastrar;
     // End of variables declaration//GEN-END:variables
 }

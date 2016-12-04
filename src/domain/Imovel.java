@@ -5,6 +5,9 @@
  */
 package domain;
 
+import java.text.DecimalFormat;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author victor alves abreu
@@ -49,8 +52,9 @@ public class Imovel extends Endereco{
     }
 
     public void setMetrosQuad(float metrosQuad) throws Exception {
+        DecimalFormat df = new DecimalFormat("#.00");
         if (metrosQuad > 0) {
-            this.metrosQuad = metrosQuad;
+            this.metrosQuad = Float.parseFloat(df.format(metrosQuad).replace(',', '.'));
         } else {
             throw new Exception("Metros quadrados invalido!");
         }
@@ -73,8 +77,9 @@ public class Imovel extends Endereco{
     }
 
     public void setPreco(float preco) throws Exception {
+        DecimalFormat df = new DecimalFormat("#.00");
         if (preco > 0) {
-            this.preco = preco;
+            this.preco = Float.parseFloat((df.format(preco)).replace(',','.'));
         } else {
             throw new Exception("Preco Invalido");
         }

@@ -24,7 +24,7 @@ public class VendaCRUD {
                     "INSERT INTO venda(cliente, forma_pagamento, usuario, imovel, parcelas)"
                     + "VALUES(?,?,?,?,?);"
             );
-            pstm.setInt(1, venda.getCliente().getId());
+            pstm.setString(1, venda.getCliente().getCpf());
             pstm.setInt(2, venda.getFormaDePagamento().getId());
             pstm.setInt(3, venda.getUsuario().getId());
             pstm.setInt(4, venda.getImovel().getId());
@@ -53,7 +53,7 @@ public class VendaCRUD {
             while (rset.next()) {
                 Venda venda = new Venda();
                 venda.setId(rset.getInt("id"));
-                venda.setCliente(cliente.read(conn, rset.getInt("cliente")));
+                venda.setCliente(cliente.read(conn, rset.getString("cliente")));
                 venda.setFormaDePagamento(pagamento.read(conn, rset.getInt("forma_pagamento")));
                 venda.setUsuario(usuario.read(conn, rset.getInt("usuario")));
                 venda.setImovel(imovel.read(conn, rset.getInt("imovel")));
@@ -87,7 +87,7 @@ public class VendaCRUD {
             if (rset.next()) {
                 venda = new Venda();
                 venda.setId(rset.getInt("id"));
-                venda.setCliente(cliente.read(conn, rset.getInt("cliente")));
+                venda.setCliente(cliente.read(conn, rset.getString("cliente")));
                 venda.setFormaDePagamento(pagamento.read(conn, rset.getInt("forma_pagamento")));
                 venda.setUsuario(usuario.read(conn, rset.getInt("usuario")));
                 venda.setImovel(imovel.read(conn, rset.getInt("imovel")));
@@ -110,7 +110,7 @@ public class VendaCRUD {
                     + " SET cliente, forma_pagamento, usuario, imovel, parcelas"
                     + " WHERE id=?;"
             );
-            pstm.setInt(1, venda.getCliente().getId());
+            pstm.setString(1, venda.getCliente().getCpf());
             pstm.setInt(2, venda.getFormaDePagamento().getId());
             pstm.setInt(3, venda.getUsuario().getId());
             pstm.setInt(4, venda.getImovel().getId());

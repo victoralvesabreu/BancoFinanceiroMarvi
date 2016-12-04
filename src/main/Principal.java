@@ -16,6 +16,7 @@ import views.FrmPrincipal;
 public class Principal {
     public static void main(String []args){
         FrmLogin menu = new FrmLogin();
+        //FrmPrincipal menu = new FrmPrincipal();
         menu.setVisible(true);
     }
 }

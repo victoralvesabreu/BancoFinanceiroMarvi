@@ -34,11 +34,12 @@ public class FrmImovel extends javax.swing.JFrame {
             for (Uf uf : ufCrud.read(conn)) {
                 cbUf.addItem(uf.getCodigoUf());
             }
+            DatabaseFactory.getDatabase("postgres").disconnect(conn);
         } catch (Exception ex) {
             System.err.print(ex.getMessage());
         }
     }
-    
+
     public FrmImovel(int id) {
         Connection conn = DatabaseFactory.getDatabase("postgres").connect();
         ImovelCRUD imovel = new ImovelCRUD();
@@ -68,15 +69,18 @@ public class FrmImovel extends javax.swing.JFrame {
                     cbUf.addItem(uf.getCodigoUf());
                     cbUf.setSelectedItem(imo.getUf().getCodigoUf());
                 }
+                
             } else {
                 throw new IllegalAccessError("Nenhum Cliente Encontrado");
             }
+            
         } catch (Exception ex) {
             Logger.getLogger(FrmCliente.class.getName()).log(Level.ALL.SEVERE, null, ex);
+        }finally{
+            DatabaseFactory.getDatabase("postgres").disconnect(conn);
         }
 
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -327,10 +331,12 @@ public class FrmImovel extends javax.swing.JFrame {
         UfCRUD ufcrud = new UfCRUD();
         Connection conn = DatabaseFactory.getDatabase("postgres").connect();
         try {
-            imovel.setId(Integer.parseInt(tfId.getText()));
+            if (edit) {
+                imovel.setId(Integer.parseInt(tfId.getText()));
+            }
             imovel.setNome(tfNome.getText());
             imovel.setMetrosQuad(Float.parseFloat(tfMetrosQuad.getText()));
-            imovel.setPreco(Float.parseFloat(tfPreco.getText()));
+            imovel.setPreco(Float.parseFloat((tfPreco.getText()).replaceAll(",", ".")));
             imovel.setDescricao(tfDescricao.getText());
             imovel.setRua(tfRua.getText());
             imovel.setNumero(Integer.parseInt(tfNumero.getText()));
@@ -347,9 +353,11 @@ public class FrmImovel extends javax.swing.JFrame {
                 imo.create(conn, imovel);
             }
 
-            DatabaseFactory.getDatabase("postgres").disconnect(conn);
+            
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
+        }finally{
+            DatabaseFactory.getDatabase("postgres").disconnect(conn);
         }
         this.dispose();
     }//GEN-LAST:event_btCadastrarActionPerformed

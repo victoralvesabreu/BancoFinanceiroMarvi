@@ -39,29 +39,29 @@ public class FrmClienteVisualizar extends javax.swing.JFrame {
 
         if (tfFiltro.getText().equals("")) {
             for (Cliente aux : clienteCrud.read(conn)) {
-                rowData[0] = aux.getId();
-                rowData[1] = aux.getNome();
-                rowData[2] = aux.getCpf();
-                rowData[3] = aux.getEmail();
-                rowData[4] = aux.getRua();
-                rowData[5] = aux.getNumero();
-                rowData[6] = aux.getCep();
-                rowData[7] = aux.getBairro();
-                rowData[8] = aux.getUf().getCodigoUf();
+                rowData[0] = aux.getNome();
+                rowData[1] = aux.getCpf();
+                rowData[2] = aux.getEmail();
+                rowData[3] = aux.getRua();
+                rowData[4] = aux.getNumero();
+                rowData[5] = aux.getCep();
+                rowData[6] = aux.getBairro();
+                rowData[7] = aux.getUf().getCodigoUf();
 
                 modelo.addRow(rowData);
             }
         } else {
-            for (Cliente aux : clienteCrud.read(conn, tfFiltro.getText())) {
-                rowData[0] = aux.getId();
-                rowData[1] = aux.getNome();
-                rowData[3] = aux.getCpf();
-                rowData[4] = aux.getEmail();
-                rowData[5] = aux.getRua();
-                rowData[6] = aux.getNumero();
-                rowData[7] = aux.getCep();
-                rowData[8] = aux.getUf().getCodigoUf();
-
+            for (Cliente aux : clienteCrud.read(tfFiltro.getText(), conn)) {
+                
+                rowData[0] = aux.getNome();
+                rowData[1] = aux.getCpf();
+                rowData[2] = aux.getEmail();
+                rowData[3] = aux.getRua();
+                rowData[4] = aux.getNumero();
+                rowData[5] = aux.getCep();
+                rowData[6] = aux.getBairro();
+                rowData[7] = aux.getUf().getCodigoUf();
+                modelo.getDataVector().removeAllElements();
                 modelo.addRow(rowData);
             }
         }
@@ -98,14 +98,14 @@ public class FrmClienteVisualizar extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Id", "Nome", "Cpf", "email", "rua", "numero", "Cep", "Bairro", "Uf"
+                "Nome", "Cpf", "email", "rua", "numero", "Cep", "Bairro", "Uf"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -180,7 +180,7 @@ public class FrmClienteVisualizar extends javax.swing.JFrame {
                 .addComponent(btEditar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btRemover)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 275, Short.MAX_VALUE)
                 .addComponent(btSair)
                 .addContainerGap())
         );
@@ -197,30 +197,29 @@ public class FrmClienteVisualizar extends javax.swing.JFrame {
                         .addGap(26, 26, 26)
                         .addComponent(tfFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btListar))
+                        .addComponent(btListar)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 863, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(plCrud, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(plCrud, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbFiltro)
-                        .addGap(18, 18, 18))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(tfFiltro)
-                            .addComponent(btListar, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(plCrud, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbFiltro)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(tfFiltro)
+                                .addComponent(btListar, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(12, 12, 12)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
@@ -255,8 +254,8 @@ public class FrmClienteVisualizar extends javax.swing.JFrame {
 
             int index = tbCliente.getSelectedRow();
             DefaultTableModel model = (DefaultTableModel) tbCliente.getModel();
-            int id = Integer.parseInt(model.getValueAt(index, 0).toString());
-            FrmCliente editCliente = new FrmCliente(id);
+            String cpf = model.getValueAt(index, 1).toString();
+            FrmCliente editCliente = new FrmCliente(cpf);
             editCliente.setVisible(true);
         } catch (Exception ex) {
             Logger.getLogger(FrmCliente.class.getName()).log(Level.SEVERE, null, ex);
@@ -269,8 +268,8 @@ public class FrmClienteVisualizar extends javax.swing.JFrame {
             ClienteCRUD clienteCrud = new ClienteCRUD();
             int index = tbCliente.getSelectedRow();
             DefaultTableModel model = (DefaultTableModel) tbCliente.getModel();
-            int id = Integer.parseInt(model.getValueAt(index, 0).toString());
-            clienteCrud.delete(conn, id);
+            String cpf = model.getValueAt(index, 2).toString();
+            clienteCrud.delete(conn, cpf);
             DatabaseFactory.getDatabase("postgres").disconnect(conn);
         } catch (Exception ex) {
             Logger.getLogger(FrmCliente.class.getName()).log(Level.SEVERE, null, ex);
