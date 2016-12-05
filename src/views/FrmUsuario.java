@@ -79,6 +79,8 @@ public class FrmUsuario extends javax.swing.JFrame {
         tfCargo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Cadastrar Usuario");
+        setResizable(false);
 
         btCadastrar.setText("Cadastrar");
         btCadastrar.addActionListener(new java.awt.event.ActionListener() {

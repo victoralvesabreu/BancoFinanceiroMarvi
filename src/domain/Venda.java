@@ -46,9 +46,9 @@ public class Venda {
     public void setCliente(Cliente cliente) throws Exception {
         if (cliente != null) {
             this.cliente = cliente;
-        } else {
+        } /*else {
             throw new Exception("cliente invalido!");
-        }
+        }*/
     }
 
     public FormaDePagamento getFormaDePagamento() {

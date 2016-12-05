@@ -99,6 +99,39 @@ public class UsuarioCRUD {
         }
     }
     
+    
+    public Usuario read(Connection conn, String email) throws Exception{
+        Usuario usuario = null;
+        try{
+            PreparedStatement pstm = conn.prepareStatement(
+                    "SELECT id, nome,email, senha, acesso, cpf, cargo"+
+                    "  FROM usuario"+
+                    "  WHERE email=?"+
+                    " LIMIT 1;"
+            );
+            pstm.setString(1, email);
+            ResultSet rset = pstm.executeQuery();
+            UfCRUD uf = new UfCRUD();
+            if (rset.next()) {
+                usuario = new Usuario();
+                usuario.setId(rset.getInt("id"));
+                usuario.setNome(rset.getString("nome"));
+                usuario.setEmail(rset.getString("email"));
+                usuario.setSenha(rset.getString("senha"));
+                usuario.setAcesso(rset.getString("acesso"));
+                usuario.setCpf(rset.getString("cpf"));
+                usuario.setCargo(rset.getString("cargo"));
+                return usuario;
+                
+            }else{
+                return usuario;
+            }
+        }catch(SQLException ex){
+            System.err.println(ex.getMessage());
+            return usuario;
+        }
+    }
+    
     public ArrayList<Usuario> read(String filtro, Connection conn) throws Exception {
         ArrayList<Usuario> listaUsuario = new ArrayList<>();
         UfCRUD uf = new UfCRUD();

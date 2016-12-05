@@ -167,7 +167,7 @@ public class ClienteCRUD {
             pstm.setString(1, cpf);
             pstm.execute();
         } catch (SQLException ex) {
-            System.err.println(ex.getMessage());
+            System.err.println(ex.getMessage()+ "Não pode deletar cliente que ja efetuo uma compra!");
         }
     }
 }

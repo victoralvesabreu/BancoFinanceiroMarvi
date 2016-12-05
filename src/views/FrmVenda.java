@@ -8,15 +8,12 @@ package views;
 import crud.ClienteCRUD;
 import crud.FormaDePagamentoCRUD;
 import crud.ImovelCRUD;
-import crud.UfCRUD;
 import crud.UsuarioCRUD;
 import crud.VendaCRUD;
-import database.Database;
 import database.DatabaseFactory;
 import domain.Cliente;
 import domain.FormaDePagamento;
 import domain.Imovel;
-import domain.Uf;
 import domain.Usuario;
 import domain.Venda;
 import java.sql.Connection;
@@ -52,16 +49,60 @@ public class FrmVenda extends javax.swing.JFrame {
             for (Imovel imovel : imovelCrud.read(conn)) {
                 cbImovel.addItem(imovel.getNome());
             }
-
+            if (cbImovel.getItemCount() == 0) {
+                throw new Exception("não há imoveis cadastrados!");
+            }
             DatabaseFactory.getDatabase("postgresql").disconnect(conn);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             System.err.println(ex.getMessage());
             DatabaseFactory.getDatabase("postgresql").disconnect(conn);
+            this.dispose();
         }
     }
 
-    FrmVenda(int parseInt) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public FrmVenda(int id) {
+        initComponents();
+        Connection conn = DatabaseFactory.getDatabase("postgresql").connect();
+        ClienteCRUD clienteCrud = new ClienteCRUD();
+        FormaDePagamentoCRUD formaPagamentoCrud = new FormaDePagamentoCRUD();
+        ImovelCRUD imovelCrud = new ImovelCRUD();
+        VendaCRUD vendaCRUD = new VendaCRUD();
+        Venda v = new Venda();
+        try {
+
+            lbNomeUsuario.setText(Usuario.logado.getEmail());
+
+            for (Venda venda : vendaCRUD.read(conn)) {
+                if (venda.getId() == id) {
+                    v = venda;
+                    break;
+                }
+            }
+            if (v == null) {
+                throw new Exception("Venda Invalida!");
+            }
+            for (FormaDePagamento pagamento : formaPagamentoCrud.read(conn)) {
+                cbFormaDePagamento.addItem(pagamento.getTipo());
+            }
+            cbFormaDePagamento.setSelectedItem(v.getFormaDePagamento().getTipo());
+            for (Imovel imovel : imovelCrud.read(conn)) {
+                cbImovel.addItem(imovel.getNome());
+            }
+            cbImovel.setSelectedItem(v.getImovel().getNome());
+            if (cbImovel.getItemCount() == 0) {
+                throw new Exception("não há imoveis cadastrados!");
+            }
+
+            tfId.setText(Integer.toString(v.getId()));
+            tfParcelas.setText(Integer.toString(v.getParcelas()));
+            tfCpf.setText(v.getCliente().getCpf());
+            edit = true;
+            DatabaseFactory.getDatabase("postgresql").disconnect(conn);
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+            DatabaseFactory.getDatabase("postgresql").disconnect(conn);
+            this.dispose();
+        }
     }
 
     /**
@@ -73,27 +114,26 @@ public class FrmVenda extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lbCliente = new javax.swing.JLabel();
-        lbUsuario = new javax.swing.JLabel();
-        cbFormaDePagamento = new javax.swing.JComboBox<>();
-        lbFormaDePagamento = new javax.swing.JLabel();
         cbImovel = new javax.swing.JComboBox<>();
         lbImovel = new javax.swing.JLabel();
         btCadastrar = new javax.swing.JButton();
         btSair = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        cbFormaDePagamento = new javax.swing.JComboBox<>();
+        lbFormaDePagamento = new javax.swing.JLabel();
         tfParcelas = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        lbId = new javax.swing.JLabel();
+        tfId = new javax.swing.JTextField();
+        jPanel2 = new javax.swing.JPanel();
         tfCpf = new javax.swing.JTextField();
+        lbCliente = new javax.swing.JLabel();
+        lbUsuario = new javax.swing.JLabel();
         lbNomeUsuario = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastrar Venda");
-
-        lbCliente.setText("Cliente CPF:");
-
-        lbUsuario.setText("Usuário:");
-
-        lbFormaDePagamento.setText("Forma de Pagamento");
+        setResizable(false);
 
         lbImovel.setText("Imóvel:");
 
@@ -111,63 +151,131 @@ public class FrmVenda extends javax.swing.JFrame {
             }
         });
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        lbFormaDePagamento.setText("Forma de Pagamento");
+
         jLabel1.setText("parcelas:");
+
+        lbId.setText("Id :");
+
+        tfId.setEnabled(false);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel1)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(71, 71, 71)
+                            .addComponent(tfParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(lbFormaDePagamento))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(cbFormaDePagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbId)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbFormaDePagamento)
+                    .addComponent(cbFormaDePagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(lbId)
+                    .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(25, Short.MAX_VALUE))
+        );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        lbCliente.setText("Cliente CPF:");
+
+        lbUsuario.setText("Usuário:");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lbCliente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfCpf))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lbUsuario)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                        .addComponent(lbNomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lbNomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbUsuario))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbCliente))
+                .addGap(0, 38, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbCliente)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tfParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(189, 189, 189)
+                        .addComponent(btCadastrar)
+                        .addGap(27, 27, 27)
+                        .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbUsuario)
-                        .addGap(18, 18, 18)
-                        .addComponent(lbNomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbImovel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbImovel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(80, 80, 80)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btCadastrar)
-                                .addGap(27, 27, 27)
-                                .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbFormaDePagamento)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cbFormaDePagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(79, Short.MAX_VALUE))
+                        .addGap(23, 23, 23)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(227, 227, 227)
+                .addComponent(lbImovel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cbImovel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbUsuario)
-                    .addComponent(lbNomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbCliente)
-                    .addComponent(tfParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbFormaDePagamento)
-                    .addComponent(cbFormaDePagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbImovel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbImovel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btCadastrar)
                     .addComponent(btSair))
@@ -182,13 +290,14 @@ public class FrmVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_btSairActionPerformed
 
     private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
+
         VendaCRUD ven = new VendaCRUD();
         Venda venda = new Venda();
         Connection conn = DatabaseFactory.getDatabase("postgres").connect();
         ClienteCRUD clienteCrud = new ClienteCRUD();
         FormaDePagamentoCRUD formaPagamentoCrud = new FormaDePagamentoCRUD();
         ImovelCRUD imovelCrud = new ImovelCRUD();
-
+        UsuarioCRUD usuarioCRUD = new UsuarioCRUD();
         try {
             for (Cliente cliente : clienteCrud.read(conn)) {
                 if (cliente.getCpf().equals(tfCpf.getText())) {
@@ -197,8 +306,13 @@ public class FrmVenda extends javax.swing.JFrame {
                 }
             }
 
-            venda.setUsuario(Usuario.logado);
-
+            if (edit) {
+                venda.setId(Integer.parseInt(tfId.getText()));
+                venda.setUsuario(usuarioCRUD.read(conn, lbNomeUsuario.getText()));
+            } else {
+                venda.setUsuario(Usuario.logado);
+            }
+            
             for (FormaDePagamento formaDePagamento : formaPagamentoCrud.read(conn)) {
                 if (formaDePagamento.getTipo().equals(cbFormaDePagamento.getSelectedItem())) {
                     venda.setFormaDePagamento(formaDePagamento);
@@ -214,6 +328,7 @@ public class FrmVenda extends javax.swing.JFrame {
             }
 
             venda.setParcelas(Integer.parseInt(tfParcelas.getText()));
+            
             if (edit) {
                 ven.update(conn, venda);
             } else {
@@ -271,12 +386,16 @@ public class FrmVenda extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbFormaDePagamento;
     private javax.swing.JComboBox<String> cbImovel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lbCliente;
     private javax.swing.JLabel lbFormaDePagamento;
+    private javax.swing.JLabel lbId;
     private javax.swing.JLabel lbImovel;
     private javax.swing.JLabel lbNomeUsuario;
     private javax.swing.JLabel lbUsuario;
     private javax.swing.JTextField tfCpf;
+    private javax.swing.JTextField tfId;
     private javax.swing.JTextField tfParcelas;
     // End of variables declaration//GEN-END:variables
 }

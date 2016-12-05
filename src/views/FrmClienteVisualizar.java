@@ -91,7 +91,7 @@ public class FrmClienteVisualizar extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Visualizar Cliente");
-        setResizable(false);
+        setMinimumSize(new java.awt.Dimension(1026, 443));
 
         tbCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -180,7 +180,7 @@ public class FrmClienteVisualizar extends javax.swing.JFrame {
                 .addComponent(btEditar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btRemover)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 275, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btSair)
                 .addContainerGap())
         );
@@ -210,17 +210,20 @@ public class FrmClienteVisualizar extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(plCrud, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbFiltro)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(tfFiltro)
                                 .addComponent(btListar, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(12, 12, 12)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
+                            .addComponent(plCrud, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
         );
 
         pack();
@@ -268,7 +271,7 @@ public class FrmClienteVisualizar extends javax.swing.JFrame {
             ClienteCRUD clienteCrud = new ClienteCRUD();
             int index = tbCliente.getSelectedRow();
             DefaultTableModel model = (DefaultTableModel) tbCliente.getModel();
-            String cpf = model.getValueAt(index, 2).toString();
+            String cpf = model.getValueAt(index, 1).toString();
             clienteCrud.delete(conn, cpf);
             DatabaseFactory.getDatabase("postgres").disconnect(conn);
         } catch (Exception ex) {

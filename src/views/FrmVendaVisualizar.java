@@ -5,9 +5,12 @@
  */
 package views;
 
+import crud.FormaDePagamentoCRUD;
+import crud.ImovelCRUD;
 import crud.UsuarioCRUD;
+import crud.VendaCRUD;
 import database.DatabaseFactory;
-import domain.Usuario;
+import domain.Venda;
 import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,46 +20,51 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author victo
  */
-public class FrmUsuarioVisualizar extends javax.swing.JFrame {
+public class FrmVendaVisualizar extends javax.swing.JFrame {
 
     /**
-     * Creates new form FrmUsuarioVisualizar
+     * Creates new form FrmVendaVisualizar
      */
-    public FrmUsuarioVisualizar() {
+    public FrmVendaVisualizar() {
         initComponents();
     }
-
+    
+    
     public void addRowsToTable() throws Exception {
-        DefaultTableModel modelo = (DefaultTableModel) tbUsuario.getModel();
+        DefaultTableModel modelo = (DefaultTableModel) tbVenda.getModel();
 
         modelo.getDataVector().removeAllElements();
 
         Connection conn = DatabaseFactory.getDatabase("postgresql").connect();
 
-        UsuarioCRUD usuarioCrud = new UsuarioCRUD();
-
+        ImovelCRUD imovelCRUD = new ImovelCRUD();
+        VendaCRUD vendaCRUD = new VendaCRUD();
+        UsuarioCRUD usuarioCRUD = new UsuarioCRUD();
+        
+        
         Object rowData[] = new Object[6];
 
         if (tfFiltro.getText().equals("")) {
-            for (Usuario aux : usuarioCrud.read(conn)) {
+            for (Venda aux : vendaCRUD.read(conn)) {
                 rowData[0] = aux.getId();
-                rowData[1] = aux.getNome();
-                rowData[2] = aux.getEmail();
-                rowData[3] = aux.getAcesso();
-                rowData[4] = aux.getCpf();
-                rowData[5] = aux.getCargo();
-
+                rowData[1] = aux.getCliente().getCpf();
+                rowData[2] = aux.getFormaDePagamento().getTipo();
+                rowData[3] = usuarioCRUD.read(conn, aux.getUsuario().getId()).getEmail();
+                rowData[4] = imovelCRUD.read(conn, aux.getImovel().getId()).getNome();
+                rowData[5] = aux.getParcelas();
                 modelo.addRow(rowData);
             }
         } else {
-            for (Usuario aux : usuarioCrud.read(tfFiltro.getText(), conn)) {
+            modelo.getDataVector().removeAllElements();
+            for (Venda aux : vendaCRUD.read(tfFiltro.getText(), conn)) {
 
                 rowData[0] = aux.getId();
-                rowData[1] = aux.getNome();
-                rowData[2] = aux.getEmail();
-                rowData[3] = aux.getAcesso();
-                rowData[4] = aux.getCpf();
-                rowData[5] = aux.getCargo();
+                rowData[1] = aux.getCliente().getCpf();
+                rowData[2] = aux.getFormaDePagamento();
+                rowData[3] = usuarioCRUD.read(conn, aux.getUsuario().getId()).getEmail();
+                rowData[4] = imovelCRUD.read(conn, aux.getImovel().getId()).getNome();
+                rowData[5] = aux.getParcelas();
+                
                 modelo.getDataVector().removeAllElements();
                 modelo.addRow(rowData);
             }
@@ -74,29 +82,28 @@ public class FrmUsuarioVisualizar extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lbFiltro = new javax.swing.JLabel();
+        lbFiltro1 = new javax.swing.JLabel();
         tfFiltro = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbUsuario = new javax.swing.JTable();
+        tbVenda = new javax.swing.JTable();
+        btListar = new javax.swing.JButton();
         pnBotao = new javax.swing.JPanel();
         btNovo = new javax.swing.JButton();
         btEditar = new javax.swing.JButton();
         btRemover = new javax.swing.JButton();
         btSair = new javax.swing.JButton();
-        btListar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Visualizar Usuario");
-        setMinimumSize(new java.awt.Dimension(834, 465));
+        setTitle("Visualizar Venda");
 
-        lbFiltro.setText("Filtro :");
+        lbFiltro1.setText("Filtro :");
 
-        tbUsuario.setModel(new javax.swing.table.DefaultTableModel(
+        tbVenda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "id", "nome", "email", "Acesso", "cpf", "cargo"
+                "id", "cliente", "forma de pagamento", "usuario", "imovel", "parcelas"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -107,8 +114,23 @@ public class FrmUsuarioVisualizar extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tbUsuario.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(tbUsuario);
+        tbVenda.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tbVenda);
+        if (tbVenda.getColumnModel().getColumnCount() > 0) {
+            tbVenda.getColumnModel().getColumn(0).setMinWidth(30);
+            tbVenda.getColumnModel().getColumn(0).setPreferredWidth(30);
+            tbVenda.getColumnModel().getColumn(0).setMaxWidth(60);
+            tbVenda.getColumnModel().getColumn(5).setMinWidth(70);
+            tbVenda.getColumnModel().getColumn(5).setPreferredWidth(70);
+            tbVenda.getColumnModel().getColumn(5).setMaxWidth(70);
+        }
+
+        btListar.setText("Listar");
+        btListar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btListarActionPerformed(evt);
+            }
+        });
 
         pnBotao.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -170,13 +192,6 @@ public class FrmUsuarioVisualizar extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        btListar.setText("Listar");
-        btListar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btListarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -185,15 +200,16 @@ public class FrmUsuarioVisualizar extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbFiltro)
+                        .addComponent(lbFiltro1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tfFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btListar)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 691, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnBotao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 709, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(pnBotao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -201,13 +217,13 @@ public class FrmUsuarioVisualizar extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbFiltro)
+                    .addComponent(lbFiltro1)
                     .addComponent(tfFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btListar, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnBotao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -215,9 +231,38 @@ public class FrmUsuarioVisualizar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
-        FrmUsuario usuario = new FrmUsuario();
-        usuario.setVisible(true);
+        FrmVenda venda;
+        try {
+            venda = new FrmVenda();
+            venda.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmVendaVisualizar.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_btNovoActionPerformed
+
+    private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
+        try {
+
+            int index = tbVenda.getSelectedRow();
+            DefaultTableModel model = (DefaultTableModel) tbVenda.getModel();
+            int id = Integer.parseInt(model.getValueAt(index, 0).toString());
+            FrmVenda editVenda = new FrmVenda(id);
+            editVenda.setVisible(true);
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        }
+    }//GEN-LAST:event_btEditarActionPerformed
+
+    private void btRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverActionPerformed
+        VendaCRUD vendaCrud = new VendaCRUD();
+        Connection conn = DatabaseFactory.getDatabase("postgres").connect();
+        int index = tbVenda.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) tbVenda.getModel();
+        int id = Integer.parseInt(model.getValueAt(index, 0).toString());
+        vendaCrud.delete(conn, id);
+        DatabaseFactory.getDatabase("postgres").disconnect(conn);
+    }//GEN-LAST:event_btRemoverActionPerformed
 
     private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
         this.dispose();
@@ -230,29 +275,6 @@ public class FrmUsuarioVisualizar extends javax.swing.JFrame {
             Logger.getLogger(FrmUsuarioVisualizar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btListarActionPerformed
-
-    private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
-        try {
-
-            int index = tbUsuario.getSelectedRow();
-            DefaultTableModel model = (DefaultTableModel) tbUsuario.getModel();
-            int id = Integer.parseInt(model.getValueAt(index, 0).toString());
-            FrmUsuario editUsuario = new FrmUsuario(id);
-            editUsuario.setVisible(true);
-        } catch (Exception ex) {
-            Logger.getLogger(FrmCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btEditarActionPerformed
-
-    private void btRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverActionPerformed
-        UsuarioCRUD usuarioCRUD = new UsuarioCRUD();
-        Connection conn = DatabaseFactory.getDatabase("postgres").connect();
-        int index = tbUsuario.getSelectedRow();
-        DefaultTableModel model = (DefaultTableModel) tbUsuario.getModel();
-        int id = Integer.parseInt(model.getValueAt(index, 0).toString());
-        usuarioCRUD.delete(conn, id);
-        DatabaseFactory.getDatabase("postgres").disconnect(conn);
-    }//GEN-LAST:event_btRemoverActionPerformed
 
     /**
      * @param args the command line arguments
@@ -271,20 +293,20 @@ public class FrmUsuarioVisualizar extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmUsuarioVisualizar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmVendaVisualizar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmUsuarioVisualizar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmVendaVisualizar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmUsuarioVisualizar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmVendaVisualizar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmUsuarioVisualizar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmVendaVisualizar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmUsuarioVisualizar().setVisible(true);
+                new FrmVendaVisualizar().setVisible(true);
             }
         });
     }
@@ -296,10 +318,9 @@ public class FrmUsuarioVisualizar extends javax.swing.JFrame {
     private javax.swing.JButton btRemover;
     private javax.swing.JButton btSair;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lbFiltro;
+    private javax.swing.JLabel lbFiltro1;
     private javax.swing.JPanel pnBotao;
-    private javax.swing.JTable tbUsuario;
+    private javax.swing.JTable tbVenda;
     private javax.swing.JTextField tfFiltro;
     // End of variables declaration//GEN-END:variables
-
 }

@@ -10,7 +10,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 
@@ -60,8 +59,9 @@ public class ImovelCRUD {
                 imovel.setPreco(rset.getFloat("preco"));
                 imovel.setRua(rset.getString("rua"));
                 imovel.setNumero(rset.getInt("numero"));
+                imovel.setCep(rset.getString("cep"));
                 imovel.setBairro(rset.getString("bairro"));
-                imovel.setUf(uf.read(conn, rset.getString("codigo_uf")));
+                imovel.setUf(uf.read(conn, rset.getString("uf")));
                 
                 listaImovel.add(imovel);
             }
@@ -76,7 +76,7 @@ public class ImovelCRUD {
         Imovel imovel = null;
         try{
             PreparedStatement pstm = conn.prepareStatement(
-                    "SELECT id, nome,metros_quad, preco, descricao ,cpf, email, rua, numero, cep, bairro, codigo_uf"+
+                    "SELECT id, nome,metros_quad, preco, descricao, rua, numero, cep, bairro, uf"+
                     "  FROM imovel"+
                     "  WHERE id=?"+
                     " LIMIT 1;"
@@ -94,7 +94,7 @@ public class ImovelCRUD {
                 imovel.setRua(rset.getString("rua"));
                 imovel.setNumero(rset.getInt("numero"));
                 imovel.setBairro(rset.getString("bairro"));
-                imovel.setUf(uf.read(conn, rset.getString("codigo_uf")));
+                imovel.setUf(uf.read(conn, rset.getString("uf")));
                 return imovel;
                 
             }else{
@@ -106,11 +106,46 @@ public class ImovelCRUD {
         }
     }
     
+    public ArrayList<Imovel> read(String filtro, Connection conn) throws Exception {
+        ArrayList<Imovel> listaClientes = new ArrayList<>();
+        UfCRUD uf = new UfCRUD();
+        try {
+            PreparedStatement pstm = conn.prepareStatement(
+                    "SELECT id, nome,metros_quad, preco, descricao, rua, numero, cep, bairro, uf"
+                    + "  FROM imovel"
+                    + "  where nome LIKE ?"
+                    + "  ORDER BY nome;"
+            );
+
+            pstm.setString(1, filtro);
+            ResultSet rset = pstm.executeQuery();
+
+            while (rset.next()) {
+                Imovel imovel = new Imovel();
+                imovel.setId(rset.getInt("id"));
+                imovel.setNome(rset.getString("nome"));
+                imovel.setMetrosQuad(rset.getFloat("metros_quad"));
+                imovel.setPreco(rset.getFloat("preco"));
+                imovel.setDescricao(rset.getString("descricao"));
+                imovel.setRua(rset.getString("rua"));
+                imovel.setNumero(rset.getInt("numero"));
+                imovel.setBairro(rset.getString("bairro"));
+                imovel.setUf(uf.read(conn, rset.getString("uf")));
+
+                listaClientes.add(imovel);
+            }
+            return listaClientes;
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+            return listaClientes;
+        }
+    }
+    
     public void update(Connection conn, Imovel imovel){
         try{
             PreparedStatement pstm = conn.prepareStatement(
-                    "UPDATE cliente"+
-                    " SET nome=?, metros_quad=?, preco=?,descicao=? ,rua=?, numero=?, cep=?, bairro=?, codigo_uf=?"+
+                    "UPDATE imovel"+
+                    " SET nome=?, metros_quad=?, preco=?,descricao=? ,rua=?, numero=?, cep=?, bairro=?, uf=?"+
                     " WHERE id=?;"
             );
             pstm.setString(1, imovel.getNome());
@@ -131,13 +166,13 @@ public class ImovelCRUD {
     }
     
     
-    public void delete(Connection conn, Imovel imovel){
+    public void delete(Connection conn, int id){
         try{
             PreparedStatement pstm = conn.prepareStatement(
                     "DELETE FROM imovel"+
                     "  WHERE id=?;"
             );
-            pstm.setInt(1, imovel.getId());
+            pstm.setInt(1,id);
             pstm.execute();
         }catch(SQLException ex){
             System.err.println(ex.getMessage());

@@ -60,7 +60,7 @@ public class FormaDePagamentoCRUD {
         try{
             PreparedStatement pstm = conn.prepareStatement(
                     "SELECT id, tipo"+
-                    "  FROM cliente"+
+                    "  FROM forma_pagamento"+
                     "  WHERE id=?"+
                     " LIMIT 1;"
             );

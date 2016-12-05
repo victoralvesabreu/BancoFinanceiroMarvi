@@ -21,8 +21,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
      */
     public FrmPrincipal() {
         initComponents();
-        lbUser.setText("Bem Vindo "+Usuario.logado.getNome());
-        
+        lbUser.setText("Bem Vindo " + Usuario.logado.getNome());
+
     }
 
     /**
@@ -45,8 +45,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
         miUsuarioVisualizar = new javax.swing.JMenuItem();
         mImovel = new javax.swing.JMenu();
         miImovelCadastrar = new javax.swing.JMenuItem();
+        miImovelVisualizar = new javax.swing.JMenuItem();
         mVenda = new javax.swing.JMenu();
         miVendaCadastrar = new javax.swing.JMenuItem();
+        miVendaVisualizar = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Imobiliária Marvi");
@@ -111,6 +113,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         mImovel.add(miImovelCadastrar);
 
+        miImovelVisualizar.setText("Visualizar");
+        miImovelVisualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miImovelVisualizarActionPerformed(evt);
+            }
+        });
+        mImovel.add(miImovelVisualizar);
+
         mbPrincipal.add(mImovel);
 
         mVenda.setText("Venda");
@@ -122,6 +132,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
         mVenda.add(miVendaCadastrar);
+
+        miVendaVisualizar.setText("Visualizar");
+        miVendaVisualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miVendaVisualizarActionPerformed(evt);
+            }
+        });
+        mVenda.add(miVendaVisualizar);
 
         mbPrincipal.add(mVenda);
 
@@ -148,7 +166,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         if (Usuario.logado.getAcesso().equals("admin")) {
             FrmUsuario usuario = new FrmUsuario();
             usuario.setVisible(true);
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Voce não possue permição para acessar esse recurso!");
         }
 
@@ -167,13 +185,26 @@ public class FrmPrincipal extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_miVendaCadastrarActionPerformed
 
     private void miUsuarioVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miUsuarioVisualizarActionPerformed
-        FrmUsuarioVisualizar usuario = new FrmUsuarioVisualizar();
-        usuario.setVisible(true);
+        if(Usuario.logado.getAcesso().equals("admin"))
+        {
+            FrmUsuarioVisualizar usuario = new FrmUsuarioVisualizar();
+            usuario.setVisible(true);
+        }
     }//GEN-LAST:event_miUsuarioVisualizarActionPerformed
+
+    private void miImovelVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miImovelVisualizarActionPerformed
+        FrmImovelVisualizar imovel = new FrmImovelVisualizar();
+        imovel.setVisible(true);
+    }//GEN-LAST:event_miImovelVisualizarActionPerformed
+
+    private void miVendaVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miVendaVisualizarActionPerformed
+        FrmVendaVisualizar venda = new FrmVendaVisualizar();
+        venda.setVisible(true);
+    }//GEN-LAST:event_miVendaVisualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -221,8 +252,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem miClienteCadastrar;
     private javax.swing.JMenuItem miClienteVisualizar;
     private javax.swing.JMenuItem miImovelCadastrar;
+    private javax.swing.JMenuItem miImovelVisualizar;
     private javax.swing.JMenuItem miUsuarioCadastrar;
     private javax.swing.JMenuItem miUsuarioVisualizar;
     private javax.swing.JMenuItem miVendaCadastrar;
+    private javax.swing.JMenuItem miVendaVisualizar;
     // End of variables declaration//GEN-END:variables
 }
