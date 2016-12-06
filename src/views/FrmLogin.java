@@ -6,11 +6,11 @@
 package views;
 
 import crud.UsuarioCRUD;
-import database.Database;
 import database.DatabaseFactory;
 import domain.Usuario;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
+import main.LoginValidation;
 
 /**
  *
@@ -110,7 +110,7 @@ public class FrmLogin extends javax.swing.JFrame {
 
     private void btEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEntrarActionPerformed
 
-        Connection conn = DatabaseFactory.getDatabase("postgres").connect();
+        /*Connection conn = DatabaseFactory.getDatabase("postgres").connect();
         UsuarioCRUD usuarioCrud = new UsuarioCRUD();
         Usuario aux = null;
         try {
@@ -131,6 +131,14 @@ public class FrmLogin extends javax.swing.JFrame {
             DatabaseFactory.getDatabase("postgres").disconnect(conn);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
+        }*/
+        LoginValidation login = new LoginValidation();
+        if (login.equal(tfEmail.getText(), pfSenha.getText())) {
+            FrmPrincipal principal = new FrmPrincipal();
+            principal.setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Usuario/Senha invalido!");
         }
     }//GEN-LAST:event_btEntrarActionPerformed
 

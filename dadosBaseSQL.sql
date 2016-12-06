@@ -12,7 +12,7 @@ INSERT INTO forma_pagamento(tipo) VALUES ('Crediario');
 /*
  Cadastro do Administrador
  */
-INSERT INTO usuario(nome, email, senha, acesso, cpf, cargo) VALUES ('admin', 'admin@marvi.edu.br', '123456', 'admin', '00000000000', 'Administrador');
+INSERT INTO usuario(nome, email, senha, acesso, cpf, cargo) VALUES ('admin', 'admin@marvi.edu.br', MD5('123456'), 'admin', '00000000000', 'Administrador');
 
 /*
 Cadastro Uf's
